@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Jurusan;
+
+class JurusanController extends Controller
+{
+    public function index()
+    {
+        $jurusan = Jurusan::all();
+        return view('admin.jurusan.index', compact('jurusan'));
+    }
+
+    public function create()
+    {
+        return view('admin.jurusan.create'); // hanya return view create jurusan
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+        ]);
+
+        Jurusan::create([
+            'nama' => $request->nama,
+        ]);
+
+        return redirect()->route('admin.jurusan.index')->with('success', 'Jurusan berhasil ditambahkan.');
+    }
+
+    public function edit(string $id)
+    {
+        $jurusan = Jurusan::findOrFail($id);
+        return view('admin.jurusan.edit', compact('jurusan'));
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'nama' => 'required',
+        ]);
+
+        $jurusan = Jurusan::findOrFail($id);
+        $jurusan->update([
+            'nama' => $request->nama,
+        ]);
+
+        return redirect()->route('admin.jurusan.index')->with('success', 'Jurusan berhasil diperbarui.');
+    }
+
+    public function destroy(string $id)
+    {
+        $jurusan = Jurusan::findOrFail($id);
+        $jurusan->delete();
+
+        return redirect()->route('admin.jurusan.index')->with('success', 'Jurusan berhasil dihapus.');
+    }
+}
