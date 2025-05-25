@@ -8,10 +8,13 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Dosen\NilaiController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Mahasiswa\KRSController;
+use App\Http\Controllers\Mahasiswa\ProfilController;
 
 // Halaman utama
-Route::get('/', fn() => view('login'));
+Route::get('/', fn() => view('auth.login'));
 
 // Login admin terpisah
 Route::get('/login/admin', [AdminLoginController::class, 'create'])->name('login.admin');
@@ -19,11 +22,11 @@ Route::post('/login/admin', [AdminLoginController::class, 'store'])->name('login
 
 // Login dosen & mahasiswa
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
 // Register mahasiswa
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
@@ -107,19 +110,38 @@ Route::middleware('auth')->group(function () {
     });
 
     // Dosen
-    Route::middleware('is_dosen')->group(function () {
-        Route::get('/dosen/dashboard', fn() => view('dosen.dashboard'))->name('dosen.dashboard');
+    Route::middleware('is_dosen')->prefix('dosen')->name('dosen.')->group(function () {
+    Route::get('/dashboard', fn() => view('dosen.dashboard'))->name('dashboard');
+
+    Route::prefix('nilai')->name('nilai.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Dosen\NilaiController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\Dosen\NilaiController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\Dosen\NilaiController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [\App\Http\Controllers\Dosen\NilaiController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [\App\Http\Controllers\Dosen\NilaiController::class, 'update'])->name('update');
+        Route::delete('/{id}', [\App\Http\Controllers\Dosen\NilaiController::class, 'destroy'])->name('destroy');
     });
+});
+
+
 
     // Mahasiswa
     Route::middleware('is_mahasiswa')->group(function () {
         Route::get('/mahasiswa/dashboard', fn() => view('mahasiswa.dashboard'))->name('mahasiswa.dashboard');
-    });
+        Route::get('/mahasiswa/krs', [KRSController::class, 'index'])->name('mahasiswa.krs.index');
+        Route::get('/mahasiswa/krs/create', [KRSController::class, 'create'])->name('mahasiswa.krs.create');
+        Route::post('/mahasiswa/krs', [KRSController::class, 'store'])->name('mahasiswa.krs.store');
+        Route::get('/mahasiswa/krs/{krs}/edit', [KRSController::class, 'edit'])->name('mahasiswa.krs.edit');
+        Route::put('/mahasiswa/krs/{krs}', [KRSController::class, 'update'])->name('mahasiswa.krs.update');
+        Route::delete('/mahasiswa/krs/{krs}', [KRSController::class, 'destroy'])->name('mahasiswa.krs.destroy');
 
-    // Profil
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
+    Route::get('profil', [ProfilController::class, 'index'])->name('profil.index');
+    Route::get('profil/edit', [ProfilController::class, 'edit'])->name('profil.edit');
+    Route::post('profil/update', [ProfilController::class, 'update'])->name('profil.update');
+});
+
+    });
 });
 
 // Laravel Breeze / Fortify

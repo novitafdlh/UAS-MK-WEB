@@ -61,4 +61,11 @@ class UserController extends Controller
 
         return redirect()->route('admin.create-user')->with('success', 'User berhasil dibuat!');
     }
+
+    // app/Models/User.php
+
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class);
+    }
 }

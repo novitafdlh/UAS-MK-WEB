@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Matakuliah extends Model
 {
-    protected $fillable = ['kode', 'nama', 'sks', 'jurusan'];
+    protected $table = 'matakuliahs';
+    protected $fillable = ['prodi_id', 'kode', 'nama', 'sks', 'jurusan'];
+
 
     public function prodi() {
         return $this->belongsTo(Prodi::class);

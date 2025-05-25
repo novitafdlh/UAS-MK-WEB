@@ -16,5 +16,10 @@ class Mahasiswa extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function krs()
+    {
+        return $this->hasMany(Krs::class);
+    }
+
     protected $fillable = ['nim', 'nama', 'email', 'prodi', 'jurusan'];
 }
