@@ -34,33 +34,34 @@
     @endif
 
     {{-- Pilih Mahasiswa --}}
-    @if($selectedMataKuliahId)
-    <div>
-        <label for="mahasiswa_id" class="block font-medium">Pilih Mahasiswa</label>
-        <select name="mahasiswa_id" id="mahasiswa_id" class="border p-2 rounded w-full" onchange="this.form.submit()">
-            <option value="">-- Pilih Mahasiswa --</option>
-            @foreach($mahasiswas as $mhs)
-                <option value="{{ $mhs->id }}" {{ $selectedMahasiswaId == $mhs->id ? 'selected' : '' }}>
-                    {{ $mhs->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-    @endif
-</form>
+@if($selectedMataKuliahId)
+<div>
+    <label for="mahasiswa_id" class="block font-medium">Pilih Mahasiswa</label>
+    <select name="mahasiswa_id" id="mahasiswa_id" class="border p-2 rounded w-full" onchange="this.form.submit()">
+        <option value="">-- Pilih Mahasiswa --</option>
+        @foreach($mahasiswas as $mhs)
+            <option value="{{ $mhs->user->id ?? '' }}" {{-- Ambil ID dari model User yang terkait --}}
+                    {{ $selectedMahasiswaId == ($mhs->user->id ?? '') ? 'selected' : '' }}>
+                {{ $mhs->nama }} {{-- Gunakan kolom 'nama' dari model Mahasiswa --}}
+            </option>
+        @endforeach
+    </select>
+</div>
+@endif
 
 {{-- Form Input Nilai --}}
 @if($selectedMahasiswaId && $selectedMataKuliahId)
-<form method="POST" action="{{ route('nilai.store') }}" class="space-y-4 max-w-md">
+<form method="POST" action="{{ route('dosen.nilai.store') }}" class="space-y-4 max-w-md">
     @csrf
     <input type="hidden" name="prodi_id" value="{{ $selectedProdiId }}">
     <input type="hidden" name="mata_kuliah_id" value="{{ $selectedMataKuliahId }}">
-    <input type="hidden" name="mahasiswa_id" value="{{ $selectedMahasiswaId }}">
+    <input type="hidden" name="mahasiswa_id" value="{{ $selectedMahasiswaId }}"> {{-- Ini adalah user_id dari tabel users --}}
 
     <div>
         <label class="block font-medium mb-1">Nilai untuk:</label>
         <div class="mb-2">
-            <strong>Mahasiswa:</strong> {{ $mahasiswas->where('id', $selectedMahasiswaId)->first()->name ?? '-' }}
+            {{-- Kita perlu mencari Mahasiswa yang user_id-nya sama dengan selectedMahasiswaId --}}
+            <strong>Mahasiswa:</strong> {{ $mahasiswas->where('user.id', $selectedMahasiswaId)->first()->nama ?? '-' }}
         </div>
         <div>
             <strong>Mata Kuliah:</strong> {{ $mataKuliahs->where('id', $selectedMataKuliahId)->first()->nama ?? '-' }}
@@ -77,5 +78,4 @@
     </button>
 </form>
 @endif
-
 @endsection

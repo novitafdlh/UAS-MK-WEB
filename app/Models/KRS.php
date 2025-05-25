@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class KRS extends Model
@@ -15,9 +16,14 @@ class KRS extends Model
         'tahun_akademik',
     ];
 
+     public function user()
+    {
+        return $this->belongsTo(User::class, 'mahasiswa_id');
+    }
+
     public function mataKuliah()
     {
-        return $this->belongsTo(MataKuliah::class);
+        return $this->belongsTo(MataKuliah::class, 'mata_kuliah_id');
     }
 
     public function mahasiswa()

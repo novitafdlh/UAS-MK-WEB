@@ -23,10 +23,6 @@
                        class="block px-3 py-2 rounded hover:bg-red-700 transition {{ request()->routeIs('mahasiswa.krs.*') ? 'bg-red-600' : '' }}">
                         📚 KRS
                     </a>
-                    <a href="{{ route('mahasiswa.profil.index') }}"
-                       class="block px-3 py-2 rounded hover:bg-red-700 transition {{ request()->routeIs('mahasiswa.profil.*') ? 'bg-red-600' : '' }}">
-                        👤 Profil
-                    </a>
                 </nav>
             </div>
             <div class="px-4 py-4 border-t border-red-700">

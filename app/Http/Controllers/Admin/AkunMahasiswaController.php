@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Mahasiswa;
+use Illuminate\Support\Str;
 
 class AkunMahasiswaController extends Controller
 {
@@ -44,6 +46,15 @@ class AkunMahasiswaController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'mahasiswa',
         ]);
+
+            Mahasiswa::create([
+                'user_id' => $user->id, // Ini adalah kunci penghubung!
+                'nim' => $request->nim ?? 'NIM-' . Str::random(8), // Ambil dari request atau generate otomatis
+                'nama' => $user->name, // Ambil dari nama user
+                'email' => $user->email, // Ambil dari email user
+                'prodi_id' => $request->prodi_id ?? 1, // Ambil dari request atau set ID prodi default
+                'jurusan_id' => $request->jurusan_id ?? 1, // Ambil dari request atau set ID jurusan default
+            ]);
 
         return redirect()->route('admin.mahasiswa.akun.index')->with('success', 'Akun mahasiswa berhasil dibuat.');
     }
