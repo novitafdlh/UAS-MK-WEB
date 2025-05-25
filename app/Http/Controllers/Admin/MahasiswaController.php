@@ -29,10 +29,11 @@ class MahasiswaController extends Controller
             'nim' => 'required|unique:mahasiswas,nim',
             'nama' => 'required|string|max:255',
             'email' => 'required|email|unique:mahasiswas,email',
-            'user_id' => 'nullable|exists:users,id',
             'prodi_id' => 'required|exists:prodis,id',
             'jurusan_id' => 'required|exists:jurusans,id',
         ]);
+
+        $validatedData['user_id'] = auth()->id();
 
         Mahasiswa::create($validatedData);
 
@@ -56,7 +57,10 @@ class MahasiswaController extends Controller
             'email' => 'required|email|unique:mahasiswas,email,' . $mahasiswa->id,
             'prodi_id' => 'required|exists:prodis,id',
             'jurusan_id' => 'required|exists:jurusans,id',
+            'user_id' => 'required|exists:users,id',
         ]);
+
+        $validatedData['user_id'] = auth()->id();
 
         $mahasiswa->update($validatedData);
 

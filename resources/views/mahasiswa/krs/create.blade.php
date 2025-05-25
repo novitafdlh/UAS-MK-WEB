@@ -1,35 +1,43 @@
 @extends('layouts.mahasiswa')
 
 @section('content')
-<h2 class="text-xl font-bold mb-4">Tambah KRS</h2>
+<div class="max-w-3xl mx-auto mt-8 px-8 py-10 bg-white rounded-lg shadow-lg">
+    {{-- Judul --}}
+    <h1 class="text-3xl font-bold mb-8 text-center text-red-700">Tambah KRS Baru</h1>
 
-{{-- Form pilih Prodi --}}
-<form action="{{ route('mahasiswa.krs.create') }}" method="GET" class="mb-6">
-    <label for="prodi_id" class="block font-semibold mb-1">Pilih Prodi</label>
-    <select name="prodi_id" id="prodi_id" class="border p-2 rounded w-full" required>
-        <option value="">-- Pilih Prodi --</option>
-        @foreach($prodis as $prodi)
-            <option value="{{ $prodi->id }}" {{ request('prodi_id') == $prodi->id ? 'selected' : '' }}>
-                {{ $prodi->nama }}
-            </option>
-        @endforeach
-    </select>
-    <button type="submit" class="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-        Tampilkan Mata Kuliah
-    </button>
-</form>
+    {{-- Form pilih prodi --}}
+    <form action="{{ route('mahasiswa.krs.create') }}" method="GET" class="mb-10">
+        <div>
+            <label for="prodi_id" class="block mb-2 font-semibold text-gray-700">Prodi</label>
+            <select name="prodi_id" id="prodi_id" required
+                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
+                <option value="" disabled {{ request('prodi_id') ? '' : 'selected' }}>-- Pilih Prodi --</option>
+                @foreach($prodis as $prodi)
+                    <option value="{{ $prodi->id }}" {{ request('prodi_id') == $prodi->id ? 'selected' : '' }}>
+                        {{ $prodi->nama }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-{{-- Jika sudah pilih Prodi, tampilkan form KRS --}}
-@if(request('prodi_id'))
-    <form action="{{ route('mahasiswa.krs.store') }}" method="POST">
+        <div class="flex justify-end pt-6">
+            <button type="submit" class="bg-red-700 hover:bg-red-800 text-white font-bold px-6 py-2 rounded shadow transition duration-200">
+                Tampilkan Mata Kuliah
+            </button>
+        </div>
+    </form>
+
+    {{-- Jika sudah pilih Prodi, tampilkan form tambah KRS --}}
+    @if(request('prodi_id'))
+    <form action="{{ route('mahasiswa.krs.store') }}" method="POST" class="border-t pt-8">
         @csrf
-
         <input type="hidden" name="prodi_id" value="{{ request('prodi_id') }}">
 
-        <div class="mb-3">
-            <label for="mata_kuliah_id" class="block font-semibold mb-1">Pilih Mata Kuliah</label>
-            <select name="mata_kuliah_id" id="mata_kuliah_id" class="border p-2 rounded w-full" required>
-                <option value="">-- Pilih Mata Kuliah --</option>
+        <div>
+            <label for="mata_kuliah_id" class="block mb-2 font-semibold text-gray-700">Mata Kuliah</label>
+            <select name="mata_kuliah_id" id="mata_kuliah_id" required
+                class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
+                <option value="" disabled selected>-- Pilih Mata Kuliah --</option>
                 @foreach($matakuliahs as $mk)
                     <option value="{{ $mk->id }}" {{ old('mata_kuliah_id') == $mk->id ? 'selected' : '' }}>
                         {{ $mk->kode }} - {{ $mk->nama }} ({{ $mk->sks }} SKS)
@@ -38,9 +46,15 @@
             </select>
         </div>
 
-        <button type="submit" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-            Simpan KRS
-        </button>
+        <div class="flex justify-between items-center pt-6">
+            <a href="{{ route('mahasiswa.krs.create') }}" class="text-gray-600 hover:underline font-semibold">
+                Batal
+            </a>
+            <button type="submit" class="bg-red-700 hover:bg-red-800 text-white font-bold px-6 py-2 rounded shadow transition duration-200">
+                Simpan KRS
+            </button>
+        </div>
     </form>
-@endif
+    @endif
+</div>
 @endsection

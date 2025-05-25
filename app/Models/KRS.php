@@ -10,6 +10,7 @@ class KRS extends Model
     protected $table = 'krs';
 
     protected $fillable = [
+        'user_id',
         'mahasiswa_id',
         'mata_kuliah_id',
         'semester',

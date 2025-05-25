@@ -9,7 +9,6 @@ use App\Models\Mahasiswa;
 use App\Models\Prodi;
 use App\Models\KRS;
 use App\Models\MataKuliah;
-use App\Models\User;
 
 class NilaiController extends Controller
 {
@@ -44,15 +43,11 @@ class NilaiController extends Controller
         // Ambil mahasiswa yang mengambil mata kuliah tersebut (via KRS)
         $mahasiswas = collect();
         if ($selectedMataKuliahId) {
-            // Ambil semua entri KRS untuk mata kuliah yang dipilih
             $krsEntries = KRS::where('mata_kuliah_id', $selectedMataKuliahId)->get();
 
-            // Dapatkan user_id dari entri KRS tersebut
-            $userIdsInKRS = $krsEntries->pluck('mahasiswa_id')->unique()->toArray();
+            $mahasiswaIdsInKRS = $krsEntries->pluck('mahasiswa_id')->unique()->toArray();
 
-            // Dapatkan data Mahasiswa yang user_id-nya ada di daftar user_id KRS
-            // Asumsi model Mahasiswa memiliki kolom 'user_id' yang terhubung ke tabel users
-            $mahasiswas = Mahasiswa::whereIn('user_id', $userIdsInKRS)->get();
+            $mahasiswas = Mahasiswa::whereIn('id', $mahasiswaIdsInKRS)->get();
         }
 
         return view('dosen.nilai.create', compact(
@@ -68,15 +63,16 @@ class NilaiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'mahasiswa_id' => 'required|exists:users,id',
+            'mahasiswa_id' => 'required|exists:mahasiswas,id', // validasi berdasarkan id mahasiswa
             'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
-            'nilai' => 'required|string|max:2', // misal nilai huruf A, B, C, dst
+            'nilai' => 'required|string|max:2',
         ]);
 
-        $mahasiswaActual = Mahasiswa::where('user_id', $request->mahasiswa_id)->first();
+        // Ambil mahasiswa berdasarkan id mahasiswa langsung
+        $mahasiswaActual = Mahasiswa::find($request->mahasiswa_id);
 
         if (!$mahasiswaActual) {
-            return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan untuk user ini.');
+            return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan.');
         }
 
         Nilai::updateOrCreate(
@@ -91,6 +87,4 @@ class NilaiController extends Controller
 
         return redirect()->route('nilai.index')->with('success', 'Nilai berhasil disimpan.');
     }
-
-    // index dan metode lain bisa disesuaikan jika perlu
 }

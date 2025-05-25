@@ -11,7 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Dosen\NilaiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Mahasiswa\KRSController;
-use App\Http\Controllers\Mahasiswa\ProfilController;
+use App\Http\Controllers\Mahasiswa\AkunController;
 
 // Halaman utama
 Route::get('/', fn() => view('auth.login'));
@@ -134,8 +134,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/mahasiswa/krs/{krs}/edit', [KRSController::class, 'edit'])->name('mahasiswa.krs.edit');
         Route::put('/mahasiswa/krs/{krs}', [KRSController::class, 'update'])->name('mahasiswa.krs.update');
         Route::delete('/mahasiswa/krs/{krs}', [KRSController::class, 'destroy'])->name('mahasiswa.krs.destroy');
-    });
+
+        Route::get('/mahasiswa/akun', [AkunController::class, 'index'])->name('mahasiswa.akun.index');
+        Route::get('/mahasiswa/akun/create', [AkunController::class, 'create'])->name('mahasiswa.akun.create');
+        Route::post('/mahasiswa/akun', [AkunController::class, 'store'])->name('mahasiswa.akun.store');
+        Route::get('/mahasiswa/akun/{akn}/edit', [AkunController::class, 'edit'])->name('mahasiswa.akun.edit');
+        Route::put('/mahasiswa/akun/{akn}', [AkunController::class, 'update'])->name('mahasiswa.akun.update');
+        Route::delete('/mahasiswa/akun/{akn}', [AkunController::class, 'destroy'])->name('mahasiswa.akun.destroy');
 });
+    });
+
 
 // Laravel Breeze / Fortify
 require __DIR__.'/auth.php';
