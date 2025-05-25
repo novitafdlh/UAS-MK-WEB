@@ -1,38 +1,42 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="max-w-4xl mx-auto">
+<div class="max-w-4xl mx-auto mt-6">
     <h1 class="text-2xl font-bold mb-4">Data Jurusan</h1>
 
     @if(session('success'))
-        <div class="mb-4 bg-green-100 text-green-700 p-2 rounded">{{ session('success') }}</div>
+        <div class="mb-4 bg-green-100 text-green-800 p-3 rounded">{{ session('success') }}</div>
     @endif
 
     <a href="{{ route('admin.jurusan.create') }}" class="mb-4 inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-        Tambah Jurusan
+        + Tambah Jurusan
     </a>
 
     <table class="w-full table-auto bg-white shadow rounded">
-        <thead class="bg-gray-100">
+        <thead class="bg-gray-100 text-left">
             <tr>
                 <th class="border px-4 py-2">Nama</th>
-                <th class="border px-4 py-2">Aksi</th>
+                <th class="border px-4 py-2 w-1/4">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($jurusan as $item)
-            <tr>
-                <td class="border px-4 py-2">{{ $item->nama }}</td>
-                <td class="border px-4 py-2 flex gap-2">
-                    <a href="{{ route('admin.jurusan.edit', $item->id) }}" class="px-2 py-1 bg-yellow-500 rounded hover:bg-yellow-600">Edit</a>
-                    <form action="{{ route('admin.jurusan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Hapus jurusan ini?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
+            @forelse($jurusans as $item)
+                <tr>
+                    <td class="border px-4 py-2">{{ $item->nama }}</td>
+                    <td class="border px-4 py-2 flex gap-2">
+                        <a href="{{ route('admin.jurusan.edit', $item->id) }}" class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">Edit</a>
+                        <form action="{{ route('admin.jurusan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus jurusan ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="2" class="border px-4 py-2 text-center text-gray-500">Belum ada data jurusan.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </div>

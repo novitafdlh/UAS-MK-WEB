@@ -1,46 +1,52 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container">
-    <h1>Daftar Program Studi</h1>
+<div class="max-w-5xl mx-auto mt-6">
+    <h1 class="text-2xl font-semibold mb-4">Daftar Program Studi</h1>
 
     @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="mb-4 bg-green-100 border border-green-300 text-green-700 p-3 rounded">
+            {{ session('success') }}
+        </div>
     @endif
 
-    <a href="{{ route('admin.prodi.create') }}" class="btn btn-primary mb-3">+ Tambah Prodi</a>
+    <a href="{{ route('admin.prodi.create') }}" class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        + Tambah Prodi
+    </a>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Jurusan</th>
-                <th>Nama Prodi</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($prodi as $index => $prodi)
+    <div class="overflow-x-auto">
+        <table class="w-full text-left bg-white border shadow rounded">
+            <thead class="bg-gray-100">
                 <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $prodi->jurusan->nama ?? '-' }}</td>
-                    <td>{{ $prodi->nama }}</td>
-                    <td>
-                        <a href="{{ route('admin.prodi.edit', $prodi->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <th class="border px-4 py-2 w-12">No</th>
+                    <th class="border px-4 py-2">Jurusan</th>
+                    <th class="border px-4 py-2">Nama Prodi</th>
+                    <th class="border px-4 py-2 w-36">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($prodi as $index => $item)
+                    <tr class="hover:bg-gray-50">
+                        <td class="border px-4 py-2">{{ $index + 1 }}</td>
+                        <td class="border px-4 py-2">{{ $item->jurusan->nama ?? '-' }}</td>
+                        <td class="border px-4 py-2">{{ $item->nama }}</td>
+                        <td class="border px-4 py-2 flex gap-2">
+                            <a href="{{ route('admin.prodi.edit', $item->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">Edit</a>
 
-                        <form action="{{ route('admin.prodi.destroy', $prodi->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus prodi ini?');">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4">Belum ada data prodi.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+                            <form action="{{ route('admin.prodi.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus prodi ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="border px-4 py-2 text-center text-gray-500">Belum ada data prodi.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

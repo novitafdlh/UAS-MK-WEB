@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Jurusan;
+use App\Models\Prodi;
 
 class JurusanController extends Controller
 {
     public function index()
     {
-        $jurusan = Jurusan::all();
-        return view('admin.jurusan.index', compact('jurusan'));
+        $jurusans = Jurusan::all();
+        return view('admin.jurusan.index', compact('jurusans'));
     }
 
     public function create()
@@ -34,8 +35,9 @@ class JurusanController extends Controller
 
     public function edit(string $id)
     {
+        $prodis = Prodi::all();
         $jurusan = Jurusan::findOrFail($id);
-        return view('admin.jurusan.edit', compact('jurusan'));
+        return view('admin.jurusan.edit', compact('jurusan', 'prodis'));
     }
 
     public function update(Request $request, string $id)

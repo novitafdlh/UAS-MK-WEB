@@ -27,7 +27,6 @@
         <select name="role" class="w-full border rounded px-3 py-2 mb-4" required>
             <option value="" disabled selected>Pilih Role</option>
             <option value="mahasiswa">Mahasiswa</option>
-            <option value="dosen">Dosen</option>
 
         <label class="block mb-2 font-semibold">Password</label>
         <input type="password" name="password" required class="w-full border rounded px-3 py-2 mb-4">

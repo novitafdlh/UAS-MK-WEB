@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mahasiswa extends Model
 {
+    // Pastikan fillable hanya berisi kolom yang ada di tabel, dan gunakan _id untuk foreign key
+    protected $fillable = ['nim', 'nama', 'email', 'prodi_id', 'jurusan_id', 'user_id'];
+
     public function jadwals()
     {
         return $this->belongsToMany(Jadwal::class, 'jadwal_mahasiswa', 'mahasiswa_id', 'jadwal_id');
@@ -16,10 +19,15 @@ class Mahasiswa extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function krs()
+    // Tambahkan relasi ke Prodi
+    public function prodi()
     {
-        return $this->hasMany(Krs::class);
+        return $this->belongsTo(Prodi::class);
     }
 
-    protected $fillable = ['nim', 'nama', 'email', 'prodi', 'jurusan'];
+    // Tambahkan relasi ke Jurusan
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class);
+    }
 }

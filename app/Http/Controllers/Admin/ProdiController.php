@@ -39,8 +39,8 @@ class ProdiController extends Controller
     public function edit(string $id)
     {
         $prodi = Prodi::findOrFail($id);
-        $jurusan = Jurusan::all();
-        return view('admin.prodi.edit', compact('prodi', 'jurusan'));
+        $jurusans = Jurusan::all();
+        return view('admin.prodi.edit', compact('prodi', 'jurusans'));
     }
 
     public function update(Request $request, string $id)

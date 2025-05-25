@@ -16,7 +16,13 @@ return new class extends Migration
             $table->string('nim')->unique();
             $table->string('nama');
             $table->string('email')->unique();
-            $table->string('jurusan');
+
+            // Ganti kolom jurusan string jadi foreign key
+            $table->foreignId('jurusan_id')->constrained()->onDelete('cascade');
+
+            // Tambahkan foreign key prodi_id
+            $table->foreignId('prodi_id')->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }

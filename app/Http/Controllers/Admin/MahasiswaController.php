@@ -5,18 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
+use App\Models\Prodi;
+use App\Models\Jurusan;
 
 class MahasiswaController extends Controller
 {
     public function index()
     {
-        $mahasiswa = Mahasiswa::all();
+        // Eager load relasi 'prodi' dan 'jurusan' (melalui prodi)
+        $mahasiswa = Mahasiswa::with('prodi.jurusan')->get();
         return view('admin.mahasiswa.data.index', compact('mahasiswa'));
     }
 
     public function create()
     {
-        return view('admin.mahasiswa.data.create');
+        $jurusans = Jurusan::with('prodis')->get();
+        return view('admin.mahasiswa.data.create', compact('jurusans'));
     }
 
     public function store(Request $request)
@@ -25,8 +29,8 @@ class MahasiswaController extends Controller
             'nim' => 'required|unique:mahasiswas,nim',
             'nama' => 'required|string|max:255',
             'email' => 'required|email|unique:mahasiswas,email',
-            'prodi' => 'required|string|max:255',
-            'jurusan' => 'required|string|max:255',
+            'prodi_id' => 'required|exists:prodis,id',
+            'jurusan_id' => 'required|exists:jurusans,id',
         ]);
 
         Mahasiswa::create($validatedData);
@@ -36,8 +40,9 @@ class MahasiswaController extends Controller
 
     public function edit($id)
     {
-        $mahasiswa = Mahasiswa::findOrFail($id);
-        return view('admin.mahasiswa.data.edit', compact('mahasiswa'));
+        $mahasiswa = Mahasiswa::with('prodi.jurusan')->findOrFail($id); // Eager load juga di edit
+        $jurusans = Jurusan::with('prodis')->get();
+        return view('admin.mahasiswa.data.edit', compact('mahasiswa', 'jurusans'));
     }
 
     public function update(Request $request, $id)
@@ -48,8 +53,8 @@ class MahasiswaController extends Controller
             'nim' => 'required|unique:mahasiswas,nim,' . $mahasiswa->id,
             'nama' => 'required|string|max:255',
             'email' => 'required|email|unique:mahasiswas,email,' . $mahasiswa->id,
-            'prodi' => 'required|string|max:255',
-            'jurusan' => 'required|string|max:255',
+            'prodi_id' => 'required|exists:prodis,id',
+            'jurusan_id' => 'required|exists:jurusans,id',
         ]);
 
         $mahasiswa->update($validatedData);

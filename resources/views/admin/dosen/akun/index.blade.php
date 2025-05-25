@@ -22,9 +22,7 @@
             <tr>
                 <td class="border px-4 py-2">{{ $user->name }}</td>
                 <td class="border px-4 py-2">{{ $user->email }}</td>
-                <td class="border px-4 py-2">
-                    {{ $user->getRoleNames()->first() ?? '-' }}
-                </td>
+                <td class="border px-4 py-2">{{ $user->role }}</td>
                 <td class="border px-4 py-2 flex gap-2">
                     <a href="{{ route('admin.dosen.akun.edit', $user->id) }}" class="px-2 py-1 bg-yellow-400 rounded hover:bg-yellow-500">Edit</a>
 
