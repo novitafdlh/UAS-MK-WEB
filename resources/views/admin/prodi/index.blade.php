@@ -1,48 +1,73 @@
 @extends('layouts.admin')
 
-@section('content')
-<div class="max-w-5xl mx-auto mt-6">
-    <h1 class="text-2xl font-semibold mb-4">Daftar Program Studi</h1>
+@section('title', 'Daftar Program Studi')
 
+@section('content')
+<div class="max-w-5xl mx-auto mt-6 px-4">
+    {{-- Background logo Untad besar pudar --}}
+    <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-0">
+        <img src="{{ asset('img/untad-new.jpeg') }}" alt="Logo Untad"
+            class="opacity-10 max-w-sm sm:max-w-lg lg:max-w-xl absolute top-1/2 left-1/2"
+            style="user-select: none; transform: translate(-25%, -48%);" />
+    </div>
+    
+    {{-- Header --}}
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-bold text-gray-900">Daftar Program Studi</h1>
+        <a href="{{ route('admin.prodi.create') }}"
+           class="px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-800 shadow transition">
+            + Tambah Prodi
+        </a>
+    </div>
+
+    {{-- Alert Sukses --}}
     @if (session('success'))
-        <div class="mb-4 bg-green-100 border border-green-300 text-green-700 p-3 rounded">
+        <div class="mb-5 bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded shadow">
             {{ session('success') }}
         </div>
     @endif
 
-    <a href="{{ route('admin.prodi.create') }}" class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-        + Tambah Prodi
-    </a>
-
-    <div class="overflow-x-auto">
-        <table class="w-full text-left bg-white border shadow rounded">
-            <thead class="bg-gray-100">
+    {{-- Tabel Prodi --}}
+    <div class="bg-white shadow rounded-lg overflow-x-auto">
+        <table class="w-full table-auto divide-y divide-gray-200">
+            <thead class="bg-red-100 text-red-900">
                 <tr>
-                    <th class="border px-4 py-2 w-12">No</th>
-                    <th class="border px-4 py-2">Jurusan</th>
-                    <th class="border px-4 py-2">Nama Prodi</th>
-                    <th class="border px-4 py-2 w-36">Aksi</th>
+                    <th class="px-5 py-3 text-xs font-semibold uppercase">No</th>
+                    <th class="px-5 py-3 text-xs font-semibold uppercase">Jurusan</th>
+                    <th class="px-5 py-3 text-xs font-semibold uppercase">Nama Prodi</th>
+                    <th class="px-5 py-3 text-xs font-semibold uppercase text-center">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-gray-100">
                 @forelse ($prodi as $index => $item)
-                    <tr class="hover:bg-gray-50">
-                        <td class="border px-4 py-2">{{ $index + 1 }}</td>
-                        <td class="border px-4 py-2">{{ $item->jurusan->nama ?? '-' }}</td>
-                        <td class="border px-4 py-2">{{ $item->nama }}</td>
-                        <td class="border px-4 py-2 flex gap-2">
-                            <a href="{{ route('admin.prodi.edit', $item->id) }}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">Edit</a>
-
-                            <form action="{{ route('admin.prodi.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus prodi ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm">Hapus</button>
-                            </form>
+                    <tr class="hover:bg-red-50 transition">
+                        <td class="px-5 py-3 text-sm text-gray-800">{{ $index + 1 }}</td>
+                        <td class="px-5 py-3 text-sm text-gray-800">{{ $item->jurusan->nama ?? '-' }}</td>
+                        <td class="px-5 py-3 text-sm text-gray-800">{{ $item->nama }}</td>
+                        <td class="px-5 py-3 text-sm text-center">
+                            <div class="flex justify-center gap-2">
+                                <a href="{{ route('admin.prodi.edit', $item->id) }}"
+                                   class="px-3 py-1.5 text-xs font-medium text-white bg-yellow-500 hover:bg-yellow-600 rounded shadow">
+                                    Edit
+                                </a>
+                                <form action="{{ route('admin.prodi.destroy', $item->id) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Yakin ingin menghapus prodi ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="px-3 py-1.5 text-xs font-medium text-white bg-red-600 hover:bg-red-700 rounded shadow">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="border px-4 py-2 text-center text-gray-500">Belum ada data prodi.</td>
+                        <td colspan="4" class="px-5 py-6 text-center text-gray-500 italic">
+                            😕 Belum ada data prodi.
+                        </td>
                     </tr>
                 @endforelse
             </tbody>

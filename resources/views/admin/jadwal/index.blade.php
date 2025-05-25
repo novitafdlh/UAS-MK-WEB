@@ -1,64 +1,76 @@
 @extends('layouts.admin')
 
+@section('title', 'Daftar Jadwal')
+
 @section('content')
-<div class="container mx-auto px-4 mt-4"> {{-- mx-auto dan px-4 untuk container --}}
-    <div class="flex justify-between items-center mb-4"> {{-- flex, justify-between, items-center untuk d-flex --}}
-        <h1 class="text-2xl font-bold text-gray-800">Daftar Jadwal</h1> {{-- h4 menjadi text-2xl font-bold --}}
-        <a href="{{ route('admin.jadwal.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-150 ease-in-out">
+<div class="max-w-7xl mx-auto mt-6 px-4">
+    {{-- Background logo Untad besar pudar --}}
+    <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-0">
+        <img src="{{ asset('img/untad-new.jpeg') }}" alt="Logo Untad"
+            class="opacity-10 max-w-sm sm:max-w-lg lg:max-w-xl absolute top-1/2 left-1/2"
+            style="user-select: none; transform: translate(-25%, -48%);" />
+    </div>
+    
+    {{-- Header --}}
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-900">Daftar Jadwal</h1>
+        <a href="{{ route('admin.jadwal.create') }}"
+           class="px-4 py-2 bg-red-700 text-white rounded-md hover:bg-red-800 transition shadow">
             + Tambah Jadwal
-        </a> {{-- btn-primary menjadi bg-blue-600 dll. --}}
+        </a>
     </div>
 
+    {{-- Alert Sukses --}}
     @if (session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert"> {{-- alert alert-success --}}
+        <div class="mb-4 bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded shadow relative" role="alert">
             <strong class="font-bold">Sukses!</strong>
             <span class="block sm:inline">{{ session('success') }}</span>
-            <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none';"> {{-- btn-close --}}
-                    <title>Close</title>
-                    <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.15a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.03a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.15 2.758 3.15a1.2 1.2 0 0 1 0 1.697z"/>
-                </svg>
-            </span>
+            <button onclick="this.parentElement.style.display='none';"
+                    class="absolute top-2 right-2 text-green-500 hover:text-green-700">
+                &times;
+            </button>
         </div>
     @endif
 
-    <div class="shadow-sm rounded-lg overflow-hidden"> {{-- table-responsive dan shadow-sm rounded --}}
-        <table class="min-w-full bg-white divide-y divide-gray-200"> {{-- table, table-striped, table-hover --}}
-            <thead class="bg-gray-50"> {{-- thead, table-light --}}
+    {{-- Tabel Jadwal --}}
+    <div class="bg-white shadow rounded-lg overflow-x-auto">
+        <table class="min-w-full table-auto divide-y divide-gray-200">
+            <thead class="bg-red-100 text-red-900">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">ID</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prodi</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mata Kuliah</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dosen</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Hari</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Jam Mulai</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Jam Selesai</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Ruangan</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/12">Aksi</th>
+                    <th class="px-6 py-3 text-xs font-semibold uppercase">ID</th>
+                    <th class="px-6 py-3 text-xs font-semibold uppercase">Prodi</th>
+                    <th class="px-6 py-3 text-xs font-semibold uppercase">Mata Kuliah</th>
+                    <th class="px-6 py-3 text-xs font-semibold uppercase">Dosen</th>
+                    <th class="px-6 py-3 text-xs font-semibold uppercase">Hari</th>
+                    <th class="px-6 py-3 text-xs font-semibold uppercase">Jam Mulai</th>
+                    <th class="px-6 py-3 text-xs font-semibold uppercase">Jam Selesai</th>
+                    <th class="px-6 py-3 text-xs font-semibold uppercase">Ruangan</th>
+                    <th class="px-6 py-3 text-xs font-semibold uppercase text-center">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
+            <tbody class="divide-y divide-gray-100">
                 @forelse($jadwals as $jadwal)
-                    <tr class="hover:bg-gray-50"> {{-- table-hover --}}
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $jadwal->id }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $jadwal->prodi->nama ?? '-' }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $jadwal->mata_kuliah->nama ?? '-' }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $jadwal->dosen->name ?? '-' }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $jadwal->hari }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $jadwal->ruangan }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex space-x-2"> {{-- d-flex gap-2 --}}
-                                <a href="{{ route('admin.jadwal.edit', $jadwal->id) }}" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500" title="Edit Jadwal"> {{-- btn btn-sm btn-warning --}}
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <tr class="hover:bg-red-50">
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ $jadwal->id }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ $jadwal->prodi->nama ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ $jadwal->mata_kuliah->nama ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ $jadwal->dosen->name ?? '-' }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ $jadwal->hari }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-800">{{ $jadwal->ruangan }}</td>
+                        <td class="px-6 py-4 text-sm text-center">
+                            <div class="flex justify-center gap-2">
+                                <a href="{{ route('admin.jadwal.edit', $jadwal->id) }}"
+                                   class="px-3 py-1.5 text-xs font-medium text-white bg-yellow-500 hover:bg-yellow-600 rounded shadow">
                                     Edit
                                 </a>
-                                <form action="{{ route('admin.jadwal.destroy', $jadwal->id) }}" method="POST" onsubmit="return confirm('Yakin hapus jadwal ini?');" class="inline-block">
+                                <form action="{{ route('admin.jadwal.destroy', $jadwal->id) }}" method="POST"
+                                      onsubmit="return confirm('Yakin hapus jadwal ini?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" title="Hapus Jadwal"> {{-- btn btn-sm btn-danger --}}
-                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    <button type="submit"
+                                            class="px-3 py-1.5 text-xs font-medium text-white bg-red-600 hover:bg-red-700 rounded shadow">
                                         Hapus
                                     </button>
                                 </form>
@@ -67,7 +79,9 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 italic">Belum ada data jadwal.</td> {{-- text-muted fst-italic --}}
+                        <td colspan="9" class="px-6 py-6 text-center text-sm text-gray-500 italic">
+                            Tidak ada jadwal ditemukan.
+                        </td>
                     </tr>
                 @endforelse
             </tbody>

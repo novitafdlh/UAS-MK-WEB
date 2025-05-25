@@ -2,11 +2,9 @@
 
 @section('content')
 <div class="max-w-lg mx-auto">
-    <h1 class="text-2xl font-bold mb-4">Tambah Akun Mahasiswa Baru</h1>
-
     @if ($errors->any())
-    <div class="mb-4 bg-red-100 text-red-700 p-3 rounded">
-        <ul class="list-disc list-inside">
+    <div class="mb-8 max-w-lg mx-auto p-4 bg-red-100 text-red-700 border border-red-300 rounded-lg shadow">
+        <ul class="list-disc list-inside text-sm">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -14,27 +12,53 @@
     </div>
     @endif
 
-    <form action="{{ route('admin.mahasiswa.akun.store') }}" method="POST" class="bg-white p-6 rounded shadow">
+    <form action="{{ route('admin.mahasiswa.akun.store') }}" method="POST" class="bg-white p-8 rounded-xl shadow-md space-y-6">
         @csrf
 
-        <label class="block mb-2 font-semibold">Nama</label>
-        <input type="text" name="name" value="{{ old('name') }}" required class="w-full border rounded px-3 py-2 mb-4">
+        <h1 class="text-3xl font-bold mb-6 text-center text-red-700">Tambah Akun Mahasiswa Baru</h1>
 
-        <label class="block mb-2 font-semibold">Email</label>
-        <input type="email" name="email" value="{{ old('email') }}" required class="w-full border rounded px-3 py-2 mb-4">
+        <div>
+            <label for="name" class="block mb-2 font-semibold text-gray-700">Nama</label>
+            <input type="text" name="name" id="name" value="{{ old('name') }}" required
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:outline-none">
+        </div>
 
-        <label class="block mb-2 font-semibold">Role</label>
-        <select name="role" class="w-full border rounded px-3 py-2 mb-4" required>
-            <option value="mahasiswa">Mahasiswa</option>
+        <div>
+            <label for="email" class="block mb-2 font-semibold text-gray-700">Email</label>
+            <input type="email" name="email" id="email" value="{{ old('email') }}" required
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:outline-none">
+        </div>
 
-        <label class="block mb-2 font-semibold">Password</label>
-        <input type="password" name="password" required class="w-full border rounded px-3 py-2 mb-4">
+        <div>
+            <label for="role" class="block mb-2 font-semibold text-gray-700">Role</label>
+            <select name="role" id="role" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:outline-none">
+                <option value="mahasiswa" selected>Mahasiswa</option>
+            </select>
+        </div>
 
-        <label class="block mb-2 font-semibold">Konfirmasi Password</label>
-        <input type="password" name="password_confirmation" required class="w-full border rounded px-3 py-2 mb-6">
+        <div>
+            <label for="password" class="block mb-2 font-semibold text-gray-700">Password</label>
+            <input type="password" name="password" id="password" required
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:outline-none">
+        </div>
 
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Simpan</button>
-        <a href="{{ route('admin.mahasiswa.akun.index') }}" class="ml-4 text-gray-600 hover:underline">Batal</a>
+        <div>
+            <label for="password_confirmation" class="block mb-2 font-semibold text-gray-700">Konfirmasi Password</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" required
+                   class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:outline-none">
+        </div>
+
+        <div class="flex items-center justify-between pt-4">
+            <button type="submit"
+                    class="bg-red-700 hover:bg-red-800 text-white font-semibold py-2 px-6 rounded-lg shadow transition duration-200">
+                Simpan
+            </button>
+            <a href="{{ route('admin.mahasiswa.akun.index') }}" 
+               class="text-gray-600 hover:underline font-semibold">
+                Batal
+            </a>
+        </div>
     </form>
 </div>
 @endsection

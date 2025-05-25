@@ -1,11 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="mb-4 text-xl font-semibold">Tambah Mahasiswa</h1>
-
     @if ($errors->any())
-        <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
-            <ul class="list-disc list-inside">
+        <div class="mb-12 max-w-lg mx-auto p-4 bg-red-100 text-red-700 border border-red-300 rounded-lg shadow">
+            <ul class="list-disc list-inside text-sm">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -13,43 +11,57 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.mahasiswa.data.store') }}" method="POST" class="space-y-4">
-        @csrf
+    <div class="max-w-lg mx-auto bg-white p-8 rounded-xl shadow-md">
+        <h1 class="mb-6 text-3xl font-bold text-center text-red-700">Tambah Mahasiswa</h1>
 
-        <div>
-            <label for="nim" class="block font-medium">NIM:</label>
-            <input type="text" name="nim" id="nim" value="{{ old('nim') }}" class="w-full p-2 border rounded">
-        </div>
+        <form action="{{ route('admin.mahasiswa.data.store') }}" method="POST" class="space-y-5">
+            @csrf
 
-        <div>
-            <label for="nama" class="block font-medium">Nama:</label>
-            <input type="text" name="nama" id="nama" value="{{ old('nama') }}" class="w-full p-2 border rounded">
-        </div>
+            <div>
+                <label for="nim" class="block text-sm font-semibold text-gray-700 mb-1">NIM</label>
+                <input type="text" name="nim" id="nim" value="{{ old('nim') }}" 
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:outline-none">
+            </div>
 
-        <div>
-            <label for="email" class="block font-medium">Email:</label>
-            <input type="email" name="email" id="email" value="{{ old('email') }}" class="w-full p-2 border rounded">
-        </div>
+            <div>
+                <label for="nama" class="block text-sm font-semibold text-gray-700 mb-1">Nama</label>
+                <input type="text" name="nama" id="nama" value="{{ old('nama') }}" 
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:outline-none">
+            </div>
 
-        <div>
-            <label for="jurusan" class="block font-medium">Jurusan:</label>
-            <select name="jurusan_id" id="jurusan" class="w-full p-2 border rounded">
-                <option value="">-- Pilih Jurusan --</option>
-                @foreach($jurusans as $jurusan)
-                    <option value="{{ $jurusan->id }}">{{ $jurusan->nama }}</option>
-                @endforeach
-            </select>
-        </div>
+            <div>
+                <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+                <input type="email" name="email" id="email" value="{{ old('email') }}" 
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:outline-none">
+            </div>
 
-        <div>
-            <label for="prodi" class="block font-medium">Program Studi:</label>
-            <select name="prodi_id" id="prodi" class="w-full p-2 border rounded" disabled>
-                <option value="">-- Pilih Prodi --</option>
-            </select>
-        </div>
+            <div>
+                <label for="jurusan" class="block text-sm font-semibold text-gray-700 mb-1">Jurusan</label>
+                <select name="jurusan_id" id="jurusan" 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    <option value="">-- Pilih Jurusan --</option>
+                    @foreach($jurusans as $jurusan)
+                        <option value="{{ $jurusan->id }}">{{ $jurusan->nama }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Simpan</button>
-    </form>
+            <div>
+                <label for="prodi" class="block text-sm font-semibold text-gray-700 mb-1">Program Studi</label>
+                <select name="prodi_id" id="prodi" disabled 
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:outline-none">
+                    <option value="">-- Pilih Prodi --</option>
+                </select>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit"
+                        class="w-full bg-red-700 hover:bg-red-800 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 shadow">
+                    Simpan
+                </button>
+            </div>
+        </form>
+    </div>
 
     <script>
         const jurusanSelect = document.getElementById('jurusan');
