@@ -12,7 +12,7 @@
         <select name="prodi_id" id="prodi_id" class="border p-2 rounded w-full" onchange="this.form.submit()">
             <option value="">-- Pilih Prodi --</option>
             @foreach($prodis as $prodi)
-                <option value="{{ $prodi->id }}" {{ $selectedProdiId == $prodi->id ? 'selected' : '' }}>
+                <option value="{{ $prodi->id }}" {{ ($selectedProdiId == $prodi->id) ? 'selected' : '' }}>
                     {{ $prodi->nama }}
                 </option>
             @endforeach
@@ -26,7 +26,7 @@
         <select name="mata_kuliah_id" id="mata_kuliah_id" class="border p-2 rounded w-full" onchange="this.form.submit()">
             <option value="">-- Pilih Mata Kuliah --</option>
             @foreach($mataKuliahs as $mk)
-                <option value="{{ $mk->id }}" {{ $selectedMataKuliahId == $mk->id ? 'selected' : '' }}>
+                <option value="{{ $mk->id }}" {{ ($selectedMataKuliahId == $mk->id) ? 'selected' : '' }}>
                     {{ $mk->nama }}
                 </option>
             @endforeach
@@ -41,8 +41,7 @@
         <select name="mahasiswa_id" id="mahasiswa_id" class="border p-2 rounded w-full" onchange="this.form.submit()">
             <option value="">-- Pilih Mahasiswa --</option>
             @foreach($mahasiswas as $mhs)
-                <option value="{{ $mhs->id }}"
-                    {{ $selectedMahasiswaId == $mhs->id ? 'selected' : '' }}>
+                <option value="{{ $mhs->id }}" {{ ($selectedMahasiswaId == $mhs->id) ? 'selected' : '' }}>
                     {{ $mhs->nama }}
                 </option>
             @endforeach
@@ -56,18 +55,19 @@
 <form method="POST" action="{{ route('dosen.nilai.store') }}" class="space-y-4 max-w-md">
     @csrf
     <input type="hidden" name="mata_kuliah_id" value="{{ $selectedMataKuliahId }}">
-    <input type="hidden" name="mahasiswa_id" value="{{ $selectedMahasiswaId }}"> {{-- Ini user_id dari tabel users --}}
+    <input type="hidden" name="mahasiswa_id" value="{{ $selectedMahasiswaId }}">
 
     <div>
         <label class="block font-medium mb-1">Nilai untuk:</label>
         <div class="mb-2">
             @php
                 $selectedMhs = $mahasiswas->firstWhere('id', $selectedMahasiswaId);
+                $selectedMk = $mataKuliahs->firstWhere('id', $selectedMataKuliahId);
             @endphp
             <strong>Mahasiswa:</strong> {{ $selectedMhs->nama ?? '-' }}
         </div>
         <div>
-            <strong>Mata Kuliah:</strong> {{ $mataKuliahs->firstWhere('id', $selectedMataKuliahId)->nama ?? '-' }}
+            <strong>Mata Kuliah:</strong> {{ $selectedMk->nama ?? '-' }}
         </div>
     </div>
 

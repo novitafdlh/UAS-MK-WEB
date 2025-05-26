@@ -12,6 +12,7 @@ use App\Models\MataKuliah;
 
 class NilaiController extends Controller
 {
+    // Halaman daftar nilai (index)
     public function index()
     {
         $prodis = Prodi::all();
@@ -27,6 +28,7 @@ class NilaiController extends Controller
         return view('dosen.nilai.index', compact('prodis', 'nilaiList'));
     }
 
+    // Form input nilai
     public function create(Request $request)
     {
         $prodis = Prodi::all();
@@ -40,13 +42,14 @@ class NilaiController extends Controller
             ? MataKuliah::where('prodi_id', $selectedProdiId)->get()
             : collect();
 
-        // Ambil mahasiswa yang mengambil mata kuliah tersebut (via KRS)
+        // Ambil mahasiswa yang mengambil mata kuliah tersebut via KRS
         $mahasiswas = collect();
         if ($selectedMataKuliahId) {
-            $krsEntries = KRS::where('mata_kuliah_id', $selectedMataKuliahId)->get();
+            // Ambil semua mahasiswa_id dari tabel KRS untuk mata kuliah ini
+            $mahasiswaIdsInKRS = KRS::where('mata_kuliah_id', $selectedMataKuliahId)
+                ->pluck('mahasiswa_id')->unique();
 
-            $mahasiswaIdsInKRS = $krsEntries->pluck('mahasiswa_id')->unique()->toArray();
-
+            // Ambil data mahasiswa berdasarkan daftar id tersebut
             $mahasiswas = Mahasiswa::whereIn('id', $mahasiswaIdsInKRS)->get();
         }
 
@@ -60,21 +63,23 @@ class NilaiController extends Controller
         ));
     }
 
+    // Simpan nilai ke database
     public function store(Request $request)
     {
         $request->validate([
-            'mahasiswa_id' => 'required|exists:mahasiswas,id', // validasi berdasarkan id mahasiswa
+            'mahasiswa_id' => 'required|exists:mahasiswas,id', // validasi id mahasiswa
             'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
             'nilai' => 'required|string|max:2',
         ]);
 
-        // Ambil mahasiswa berdasarkan id mahasiswa langsung
+        // Cari mahasiswa sesuai id mahasiswa yang dipilih
         $mahasiswaActual = Mahasiswa::find($request->mahasiswa_id);
 
         if (!$mahasiswaActual) {
             return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan.');
         }
 
+        // Simpan atau update nilai
         Nilai::updateOrCreate(
             [
                 'mahasiswa_id' => $mahasiswaActual->id,
@@ -85,6 +90,6 @@ class NilaiController extends Controller
             ]
         );
 
-        return redirect()->route('nilai.index')->with('success', 'Nilai berhasil disimpan.');
+        return redirect()->route('dosen.nilai.index')->with('success', 'Nilai berhasil disimpan.');
     }
 }
