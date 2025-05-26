@@ -42,7 +42,7 @@
             <option value="">-- Pilih Mahasiswa --</option>
             @foreach($mahasiswas as $mhs)
                 <option value="{{ $mhs->id }}" {{ ($selectedMahasiswaId == $mhs->id) ? 'selected' : '' }}>
-                    {{ $mhs->nama }}
+                    {{ $mhs->nama }} ({{ $mhs->nim }})
                 </option>
             @endforeach
         </select>

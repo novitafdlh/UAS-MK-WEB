@@ -12,7 +12,6 @@ use App\Models\MataKuliah;
 
 class NilaiController extends Controller
 {
-    // Halaman daftar nilai (index)
     public function index()
     {
         $prodis = Prodi::all();
@@ -28,7 +27,6 @@ class NilaiController extends Controller
         return view('dosen.nilai.index', compact('prodis', 'nilaiList'));
     }
 
-    // Form input nilai
     public function create(Request $request)
     {
         $prodis = Prodi::all();
@@ -45,7 +43,6 @@ class NilaiController extends Controller
         // Ambil mahasiswa yang mengambil mata kuliah tersebut via KRS
         $mahasiswas = collect();
         if ($selectedMataKuliahId) {
-            // Ambil semua mahasiswa_id dari tabel KRS untuk mata kuliah ini
             $mahasiswaIdsInKRS = KRS::where('mata_kuliah_id', $selectedMataKuliahId)
                 ->pluck('mahasiswa_id')->unique();
 
@@ -68,7 +65,7 @@ class NilaiController extends Controller
     {
         $request->validate([
             'mahasiswa_id' => 'required|exists:mahasiswas,id', // validasi id mahasiswa
-            'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
+            'mata_kuliah_id' => 'required|exists:matakuliahs,id',
             'nilai' => 'required|string|max:2',
         ]);
 

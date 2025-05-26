@@ -17,6 +17,18 @@
         </div>
     @endif
 
+    <!-- FILTER PRODI SELALU TAMPIL -->
+    <form method="GET" action="{{ route('dosen.nilai.index') }}" class="mb-4">
+        <select name="prodi_id" onchange="this.form.submit()" class="border px-2 py-1 rounded">
+            <option value="">-- Pilih Prodi --</option>
+            @foreach($prodis as $prodi)
+                <option value="{{ $prodi->id }}" {{ request('prodi_id') == $prodi->id ? 'selected' : '' }}>
+                    {{ $prodi->nama }}
+                </option>
+            @endforeach
+        </select>
+    </form>
+
     @if(count($nilaiList) > 0)
         <div class="overflow-x-auto">
             <table class="min-w-full border border-gray-300 rounded-md shadow-sm">
@@ -30,7 +42,7 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($nilaiList as $item)
                         <tr class="hover:bg-teal-50 transition">
-                            <td class="px-6 py-4 border-r border-gray-300">{{ $item->mahasiswa->name }}</td>
+                            <td class="px-6 py-4 border-r border-gray-300">{{ $item->mahasiswa->nama }}</td>
                             <td class="px-6 py-4 border-r border-gray-300">{{ $item->mataKuliah->nama }}</td>
                             <td class="px-6 py-4">{{ $item->nilai ?? '-' }}</td>
                         </tr>

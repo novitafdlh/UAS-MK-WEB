@@ -10,40 +10,25 @@ use Illuminate\Support\Facades\Auth;
 
 class AkunController extends Controller
 {
-    // Tampilkan semua akun mahasiswa (untuk dosen memilih mahasiswa)
+    // Tampilkan semua akun mahasiswa
     public function index()
     {
-        $akuns = Akun::with('user')->get();
-        return view('mahasiswa.akun.index', compact('akuns'));
+        $userId = Auth::id();
+
+        // Cari data mahasiswa berdasarkan user_id login
+        $mahasiswas = Mahasiswa::where('user_id', $userId)->first();
+
+        // Kalau mahasiswa ditemukan, ambil akun yang sesuai dengan mahasiswa tersebut
+        if ($mahasiswas) {
+            $akun = Akun::where('user_id', $userId)->with('user')->get();
+        } else {
+            // Jika mahasiswa tidak ada, tampilkan koleksi kosong
+            $akun = collect();
     }
 
-    // Tampilkan form tambah akun
-    public function create()
-    {
-        return view('mahasiswa.akun.create');
+    return view('mahasiswa.akun.index', compact('akun'));
     }
 
-    // Simpan akun baru, otomatis simpan user_id mahasiswa yang login
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'nim' => 'required|unique:akuns,nim',
-            'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:akuns,email',
-            'prodi_id' => 'required|exists:prodis,id',
-            'jurusan_id' => 'required|exists:jurusans,id',
-        ]);
-
-        $validatedData['user_id'] = Auth::id();
-
-        // Simpan ke tabel akuns
-        $akun = Akun::create($validatedData);
-
-        // Simpan ke tabel mahasiswas (untuk admin)
-        Mahasiswa::create($validatedData);
-
-        return redirect()->route('mahasiswa.akun.index')->with('success', 'Akun berhasil dibuat.');
-    }
 
     // Tampilkan detail akun
     public function show($id)
@@ -81,9 +66,9 @@ class AkunController extends Controller
         ]);
 
         // Update juga data mahasiswa (jika ada)
-        $mahasiswa = Mahasiswa::where('user_id', $akun->user_id)->first();
-        if ($mahasiswa) {
-            $mahasiswa->update([
+        $mahasiswas = Mahasiswa::where('user_id', $akun->user_id)->first();
+        if ($mahasiswas) {
+            $mahasiswas->update([
                 'nim' => $request->nim,
                 'nama' => $request->nama,
                 'email' => $request->email,
@@ -101,9 +86,9 @@ class AkunController extends Controller
         $akun = Akun::findOrFail($id);
 
         // Hapus juga data mahasiswa (jika ada)
-        $mahasiswa = Mahasiswa::where('user_id', $akun->user_id)->first();
-        if ($mahasiswa) {
-            $mahasiswa->delete();
+        $mahasiswas = Mahasiswa::where('user_id', $akun->user_id)->first();
+        if ($mahasiswas) {
+            $mahasiswas->delete();
         }
 
         $akun->delete();
