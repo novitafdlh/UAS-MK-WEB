@@ -1,33 +1,44 @@
 @extends('layouts.dosen')
 
-@section('title', 'Nilai Mahasiswa')
-
 @section('content')
-    <div class="mb-6 flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-800">Daftar Nilai Mahasiswa</h1>
-        <a href="{{ route('dosen.nilai.create') }}" 
-           class="bg-teal-600 hover:bg-teal-700 transition text-white px-5 py-2 rounded shadow">
-           + Input Nilai
-        </a>
+<main class="flex-1 p-4 md:p-6 bg-gradient-to-br from-rose-50 to-red-50 min-h-screen">
+    {{-- Header Section --}}
+    <div class="mb-8">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text text-transparent mb-2">
+                    Daftar Nilai Mahasiswa
+                </h1>
+                <p class="text-gray-600">Kelola dan pantau nilai mahasiswa</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="{{ route('dosen.nilai.create') }}" 
+                   class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-rose-500 to-red-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-rose-600 hover:to-red-600 transform hover:-translate-y-0.5 transition-all duration-200">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Input Nilai
+                </a>
+            </div>
+        </div>
+        <div class="w-24 h-1 bg-gradient-to-r from-rose-400 to-red-500 rounded-full mt-4"></div>
     </div>
 
+    {{-- Success Alert --}}
     @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 p-3 rounded mb-6">
-            {{ session('success') }}
+        <div class="mb-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl shadow-sm">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-green-800 font-medium">{{ session('success') }}</p>
+                </div>
+            </div>
         </div>
     @endif
-
-    <!-- FILTER PRODI SELALU TAMPIL -->
-    <form method="GET" action="{{ route('dosen.nilai.index') }}" class="mb-4">
-        <select name="prodi_id" onchange="this.form.submit()" class="border px-2 py-1 rounded">
-            <option value="">-- Pilih Prodi --</option>
-            @foreach($prodis as $prodi)
-                <option value="{{ $prodi->id }}" {{ request('prodi_id') == $prodi->id ? 'selected' : '' }}>
-                    {{ $prodi->nama }}
-                </option>
-            @endforeach
-        </select>
-    </form>
 
     @if(count($nilaiList) > 0)
         <div class="overflow-x-auto">
@@ -42,15 +53,46 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($nilaiList as $item)
                         <tr class="hover:bg-teal-50 transition">
-                            <td class="px-6 py-4 border-r border-gray-300">{{ $item->mahasiswa->nama }}</td>
+                            <td class="px-6 py-4 border-r border-gray-300">{{ $item->mahasiswa->name }}</td>
                             <td class="px-6 py-4 border-r border-gray-300">{{ $item->mataKuliah->nama }}</td>
                             <td class="px-6 py-4">{{ $item->nilai ?? '-' }}</td>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    @else
-        <p class="text-center text-gray-500 italic mt-10">Belum ada data nilai yang diinput.</p>
-    @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            {{-- Footer Info --}}
+            <div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-600">
+                        Menampilkan <span class="font-medium">{{ count($nilaiList) }}</span> data nilai
+                    </div>
+                    <div class="text-sm text-gray-500">
+                        Total {{ count($nilaiList) }} nilai telah diinput
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="text-center py-16">
+                <div class="mx-auto w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mb-4">
+                    <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Belum Ada Data Nilai</h3>
+                <p class="text-gray-500 mb-6 max-w-md mx-auto">
+                    Belum ada nilai yang diinput. Mulai dengan menambahkan nilai mahasiswa pertama.
+                </p>
+                <a href="{{ route('dosen.nilai.create') }}" 
+                   class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-rose-500 to-red-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-rose-600 hover:to-red-600 transform hover:-translate-y-0.5 transition-all duration-200">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Input Nilai Pertama
+                </a>
+            </div>
+        @endif
+    </div>
+</main>
 @endsection
