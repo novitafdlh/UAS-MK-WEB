@@ -45,7 +45,7 @@ class KRSController extends Controller
     {
         $request->validate([
             'prodi_id' => 'required|exists:prodis,id',
-            'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
+            'mata_kuliah_id' => 'required|exists:matakuliahs,id',
         ]);
 
         KRS::create([

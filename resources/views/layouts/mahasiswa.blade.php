@@ -22,9 +22,6 @@
                     <a href="{{ route('mahasiswa.krs.index') }}" class="block px-3 py-2 rounded hover:bg-teal-100 {{ request()->routeIs('mahasiswa.krs.*') ? 'bg-teal-200' : '' }}">
                         📚 KRS
                     </a>
-                    <a href="{{ route('mahasiswa.profil.index') }}" class="block px-3 py-2 rounded hover:bg-teal-100 {{ request()->routeIs('mahasiswa.profil.*') ? 'bg-teal-200' : '' }}">
-                        👤 Profil
-                    </a>
                 </nav>
             </div>
 

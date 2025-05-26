@@ -29,6 +29,7 @@ class MahasiswaController extends Controller
             'nim' => 'required|unique:mahasiswas,nim',
             'nama' => 'required|string|max:255',
             'email' => 'required|email|unique:mahasiswas,email',
+            'user_id' => 'nullable|exists:users,id',
             'prodi_id' => 'required|exists:prodis,id',
             'jurusan_id' => 'required|exists:jurusans,id',
         ]);

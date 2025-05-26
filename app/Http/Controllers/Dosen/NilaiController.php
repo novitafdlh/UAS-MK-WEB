@@ -9,6 +9,7 @@ use App\Models\Mahasiswa;
 use App\Models\Prodi;
 use App\Models\KRS;
 use App\Models\MataKuliah;
+use App\Models\User;
 
 class NilaiController extends Controller
 {
@@ -41,11 +42,18 @@ class NilaiController extends Controller
             : collect();
 
         // Ambil mahasiswa yang mengambil mata kuliah tersebut (via KRS)
-        $mahasiswas = $selectedMataKuliahId
-            ? Mahasiswa::whereHas('krs', function ($query) use ($selectedMataKuliahId) {
-                $query->where('mata_kuliah_id', $selectedMataKuliahId);
-            })->get()
-            : collect();
+        $mahasiswas = collect();
+        if ($selectedMataKuliahId) {
+            // Ambil semua entri KRS untuk mata kuliah yang dipilih
+            $krsEntries = KRS::where('mata_kuliah_id', $selectedMataKuliahId)->get();
+
+            // Dapatkan user_id dari entri KRS tersebut
+            $userIdsInKRS = $krsEntries->pluck('mahasiswa_id')->unique()->toArray();
+
+            // Dapatkan data Mahasiswa yang user_id-nya ada di daftar user_id KRS
+            // Asumsi model Mahasiswa memiliki kolom 'user_id' yang terhubung ke tabel users
+            $mahasiswas = Mahasiswa::whereIn('user_id', $userIdsInKRS)->get();
+        }
 
         return view('dosen.nilai.create', compact(
             'prodis',
@@ -60,14 +68,20 @@ class NilaiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'mahasiswa_id' => 'required|exists:mahasiswas,id',
+            'mahasiswa_id' => 'required|exists:users,id',
             'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
             'nilai' => 'required|string|max:2', // misal nilai huruf A, B, C, dst
         ]);
 
+        $mahasiswaActual = Mahasiswa::where('user_id', $request->mahasiswa_id)->first();
+
+        if (!$mahasiswaActual) {
+            return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan untuk user ini.');
+        }
+
         Nilai::updateOrCreate(
             [
-                'mahasiswa_id' => $request->mahasiswa_id,
+                'mahasiswa_id' => $mahasiswaActual->id,
                 'mata_kuliah_id' => $request->mata_kuliah_id,
             ],
             [

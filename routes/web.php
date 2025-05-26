@@ -134,13 +134,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/mahasiswa/krs/{krs}/edit', [KRSController::class, 'edit'])->name('mahasiswa.krs.edit');
         Route::put('/mahasiswa/krs/{krs}', [KRSController::class, 'update'])->name('mahasiswa.krs.update');
         Route::delete('/mahasiswa/krs/{krs}', [KRSController::class, 'destroy'])->name('mahasiswa.krs.destroy');
-
-        Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
-    Route::get('profil', [ProfilController::class, 'index'])->name('profil.index');
-    Route::get('profil/edit', [ProfilController::class, 'edit'])->name('profil.edit');
-    Route::post('profil/update', [ProfilController::class, 'update'])->name('profil.update');
-});
-
     });
 });
 
