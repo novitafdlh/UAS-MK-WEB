@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<main class="flex-1 p-4 md:p-6 bg-gradient-to-br from-rose-50 to-red-50 min-h-screen">
+<main class="flex-1 p-4 md:p-6 bg-gradient-to-br from-white to-white min-h-screen">
     {{-- Header Section --}}
     <div class="mb-8">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -9,7 +9,7 @@
                 <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text">
                     Tambah Mahasiswa
                 </h1>
-                <p class="text-red-600">Tambahkan data mahasiswa baru ke sistem</p>
+                <p class="text-black-600">Tambahkan data mahasiswa baru ke sistem</p>
             </div>
             <div class="flex items-center gap-3">
                 <a href="{{ route('admin.mahasiswa.data.index') }}" 
@@ -47,10 +47,10 @@
 
     {{-- Form Section --}}
     <div class="bg-white max-w-4xl mx-auto">
-        <div class="bg-red-300 rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-rose-50 to-red-50">
-                <h3 class="text-lg font-semibold text-red-800 flex items-center gap-2">
-                    <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h3 class="text-lg font-semibold text-black flex items-center gap-2">
+                    <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                     </svg>
                     Informasi Mahasiswa
@@ -63,9 +63,9 @@
 
                     {{-- NIM Field --}}
                     <div>
-                        <label for="nim" class="block text-sm font-semibold text-gray-700 mb-3">
+                        <label for="nim" class="block text-sm font-semibold text-black mb-3">
                             <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                                 </svg>
                                 Nomor Induk Mahasiswa (NIM)
@@ -96,9 +96,9 @@
 
                     {{-- Nama Field --}}
                     <div>
-                        <label for="nama" class="block text-sm font-semibold text-gray-700 mb-3">
+                        <label for="nama" class="block text-sm font-semibold text-black mb-3">
                             <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
                                 Nama Lengkap
@@ -129,9 +129,9 @@
 
                     {{-- Email Field --}}
                     <div>
-                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-3">
+                        <label for="email" class="block text-sm font-semibold text-black mb-3">
                             <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                 </svg>
                                 Alamat Email
@@ -162,9 +162,9 @@
 
                     {{-- Jurusan Field --}}
                     <div>
-                        <label for="jurusan" class="block text-sm font-semibold text-gray-700 mb-3">
+                        <label for="jurusan" class="block text-sm font-semibold text-black mb-3">
                             <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
                                 Jurusan
@@ -202,9 +202,9 @@
 
                     {{-- Prodi Field --}}
                     <div>
-                        <label for="prodi" class="block text-sm font-semibold text-gray-700 mb-3">
+                        <label for="prodi" class="block text-sm font-semibold text-black mb-3">
                             <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                                 </svg>
                                 Program Studi
@@ -239,14 +239,14 @@
                     {{-- Action Buttons --}}
                     <div class="flex justify-between items-center pt-6 border-t border-gray-100">
                         <a href="{{ route('admin.mahasiswa.data.index') }}" 
-                           class="inline-flex items-center px-4 py-2 text-gray-600 hover:text-gray-800 font-medium transition-colors duration-200">
+                           class="inline-flex items-center px-4 py-2 text-black hover:text-black font-medium transition-colors duration-200">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                             </svg>
                             Batal
                         </a>
                         <button type="submit" 
-                                class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-red-300 hover:to-red-600 transform hover:-translate-y-0.5 transition-all duration-200">
+                                class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-red-600 hover:to-red-600 transform hover:-translate-y-0.5 transition-all duration-200">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>

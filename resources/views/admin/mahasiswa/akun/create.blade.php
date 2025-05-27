@@ -47,7 +47,7 @@
 
     {{-- Form Section --}}
     <div class="max-w-4xl mx-auto">
-        <div class="bg-red-100 rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-rose-50 to-red-50">
                 <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
                     <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

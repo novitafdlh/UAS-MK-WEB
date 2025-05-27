@@ -3,7 +3,7 @@
 @section('title', 'Daftar Jadwal')
 
 @section('content')
-<main class="flex-1 p-4 md:p-6 bg-gradient-to-br from-rose-50 to-red-50 min-h-screen">
+<main class="flex-1 p-4 md:p-6 bg-gradient-to-br-white min-h-screen">
     {{-- Header --}}
     <header class="bg-white rounded-2xl shadow-sm border border-rose-100 p-6 mb-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -14,7 +14,7 @@
                          class="w-14 h-14 object-contain rounded-xl shadow-md ring-2 ring-rose-100" />
                 </div>
                 <div>
-                    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text text-transparent">
+                    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text">
                         Daftar Jadwal Kuliah
                     </h1>
                     <p class="text-sm text-rose-500 font-medium">Kelola jadwal perkuliahan</p>
@@ -22,7 +22,7 @@
             </div>
             <div class="flex items-center gap-3">
                 <a href="{{ route('admin.jadwal.create') }}" 
-                   class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-rose-500 to-red-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-rose-600 hover:to-red-600 transform hover:-translate-y-0.5 transition-all duration-200">
+                   class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-300 to-red-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-red-600 hover:to-red-300 transform hover:-translate-y-0.5 transition-all duration-200">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -34,10 +34,10 @@
 
     {{-- Page Title --}}
     <div class="text-center mb-8">
-        <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text text-transparent mb-2">
+        <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text text-black">
             Manajemen Jadwal Kuliah
         </h2>
-        <div class="w-24 h-1 bg-gradient-to-r from-rose-400 to-red-500 mx-auto rounded-full"></div>
+        <div class="w-24 h-1 bg-gradient-to-r from-red-300 to-red-500 mx-auto rounded-full"></div>
     </div>
 
     {{-- Success Alert --}}
@@ -64,7 +64,7 @@
     {{-- Stats Cards --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <div class="group relative bg-white rounded-2xl shadow-sm border border-rose-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-            <div class="absolute top-4 right-4 w-12 h-12 bg-gradient-to-br from-rose-400 to-rose-500 rounded-xl flex items-center justify-center shadow-lg">
+            <div class="absolute top-4 right-4 w-12 h-12 bg-gradient-to-br from-red-600 to-rose-300 rounded-xl flex items-center justify-center shadow-lg">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
@@ -78,7 +78,7 @@
     {{-- Tabel Jadwal --}}
     <div class="bg-white rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
         {{-- Header Section --}}
-        <div class="bg-gradient-to-r from-rose-500 to-red-500 p-6 text-white">
+        <div class="bg-gradient-to-r from-rose-500 to-red-500 p-6 text-black">
             <h2 class="text-2xl md:text-3xl font-bold text-center flex items-center justify-center gap-3">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -154,7 +154,7 @@
                             <td class="px-4 py-4 text-center">
                                 <div class="flex items-center justify-center space-x-2">
                                     <a href="{{ route('admin.jadwal.edit', $jadwal->id) }}"
-                                       class="inline-flex items-center px-3 py-2 bg-gradient-to-r from-amber-400 to-orange-400 text-white text-xs font-medium rounded-lg hover:from-amber-500 hover:to-orange-500 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
+                                       class="inline-flex items-center px-3 py-2 bg-gradient-to-r from-red-600 to-red-600 text-white text-xs font-medium rounded-lg hover:from-amber-500 hover:to-orange-500 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                         </svg>
@@ -165,7 +165,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                                class="inline-flex items-center px-3 py-2 bg-gradient-to-r from-red-500 to-rose-500 text-white text-xs font-medium rounded-lg hover:from-red-600 hover:to-rose-600 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
+                                                class="inline-flex items-center px-3 py-2 bg-gradient-to-r from-red-600 to-red-600 text-white text-xs font-medium rounded-lg hover:from-red-600 hover:to-rose-600 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
                                             <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                             </svg>

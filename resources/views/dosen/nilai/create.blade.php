@@ -28,9 +28,9 @@
     <div class="max-w-4xl mx-auto space-y-8">
         {{-- Step 1: Filter Form --}}
         <div class="bg-white rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-rose-50 to-red-50">
+            <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-red-400 to-red-50">
                 <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
-                    <div class="w-8 h-8 bg-gradient-to-br from-rose-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                    <div class="w-8 h-8 bg-gradient-to-br from-red-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
                         1
                     </div>
                     Pilih Data untuk Input Nilai

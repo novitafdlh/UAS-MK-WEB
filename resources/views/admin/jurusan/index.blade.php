@@ -3,7 +3,7 @@
 @section('title', 'Data Jurusan')
 
 @section('content')
-<main class="flex-1 p-4 md:p-6 bg-gradient-to-br from-red-200 to-red-300 min-h-screen">
+<main class="flex-1 p-4 md:p-6 bg-gradient-to-br-white min-h-screen">
     {{-- Header --}}
     <header class="bg-white rounded-2xl shadow-sm border border-rose-100 p-6 mb-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">

@@ -1,78 +1,73 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="max-w-6xl mx-auto px-4 py-6">
-    {{-- Background logo Untad besar pudar --}}
-    <div class="absolute inset-0 flex justify-center items-center pointer-events-none z-0">
-        <img src="{{ asset('img/untad-new.jpeg') }}" alt="Logo Untad"
-            class="opacity-10 max-w-sm sm:max-w-lg lg:max-w-xl absolute top-1/2 left-1/2"
-            style="user-select: none; transform: translate(-25%, -48%);" />
-    </div>
-    
-    {{-- Judul Halaman --}}
-    <div class="flex items-center justify-between mb-6">
-        <h1 class="text-3xl font-bold text-gray-900">Data Dosen</h1>
+<div class="max-w-7xl mx-auto px-6 py-8">
+    {{-- Judul & Tombol --}}
+    <div class="flex items-center justify-between mb-8">
+        <h1 class="text-3xl font-bold text-rose-1500">📋 Data Dosen</h1>
         <a href="{{ route('admin.dosen.data.create') }}"
-           class="px-5 py-2 bg-red-700 text-white font-medium rounded-lg hover:bg-red-800 shadow transition duration-150">
+           class="inline-flex items-center bg-red-600 hover:bg-red-600 text-white font-medium px-5 py-2 rounded-lg shadow transition duration-200">
             + Tambah Dosen
         </a>
     </div>
 
-    @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-5 shadow relative">
-            <strong class="font-bold">Sukses!</strong>
-            <span class="block sm:inline">{{ session('success') }}</span>
-            <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.remove();">
-                <svg class="fill-current h-6 w-6 text-green-500" viewBox="0 0 20 20"><path
-                    d="M14.348 14.849a1.2 1.2 0 01-1.697 0L10 11.819l-2.651 3.03a1.2 1.2 0 01-1.697-1.698l2.758-3.15-2.758-3.15A1.2 1.2 0 017.349 5.12L10 8.183l2.651-3.063a1.2 1.2 0 111.697 1.697l-2.758 3.15 2.758 3.15a1.2 1.2 0 010 1.698z"/></svg>
-            </button>
+    {{-- Alert Sukses --}}
+    @if (session('success'))
+        <div class="mb-6 bg-green-100 border border-green-300 text-green-800 px-5 py-4 rounded-lg shadow relative">
+            <div class="flex justify-between items-center">
+                <div>
+                    <strong class="font-semibold">Sukses!</strong>
+                    <span class="ml-2">{{ session('success') }}</span>
+                </div>
+                <button onclick="this.parentElement.parentElement.remove();" class="text-green-600 hover:text-green-800">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414
+                              1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293
+                              4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
         </div>
     @endif
 
-    <div class="overflow-x-auto bg-white rounded-xl shadow">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-red-100 text-red-900">
+    {{-- Tabel Dosen --}}
+    <div class="overflow-x-auto rounded-xl shadow-lg bg-white border border-gray-200">
+        <table class="min-w-full text-sm text-black">
+            <thead class="bg-red-600 text-rose-900 uppercase text-xs">
                 <tr>
-                    <th class="px-5 py-3 text-left text-xs font-semibold uppercase">NIDN</th>
-                    <th class="px-5 py-3 text-left text-xs font-semibold uppercase">Nama</th>
-                    <th class="px-5 py-3 text-left text-xs font-semibold uppercase">Email</th>
-                    <th class="px-5 py-3 text-left text-xs font-semibold uppercase">Jurusan</th>
-                    <th class="px-5 py-3 text-left text-xs font-semibold uppercase">Prodi</th>
-                    <th class="px-5 py-3 text-center text-xs font-semibold uppercase">Aksi</th>
+                    <th class="px-6 py-4 text-left">NIDN</th>
+                    <th class="px-6 py-4 text-left">Nama</th>
+                    <th class="px-6 py-4 text-left">Email</th>
+                    <th class="px-6 py-4 text-left">Jurusan</th>
+                    <th class="px-6 py-4 text-left">Prodi</th>
+                    <th class="px-6 py-4 text-center">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-100">
-                @forelse($dosens as $dosen)
-                <tr class="hover:bg-red-50 transition">
-                    <td class="px-5 py-3 text-sm text-gray-800">{{ $dosen->nidn }}</td>
-                    <td class="px-5 py-3 text-sm text-gray-800">{{ $dosen->nama }}</td>
-                    <td class="px-5 py-3 text-sm text-gray-800">{{ $dosen->email }}</td>
-                    <td class="px-5 py-3 text-sm text-gray-800">{{ $dosen->prodi->jurusan->nama ?? '-' }}</td>
-                    <td class="px-5 py-3 text-sm text-gray-800">{{ $dosen->prodi->nama ?? '-' }}</td>
-                    <td class="px-5 py-3 text-sm text-center">
-                        <div class="flex items-center justify-center gap-2">
+            <tbody class="divide-y divide-gray-100">
+                @forelse ($dosens as $dosen)
+                <tr class="hover:bg-rose-50 transition duration-150">
+                    <td class="px-6 py-4">{{ $dosen->nidn }}</td>
+                    <td class="px-6 py-4">{{ $dosen->nama }}</td>
+                    <td class="px-6 py-4">{{ $dosen->email }}</td>
+                    <td class="px-6 py-4">{{ $dosen->prodi->jurusan->nama ?? '-' }}</td>
+                    <td class="px-6 py-4">{{ $dosen->prodi->nama ?? '-' }}</td>
+                    <td class="px-6 py-4">
+                        <div class="flex justify-center space-x-2">
+                            {{-- Edit --}}
                             <a href="{{ route('admin.dosen.data.edit', $dosen->id) }}"
-                               class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-yellow-500 hover:bg-yellow-600 rounded shadow">
-                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414
-                                          a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                </svg>
-                                Edit
+                               class="inline-block bg-red-500 hover:bg-red-500 text-white px-3 py-1.5 rounded text-xs font-medium shadow">
+                                ✏️ Edit
                             </a>
-
+                            {{-- Hapus --}}
                             <form action="{{ route('admin.dosen.data.destroy', $dosen->id) }}" method="POST"
                                   onsubmit="return confirm('Yakin ingin menghapus data ini?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                        class="inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-red-600 hover:bg-red-700 rounded shadow">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7
-                                              m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                    Hapus
+                                        class="inline-block bg-red-500 hover:bg-red-500 text-white px-3 py-1.5 rounded text-xs font-medium shadow">
+                                    🗑️ Hapus
                                 </button>
                             </form>
                         </div>
@@ -80,7 +75,9 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="px-5 py-6 text-center text-gray-500 italic">😕 Belum ada data dosen.</td>
+                    <td colspan="6" class="text-center text-gray-500 italic px-6 py-6">
+                        Belum ada data dosen.
+                    </td>
                 </tr>
                 @endforelse
             </tbody>

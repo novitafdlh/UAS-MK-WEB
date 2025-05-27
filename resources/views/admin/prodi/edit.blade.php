@@ -1,8 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="max-w-lg mx-auto mt-6 bg-white p-8 rounded-xl shadow-md">
-    <h1 class="text-3xl font-bold mb-6 text-center text-red-700">Edit Program Studi</h1>
+
+
+<div class="max-w-lg mx-auto mt-6 bg-red-300 p-8 rounded-xl shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-center text-black">Edit Program Studi</h1>
 
     <form action="{{ route('admin.prodi.update', $prodi->id) }}" method="POST" class="space-y-6">
         @csrf

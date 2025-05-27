@@ -5,7 +5,7 @@
 @section('content')
 <main class="flex-1 p-4 md:p-6 bg-gradient-to-br from-rose-50 to-red-50 min-h-screen">
     {{-- Header --}}
-    <header class="bg-white rounded-2xl shadow-sm border border-rose-100 p-6 mb-8">
+    <header class="bg-red-200 rounded-2xl shadow-sm border border-rose-100 p-6 mb-8">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center space-x-4">
                 <div class="relative">
@@ -48,7 +48,7 @@
                 </svg>
             </div>
             <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Mahasiswa</h3>
-            <p class="text-3xl font-bold text-red-600 mb-1">37,964</p>
+            <p class="text-3xl font-bold text-red-600 mb-1">3,796</p>
             <p class="text-sm text-gray-500">Mahasiswa aktif</p>
         </div>
 
@@ -177,7 +177,7 @@
         {{-- University Info --}}
         <div class="space-y-6">
             {{-- Visi --}}
-            <div class="bg-white rounded-2xl shadow-sm border border-rose-100 p-6">
+            <div class="bg-red-300 rounded-2xl shadow-sm border border-rose-100 p-6">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-8 h-8 bg-gradient-to-br from-rose-400 to-rose-500 rounded-lg flex items-center justify-center">
                         <span class="text-white text-sm">🎯</span>
@@ -192,7 +192,7 @@
             </div>
 
             {{-- Recent Activity --}}
-            <div class="bg-white rounded-2xl shadow-sm border border-rose-100 p-6">
+            <div class="bg-red-200 rounded-2xl shadow-sm border border-rose-100 p-6">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-8 h-8 bg-gradient-to-br from-red-400 to-red-500 rounded-lg flex items-center justify-center">
                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

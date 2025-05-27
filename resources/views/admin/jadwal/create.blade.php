@@ -1,6 +1,21 @@
 @extends('layouts.admin')
 
 @section('content')
+<main class="flex-1 p-4 md:p-6 bg-gradient-to-br from-white to-white min-h-screen">
+    {{-- Header Section --}}
+    <div class="mb-8">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text">
+                    Tambah Jadwal
+                </h1>
+                <p class="text-black-600">Tambahkan jadwal baru ke sistem</p>
+            </div>
+            
+        </div>
+        <div class="w-24 h-1 bg-gradient-to-r from-rose-400 to-red-500 rounded-full mt-4"></div>
+    </div>
+
 <div class="max-w-3xl mx-auto mt-8 px-8 py-10 bg-white rounded-lg shadow-lg">
     <h1 class="text-3xl font-bold mb-8 text-center text-red-700">Tambah Jadwal Baru</h1>
 

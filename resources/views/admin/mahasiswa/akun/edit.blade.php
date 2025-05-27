@@ -6,14 +6,14 @@
     <div class="mb-8">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text text-transparent mb-2">
+                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-red-600 to-red-300 bg-clip-text">
                     Edit Akun Mahasiswa
                 </h1>
-                <p class="text-gray-600">Perbarui informasi akun mahasiswa</p>
+                <p class="text-black">Perbarui informasi akun mahasiswa</p>
             </div>
             <div class="flex items-center gap-3">
                 <a href="{{ route('admin.mahasiswa.akun.index') }}" 
-                   class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-gray-600 hover:to-gray-700 transform hover:-translate-y-0.5 transition-all duration-200">
+                   class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-300 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-red-300 hover:to-red-600 transform hover:-translate-y-0.5 transition-all duration-200">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
@@ -47,7 +47,7 @@
 
     {{-- Form Section --}}
     <div class="max-w-4xl mx-auto">
-        <div class="bg-white rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
+        <div class="bg-red-300 rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-amber-50 to-orange-50">
                 <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
                     <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -230,7 +230,7 @@
                             Batal
                         </a>
                         <button type="submit" 
-                                class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-amber-600 hover:to-orange-600 transform hover:-translate-y-0.5 transition-all duration-200">
+                                class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-red-500 to-red-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-red-600 hover:to-red-600 transform hover:-translate-y-0.5 transition-all duration-200">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>

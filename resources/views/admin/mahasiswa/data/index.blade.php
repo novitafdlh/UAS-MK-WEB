@@ -15,7 +15,7 @@
             </div>
             <div class="flex items-center gap-3">
                 <a href="{{ route('admin.mahasiswa.data.create') }}" 
-                   class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-gray-600 hover:to-gray-700 transform hover:-translate-y-0.5 transition-all duration-200">
+                   class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-300 to-red-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-red-600 hover:to-red-300 transform hover:-translate-y-0.5 transition-all duration-200">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -55,7 +55,7 @@
                     <p class="text-sm font-medium text-gray-600">Total Mahasiswa</p>
                     <p class="text-2xl font-bold text-rose-600">{{ $mahasiswa->count() }}</p>
                 </div>
-                <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-rose-500 rounded-xl flex items-center justify-center">
+                <div class="w-12 h-12 bg-gradient-to-br from-red-300 to-red-600 rounded-xl flex items-center justify-center">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
                     </svg>
@@ -69,7 +69,7 @@
                     <p class="text-sm font-medium text-gray-600">Program Studi</p>
                     <p class="text-2xl font-bold text-rose-600">{{ $mahasiswa->pluck('prodi_id')->unique()->count() }}</p>
                 </div>
-                <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-rose-500 rounded-xl flex items-center justify-center">
+                <div class="w-12 h-12 bg-gradient-to-br from-red-300 to-red-600 rounded-xl flex items-center justify-center">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                     </svg>
@@ -83,7 +83,7 @@
                     <p class="text-sm font-medium text-gray-600">Jurusan</p>
                     <p class="text-2xl font-bold text-rose-600">{{ $mahasiswa->pluck('jurusan_id')->unique()->count() }}</p>
                 </div>
-                <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-rose-500 rounded-xl flex items-center justify-center">
+                <div class="w-12 h-12 bg-gradient-to-br from-red-300 to-red-600 rounded-xl flex items-center justify-center">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                     </svg>
@@ -93,8 +93,8 @@
     </div>
 
     {{-- Table Section --}}
-    <div class="bg-red-200  rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-rose-50 to-red-50">
+    <div class="bg-white  rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
+        <div class="px-6 py-4 border-b border-white bg-gradient-to-r from-white to-white">
             <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
                 <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
@@ -163,22 +163,22 @@
                         <tr class="hover:bg-gradient-to-r hover:from-rose-50 hover:to-red-50 transition-all duration-200">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-gradient-to-br from-rose-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-black to-black rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
                                         {{ substr($mhs->nim, -2) }}
                                     </div>
                                     <div>
                                         <div class="font-medium text-gray-900">{{ $mhs->nim }}</div>
-                                        <div class="text-xs text-gray-500">Mahasiswa</div>
+                                        <div class="text-xs text-black-500">Mahasiswa</div>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm font-medium text-gray-900">{{ $mhs->nama }}</div>
-                                <div class="text-xs text-gray-500">Mahasiswa Aktif</div>
+                                <div class="text-xs text-black-500">Mahasiswa Aktif</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-600 flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="text-sm text-black-600 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-black-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
                                     </svg>
                                     {{ $mhs->email }}
@@ -186,7 +186,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($mhs->prodi)
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-rose-200">
                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                                         </svg>
@@ -200,7 +200,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @if($mhs->jurusan)
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-rose-200">
                                         <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                         </svg>
@@ -215,7 +215,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                 <div class="flex items-center justify-center space-x-2">
                                     <a href="{{ route('admin.mahasiswa.data.edit', $mhs->id) }}" 
-                                       class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-sm font-medium rounded-lg hover:from-amber-500 hover:to-orange-600 transform hover:-translate-y-0.5 transition-all duration-200 shadow-sm hover:shadow-md">
+                                       class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-600 text-white text-sm font-medium rounded-lg hover:from-red-600 hover:to-red-600 transform hover:-translate-y-0.5 transition-all duration-200 shadow-sm hover:shadow-md">
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                         </svg>
@@ -226,7 +226,7 @@
                                         @method('DELETE')
                                         <button type="submit" 
                                                 onclick="return confirm('Yakin ingin menghapus data {{ $mhs->nama }}?')"
-                                                class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm font-medium rounded-lg hover:from-red-600 hover:to-red-700 transform hover:-translate-y-0.5 transition-all duration-200 shadow-sm hover:shadow-md">
+                                                class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-600 text-white text-sm font-medium rounded-lg hover:from-red-600 hover:to-red-600 transform hover:-translate-y-0.5 transition-all duration-200 shadow-sm hover:shadow-md">
                                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                             </svg>

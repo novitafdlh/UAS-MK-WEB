@@ -1,8 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="max-w-lg mx-auto mt-6 bg-white p-8 rounded-xl shadow-md">
-    <h1 class="text-3xl font-bold mb-6 text-center text-red-700">Edit Jurusan</h1>
+
+
+<div class="max-w-lg mx-auto mt-6 bg-red-300 p-8 rounded-xl shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-center text-black">Edit Jurusan</h1>
 
     @if($errors->any())
         <div class="mb-6 bg-red-100 text-red-700 p-4 rounded shadow">
