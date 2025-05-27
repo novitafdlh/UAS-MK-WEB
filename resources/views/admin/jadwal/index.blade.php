@@ -3,22 +3,26 @@
 @section('title', 'Daftar Jadwal')
 
 @section('content')
-<main class="bg-gradient-to-br from-rose-50 to-red-50 min-h-screen">
-    {{-- Header dengan Logo dan Judul --}}
-    <div class="bg-white shadow-sm border-b border-rose-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <img src="{{ asset('img/untad-new.jpeg') }}" alt="Logo Untad" class="w-12 h-12 rounded-lg shadow-md">
-                    <div>
-                        <h1 class="text-2xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text text-transparent">
-                            Daftar Jadwal Kuliah
-                        </h1>
-                        <div class="h-1 w-16 bg-gradient-to-r from-rose-500 to-red-500 rounded-full mt-1"></div>
-                    </div>
+<main class="flex-1 p-4 md:p-6 bg-gradient-to-br from-rose-50 to-red-50 min-h-screen">
+    {{-- Header --}}
+    <header class="bg-white rounded-2xl shadow-sm border border-rose-100 p-6 mb-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <img src="{{ asset('img/untad-new.jpeg') }}" 
+                         alt="Logo Untad" 
+                         class="w-14 h-14 object-contain rounded-xl shadow-md ring-2 ring-rose-100" />
                 </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text text-transparent">
+                        Daftar Jadwal Kuliah
+                    </h1>
+                    <p class="text-sm text-rose-500 font-medium">Kelola jadwal perkuliahan</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
                 <a href="{{ route('admin.jadwal.create') }}" 
-                   class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-500 to-green-500 text-white font-semibold rounded-xl hover:from-emerald-600 hover:to-green-600 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200">
+                   class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-rose-500 to-red-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-rose-600 hover:to-red-600 transform hover:-translate-y-0.5 transition-all duration-200">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                     </svg>
@@ -26,54 +30,78 @@
                 </a>
             </div>
         </div>
+    </header>
+
+    {{-- Page Title --}}
+    <div class="text-center mb-8">
+        <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-rose-600 to-red-600 bg-clip-text text-transparent mb-2">
+            Manajemen Jadwal Kuliah
+        </h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-rose-400 to-red-500 mx-auto rounded-full"></div>
     </div>
 
-    {{-- Content Area --}}
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {{-- Success Alert --}}
-        @if(session('success'))
-            <div class="mb-6 bg-gradient-to-r from-green-100 to-emerald-100 border-l-4 border-green-500 rounded-lg p-4 shadow-md">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    {{-- Success Alert --}}
+    @if(session('success'))
+        <div class="mb-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl shadow-sm">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-green-800 font-medium">{{ session('success') }}</p>
+                </div>
+                <button type="button" class="ml-auto p-1.5 text-green-500 hover:bg-green-100 rounded-lg" onclick="this.parentElement.parentElement.remove();">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    @endif
+
+    {{-- Stats Cards --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div class="group relative bg-white rounded-2xl shadow-sm border border-rose-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div class="absolute top-4 right-4 w-12 h-12 bg-gradient-to-br from-rose-400 to-rose-500 rounded-xl flex items-center justify-center shadow-lg">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Jadwal</h3>
+            <p class="text-3xl font-bold text-rose-600 mb-1">{{ $jadwals->count() }}</p>
+            <p class="text-sm text-gray-500">Jadwal kuliah</p>
+        </div>
+    </div>
+
+    {{-- Tabel Jadwal --}}
+    <div class="bg-white rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
+        {{-- Header Section --}}
+        <div class="bg-gradient-to-r from-rose-500 to-red-500 p-6 text-white">
+            <h2 class="text-2xl md:text-3xl font-bold text-center flex items-center justify-center gap-3">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                Jadwal Kuliah
+            </h2>
+        </div>
+
+        <div class="p-6 md:p-8">
+            @if($jadwals->isEmpty())
+                <div class="text-center py-12">
+                    <div class="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
                     </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium text-green-800">{{ session('success') }}</p>
-                    </div>
-                    <button type="button" class="ml-auto text-green-400 hover:text-green-600" onclick="this.closest('div').remove();">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
+                    <p class="text-gray-500 text-lg font-medium">Belum ada jadwal</p>
+                    <p class="text-gray-400 text-sm mt-1">Tambahkan jadwal kuliah pertama Anda</p>
                 </div>
-            </div>
-        @endif
-
-        {{-- Card Container --}}
-        <div class="bg-white rounded-2xl shadow-xl border border-rose-200 overflow-hidden">
-            {{-- Card Header --}}
-            <div class="bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 px-6 py-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-xl font-bold text-white">Jadwal Kuliah</h2>
-                    </div>
-                    <div class="text-white/80 text-sm">
-                        Total: {{ $jadwals->count() }} jadwal
-                    </div>
-                </div>
-            </div>
-
-            {{-- Table --}}
+            @else
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+                <table class="min-w-full divide-y divide-rose-200">
+                    <thead class="bg-rose-100">
                         <tr>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mata Kuliah</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dosen</th>
@@ -82,13 +110,13 @@
                             <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @forelse($jadwals as $jadwal)
+                    <tbody class="bg-white divide-y divide-rose-100">
+                        @foreach($jadwals as $jadwal)
                         <tr class="hover:bg-rose-50 transition-colors duration-200">
                             <td class="px-4 py-4">
                                 <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-gradient-to-br from-violet-100 to-purple-100 rounded-xl flex items-center justify-center mr-3">
-                                        <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-10 h-10 bg-gradient-to-br from-rose-100 to-red-100 rounded-xl flex items-center justify-center mr-3">
+                                        <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                                         </svg>
                                     </div>
@@ -100,8 +128,8 @@
                             </td>
                             <td class="px-4 py-4">
                                 <div class="flex items-center">
-                                    <div class="w-8 h-8 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg flex items-center justify-center mr-2">
-                                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-red-100 to-rose-100 rounded-lg flex items-center justify-center mr-2">
+                                        <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                         </svg>
                                     </div>
@@ -110,7 +138,7 @@
                             </td>
                             <td class="px-4 py-4">
                                 <div class="space-y-1">
-                                    <div class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    <div class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-800">
                                         {{ $jadwal->hari }}
                                     </div>
                                     <div class="text-xs text-gray-500">
@@ -147,25 +175,24 @@
                                 </div>
                             </td>
                         </tr>
-                        @empty
-                        <tr>
-                            <td colspan="5" class="px-6 py-12 text-center">
-                                <div class="flex flex-col items-center">
-                                    <div class="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mb-4">
-                                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                    </div>
-                                    <p class="text-gray-500 text-lg font-medium">Belum ada jadwal</p>
-                                    <p class="text-gray-400 text-sm mt-1">Tambahkan jadwal kuliah pertama Anda</p>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
+            @endif
         </div>
     </div>
+
+    {{-- Footer --}}
+    <footer class="text-center py-6 mt-8">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-rose-100">
+            <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+            <span class="text-sm text-gray-600">
+                &copy; {{ date('Y') }} Universitas Tadulako. All rights reserved.
+            </span>
+        </div>
+    </footer>
 </main>
 @endsection

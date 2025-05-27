@@ -42,13 +42,13 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {{-- Card 1: Mahasiswa --}}
         <div class="group relative bg-white rounded-2xl shadow-sm border border-rose-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-            <div class="absolute top-4 right-4 w-12 h-12 bg-gradient-to-br from-rose-400 to-rose-500 rounded-xl flex items-center justify-center shadow-lg">
+            <div class="absolute top-4 right-4 w-12 h-12 bg-gradient-to-br from-red-400 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
                 </svg>
             </div>
             <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Mahasiswa</h3>
-            <p class="text-3xl font-bold text-rose-600 mb-1">37,964</p>
+            <p class="text-3xl font-bold text-red-600 mb-1">37,964</p>
             <p class="text-sm text-gray-500">Mahasiswa aktif</p>
         </div>
 
@@ -66,13 +66,13 @@
 
         {{-- Card 3: Program Studi --}}
         <div class="group relative bg-white rounded-2xl shadow-sm border border-rose-100 p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-            <div class="absolute top-4 right-4 w-12 h-12 bg-gradient-to-br from-rose-500 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
+            <div class="absolute top-4 right-4 w-12 h-12 bg-gradient-to-br from-red-400 to-red-500 rounded-xl flex items-center justify-center shadow-lg">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                 </svg>
             </div>
             <h3 class="text-lg font-semibold text-gray-700 mb-2">Program Studi</h3>
-            <p class="text-3xl font-bold text-rose-700 mb-1">51</p>
+            <p class="text-3xl font-bold text-red-600 mb-1">51</p>
             <p class="text-sm text-gray-500">Program aktif</p>
         </div>
 
@@ -106,8 +106,8 @@
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {{-- Tambah Mahasiswa --}}
                     <a href="{{ route('admin.mahasiswa.data.create') }}" 
-                       class="group flex flex-col items-center p-4 bg-gradient-to-br from-rose-50 to-red-50 rounded-xl border border-rose-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                        <div class="w-10 h-10 bg-rose-500 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                       class="group flex flex-col items-center p-4 bg-gradient-to-br from-red-50 to-rose-50 rounded-xl border border-rose-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
@@ -128,8 +128,8 @@
 
                     {{-- Kelola Akun --}}
                     <a href="{{ route('admin.mahasiswa.akun.index') }}" 
-                       class="group flex flex-col items-center p-4 bg-gradient-to-br from-rose-50 to-red-50 rounded-xl border border-rose-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                        <div class="w-10 h-10 bg-rose-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                       class="group flex flex-col items-center p-4 bg-gradient-to-br from-red-50 to-rose-50 rounded-xl border border-rose-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
                             </svg>
@@ -150,8 +150,8 @@
 
                     {{-- Laporan --}}
                     <a href="#" 
-                       class="group flex flex-col items-center p-4 bg-gradient-to-br from-rose-50 to-red-50 rounded-xl border border-rose-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
-                        <div class="w-10 h-10 bg-rose-700 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                       class="group flex flex-col items-center p-4 bg-gradient-to-br from-red-50 to-rose-50 rounded-xl border border-rose-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                        <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                             </svg>
