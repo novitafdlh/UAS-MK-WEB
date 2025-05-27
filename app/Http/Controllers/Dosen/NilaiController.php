@@ -84,9 +84,38 @@ class NilaiController extends Controller
             ],
             [
                 'nilai' => $request->nilai,
+                'dosen_id' => auth()->user()->dosen->id, // Ambil id dosen yang sedang login
             ]
         );
 
         return redirect()->route('dosen.nilai.index')->with('success', 'Nilai berhasil disimpan.');
+    }
+
+    public function edit($id)
+    {
+        $nilai = Nilai::with(['mahasiswa', 'mataKuliah'])->findOrFail($id);
+        return view('dosen.nilai.edit', compact('nilai'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nilai' => 'required|numeric|min:0|max:100',
+        ]);
+
+        $nilai = Nilai::findOrFail($id);
+        $nilai->nilai = $request->nilai;
+        $nilai->dosen_id = auth()->user()->dosen->id;
+        $nilai->save();
+
+        return redirect()->route('dosen.nilai.index')->with('success', 'Nilai berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $nilai = Nilai::findOrFail($id);
+        $nilai->delete();
+
+        return redirect()->route('dosen.nilai.index')->with('success', 'Nilai berhasil dihapus.');
     }
 }

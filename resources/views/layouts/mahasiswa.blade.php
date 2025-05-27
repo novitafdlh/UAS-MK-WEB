@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @vite('resources/css/app.css')
 </head>
+@stack('scripts')
 <body class="bg-gradient-to-br from-rose-50 to-red-50 font-sans antialiased">
     <div class="flex min-h-screen">
 
@@ -77,8 +78,22 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                             </svg>
                         </div>
-                        <span class="ml-3 font-medium">Kartu Rencana Studi</span>
+                        <span class="ml-3 font-medium">KRS</span>
                         @if(request()->routeIs('mahasiswa.krs.*'))
+                            <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
+                        @endif
+                    </a>
+
+                    {{-- KHS --}}
+                    <a href="{{ route('mahasiswa.khs.index') }}"
+                       class="group flex items-center px-3 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('mahasiswa.khs.*') ? 'bg-gradient-to-r from-rose-500 to-red-500 text-white shadow-lg shadow-rose-200' : 'text-gray-600 hover:bg-gradient-to-r hover:from-rose-50 hover:to-red-50 hover:text-rose-600' }}">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-lg {{ request()->routeIs('mahasiswa.khs.*') ? 'bg-white/20' : 'bg-rose-100 group-hover:bg-rose-200' }} transition-colors duration-200">
+                            <svg class="w-5 h-5 {{ request()->routeIs('mahasiswa.khs.*') ? 'text-white' : 'text-rose-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <span class="ml-3 font-medium">KHS</span>
+                        @if(request()->routeIs('mahasiswa.khs.*'))
                             <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
                         @endif
                     </a>
@@ -92,7 +107,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
                         </div>
-                        <span class="ml-3 font-medium">Pengaturan Akun</span>
+                        <span class="ml-3 font-medium">Akun</span>
                         @if(request()->routeIs('mahasiswa.akun.*'))
                             <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
                         @endif

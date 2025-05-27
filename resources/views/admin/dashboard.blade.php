@@ -23,9 +23,6 @@
             <div class="text-center md:text-right">
                 <p class="text-gray-600 text-sm">Selamat datang,</p>
                 <p class="font-bold text-rose-700 text-lg">{{ auth()->user()->name }}</p>
-                <span class="inline-block px-3 py-1 bg-rose-100 text-rose-700 text-xs rounded-full font-medium mt-1">
-                    Administrator
-                </span>
             </div>
         </div>
     </header>
@@ -83,9 +80,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
                 </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-700 mb-2">Fakultas</h3>
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Jurusan</h3>
             <p class="text-3xl font-bold text-red-700 mb-1">12</p>
-            <p class="text-sm text-gray-500">Fakultas aktif</p>
+            <p class="text-sm text-gray-500">Jurusan aktif</p>
         </div>
     </div>
 

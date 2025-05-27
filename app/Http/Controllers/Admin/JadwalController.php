@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Jadwal;
 use App\Models\Matakuliah;
+use App\Models\Prodi;
+use App\Models\User;
+use App\Models\Dosen;
 
 class JadwalController extends Controller
 {
@@ -23,9 +26,9 @@ class JadwalController extends Controller
      */
     public function create()
     {
-        $prodis = \App\Models\Prodi::all();
-        $matakuliahs = \App\Models\MataKuliah::all();
-        $dosens = \App\Models\User::where('role', 'dosen')->get(); // Asumsi ada kolom role
+        $prodis = Prodi::all();
+        $matakuliahs = Matakuliah::all();
+        $dosens = Dosen::all(); // ambil dari tabel dosens
 
         return view('admin.jadwal.create', compact('prodis', 'matakuliahs', 'dosens'));
     }
@@ -73,9 +76,9 @@ class JadwalController extends Controller
     {
         $jadwal = Jadwal::with(['prodi', 'mata_kuliah', 'dosen', 'mahasiswas'])->findOrFail($id);
 
-        $prodis = \App\Models\Prodi::all();
-        $matakuliahs = \App\Models\MataKuliah::all();
-        $dosens = \App\Models\User::where('role', 'dosen')->get();
+        $prodis = Prodi::all();
+        $matakuliahs = Matakuliah::all();
+        $dosens = Dosen::all(); // ambil dari tabel dosens
         $mahasiswas = \App\Models\Mahasiswa::all();
 
         return view('admin.jadwal.edit', compact('jadwal', 'prodis', 'matakuliahs', 'dosens', 'mahasiswas'));

@@ -15,9 +15,4 @@ class Prodi extends Model
     {
         return $this->belongsTo(Jurusan::class);
     }
-
-    public function jurusans()
-    {
-        return $this->belongsTo(Jurusans::class);
-    }
 }

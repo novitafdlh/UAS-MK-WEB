@@ -7,6 +7,7 @@ use App\Models\Matakuliah;
 use Illuminate\Http\Request;
 use App\Models\Prodi;
 use App\Models\Dosen;
+use App\Models\Jurusan;
 
 class MatakuliahController extends Controller
 {
@@ -25,10 +26,10 @@ class MatakuliahController extends Controller
     public function create()
     {
         $prodis = Prodi::all();
-        $matakuliahs = Matakuliah::all();
+        $jurusans = Jurusan::all();
         $dosens = Dosen::all();
 
-        return view('admin.matakuliah.create', compact('prodis', 'matakuliahs', 'dosens'));
+        return view('admin.matakuliah.create', compact('prodis', 'jurusans', 'dosens'));
     }
 
     /**
@@ -42,6 +43,7 @@ class MatakuliahController extends Controller
             'sks' => 'required|integer',
             'jurusan' => 'required',
             'prodi_id' => 'required|exists:prodis,id',
+            'dosen_id' => 'nullable|exists:dosens,id',
         ]);
 
         Matakuliah::create($request->all());
@@ -63,7 +65,9 @@ class MatakuliahController extends Controller
     public function edit(Matakuliah $matakuliah)
     {
         $prodis = Prodi::all();
-        return view('admin.matakuliah.edit', compact('matakuliah', 'prodis'));
+        $jurusans = Jurusan::all();
+        $dosens = Dosen::all();
+        return view('admin.matakuliah.edit', compact('matakuliah', 'prodis', 'jurusans', 'dosens'));
     }
 
     /**

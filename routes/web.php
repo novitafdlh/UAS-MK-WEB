@@ -121,13 +121,27 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [\App\Http\Controllers\Dosen\NilaiController::class, 'update'])->name('update');
         Route::delete('/{id}', [\App\Http\Controllers\Dosen\NilaiController::class, 'destroy'])->name('destroy');
     });
+
+    Route::prefix('jadwal')->name('jadwal.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Dosen\JadwalController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('akun')->name('akun.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Dosen\AkunController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\Dosen\AkunController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\Dosen\AkunController::class, 'store'])->name('store');
+        Route::get('/edit', [\App\Http\Controllers\Dosen\AkunController::class, 'edit'])->name('edit');
+        Route::put('/', [\App\Http\Controllers\Dosen\AkunController::class, 'update'])->name('update');
+        Route::delete('/', [\App\Http\Controllers\Dosen\AkunController::class, 'destroy'])->name('destroy');
+    });
 });
-
-
 
     // Mahasiswa
     Route::middleware('is_mahasiswa')->group(function () {
+        // Dashboard
         Route::get('/mahasiswa/dashboard', fn() => view('mahasiswa.dashboard'))->name('mahasiswa.dashboard');
+
+        // KRS
         Route::get('/mahasiswa/krs', [KRSController::class, 'index'])->name('mahasiswa.krs.index');
         Route::get('/mahasiswa/krs/create', [KRSController::class, 'create'])->name('mahasiswa.krs.create');
         Route::post('/mahasiswa/krs', [KRSController::class, 'store'])->name('mahasiswa.krs.store');
@@ -135,14 +149,17 @@ Route::middleware('auth')->group(function () {
         Route::put('/mahasiswa/krs/{krs}', [KRSController::class, 'update'])->name('mahasiswa.krs.update');
         Route::delete('/mahasiswa/krs/{krs}', [KRSController::class, 'destroy'])->name('mahasiswa.krs.destroy');
 
-        Route::get('/mahasiswa/akun', [AkunController::class, 'index'])->name('mahasiswa.akun.index');
-        Route::get('/mahasiswa/akun/create', [AkunController::class, 'create'])->name('mahasiswa.akun.create');
-        Route::post('/mahasiswa/akun', [AkunController::class, 'store'])->name('mahasiswa.akun.store');
-        Route::get('/mahasiswa/akun/{akn}/edit', [AkunController::class, 'edit'])->name('mahasiswa.akun.edit');
-        Route::put('/mahasiswa/akun/{akn}', [AkunController::class, 'update'])->name('mahasiswa.akun.update');
-        Route::delete('/mahasiswa/akun/{akn}', [AkunController::class, 'destroy'])->name('mahasiswa.akun.destroy');
-});
+        // KHS
+        Route::get('/mahasiswa/khs', [\App\Http\Controllers\Mahasiswa\KHSController::class, 'index'])->name('mahasiswa.khs.index');
+
+        // Akun Mahasiswa
+        Route::prefix('mahasiswa/akun')->name('mahasiswa.akun.')->middleware('is_mahasiswa')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Mahasiswa\AkunController::class, 'index'])->name('index');
+            Route::get('/edit', [\App\Http\Controllers\Mahasiswa\AkunController::class, 'edit'])->name('edit');
+            Route::put('/', [\App\Http\Controllers\Mahasiswa\AkunController::class, 'update'])->name('update');
+        });
     });
+});
 
 
 // Laravel Breeze / Fortify

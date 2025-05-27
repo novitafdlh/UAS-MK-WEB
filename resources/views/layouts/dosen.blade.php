@@ -84,6 +84,34 @@
                         @endif
                     </a>
 
+                    {{-- Jadwal --}}
+                    <a href="{{ route('dosen.jadwal.index') }}"
+                       class="group flex items-center px-3 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('dosen.jadwal.*') ? 'bg-gradient-to-r from-rose-500 to-red-500 text-white shadow-lg shadow-rose-200' : 'text-gray-600 hover:bg-gradient-to-r hover:from-rose-50 hover:to-red-50 hover:text-rose-600' }}">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-lg {{ request()->routeIs('dosen.jadwal.*') ? 'bg-white/20' : 'bg-rose-100 group-hover:bg-rose-200' }} transition-colors duration-200">
+                            <svg class="w-5 h-5 {{ request()->routeIs('dosen.jadwal.*') ? 'text-white' : 'text-rose-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8V4m0 16v-4m0 0H8m4 0h4m-4 0v4m0-16h4m0 0H8m4 0V4m0 16v-4m0 0H8m4 0h4"></path>
+                            </svg>
+                        </div>
+                        <span class="ml-3 font-medium">Jadwal</span>
+                        @if(request()->routeIs('dosen.jadwal.*'))
+                            <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
+                        @endif
+                    </a>
+
+                    {{-- Akun --}}
+                    <a href="{{ route('dosen.akun.index') }}"
+                       class="group flex items-center px-3 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('dosen.akun.*') ? 'bg-gradient-to-r from-rose-500 to-red-500 text-white shadow-lg shadow-rose-200' : 'text-gray-600 hover:bg-gradient-to-r hover:from-rose-50 hover:to-red-50 hover:text-rose-600' }}">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-lg {{ request()->routeIs('dosen.akun.*') ? 'bg-white/20' : 'bg-rose-100 group-hover:bg-rose-200' }} transition-colors duration-200">
+                            <svg class="w-5 h-5 {{ request()->routeIs('dosen.akun.*') ? 'text-white' : 'text-rose-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <span class="ml-3 font-medium">Akun</span>
+                        @if(request()->routeIs('dosen.akun.*'))
+                            <div class="ml-auto w-2 h-2 bg-white rounded-full"></div>
+                        @endif
+                    </a>
+
             {{-- Logout Section --}}
             <div class="relative z-10 p-4 border-t border-rose-100 bg-gradient-to-r from-rose-50 to-red-50">
                 <a href="{{ route('logout') }}"

@@ -49,6 +49,7 @@
                             <th class="px-6 py-3 border-r border-rose-700">Mahasiswa</th>
                             <th class="px-6 py-3 border-r border-rose-700">Mata Kuliah</th>
                             <th class="px-6 py-3">Nilai</th>
+                            <th class="px-6 py-3 text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 text-gray-700">
@@ -57,15 +58,25 @@
                                 <td class="px-6 py-4 border-r border-gray-200">{{ $item->mahasiswa->nama }}</td>
                                 <td class="px-6 py-4 border-r border-gray-200">{{ $item->mataKuliah->nama }}</td>
                                 <td class="px-6 py-4">{{ $item->nilai ?? '-' }}</td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <a href="{{ route('dosen.nilai.edit', $item->id) }}"
+                                       class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition text-xs font-semibold">
+                                        Edit
+                                    </a>
+                                    <form action="{{ route('dosen.nilai.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus nilai ini?');" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition text-xs font-semibold">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-        @else
-            <p class="text-center text-gray-500 italic mt-10">
-                Belum ada data nilai yang diinput.
-            </p>
         @endif
     </div>
 @endsection

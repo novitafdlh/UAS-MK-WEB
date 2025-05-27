@@ -23,4 +23,14 @@ class Nilai extends Model
     {
         return $this->belongsTo(MataKuliah::class, 'mata_kuliah_id');
     }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'dosen_id');
+    }
+
+    public function jadwal()
+    {
+        return $this->belongsTo(\App\Models\Jadwal::class, 'jadwal_id');
+    }
 }

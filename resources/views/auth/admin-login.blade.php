@@ -48,7 +48,6 @@
                 {{-- Welcome Message --}}
                 <div class="text-center mb-6">
                     <h2 class="text-xl font-semibold text-gray-800 mb-2">Selamat Datang</h2>
-                    <p class="text-gray-600 text-sm">Masuk ke panel administrasi sistem akademik</p>
                 </div>
 
                 {{-- Error Messages --}}

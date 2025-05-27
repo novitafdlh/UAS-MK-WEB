@@ -34,7 +34,7 @@ class Jadwal extends Model
     // Relasi ke dosen (menggunakan model User karena dosen termasuk user)
     public function dosen()
     {
-        return $this->belongsTo(User::class, 'dosen_id');
+        return $this->belongsTo(Dosen::class, 'dosen_id');
     }
 
     // Relasi ke mahasiswa (many-to-many)

@@ -79,8 +79,7 @@
                     </svg>
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold text-white">SIAKAD Admin</h1>
-                    <p class="text-rose-100 text-sm">Administrator Panel</p>
+                    <h1 class="text-xl font-bold text-white">SIAKAD</h1>
                 </div>
             </div>
         </div>
