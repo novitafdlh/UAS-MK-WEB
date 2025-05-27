@@ -101,40 +101,21 @@
                     </div>
                     @endif
 
-                    {{-- Pilih Mahasiswa --}}
-                    @if($selectedMataKuliahId)
-                    <div>
-                        <label for="mahasiswa_id" class="block text-sm font-semibold text-gray-700 mb-3">
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                Mahasiswa
-                            </div>
-                        </label>
-                        <div class="relative">
-                            <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                            </svg>
-                            <select name="mahasiswa_id" id="mahasiswa_id" 
-                                    class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all duration-200 appearance-none bg-white"
-                                    onchange="this.form.submit()">
-                                <option value="">-- Pilih Mahasiswa --</option>
-                                @foreach($mahasiswas as $mhs)
-                                    <option value="{{ $mhs->id }}" {{ ($selectedMahasiswaId == $mhs->id) ? 'selected' : '' }}>
-                                        {{ $mhs->nama }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    @endif
-                </form>
-            </div>
-        </div>
+    {{-- Pilih Mahasiswa --}}
+    @if($selectedMataKuliahId)
+    <div>
+        <label for="mahasiswa_id" class="block font-medium">Pilih Mahasiswa</label>
+        <select name="mahasiswa_id" id="mahasiswa_id" class="border p-2 rounded w-full" onchange="this.form.submit()">
+            <option value="">-- Pilih Mahasiswa --</option>
+            @foreach($mahasiswas as $mhs)
+                <option value="{{ $mhs->id }}" {{ ($selectedMahasiswaId == $mhs->id) ? 'selected' : '' }}>
+                    {{ $mhs->nama }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    @endif
+</form>
 
         {{-- Step 2: Input Nilai Form --}}
         @if($selectedMahasiswaId && $selectedMataKuliahId)
