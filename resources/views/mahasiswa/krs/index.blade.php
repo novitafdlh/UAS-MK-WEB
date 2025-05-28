@@ -50,7 +50,10 @@
                 <div>
                     <h3 class="text-xl font-bold text-gray-800">{{ auth()->user()->name ?? 'Nama Mahasiswa' }}</h3>
                     <p class="text-gray-600">NIM: {{ auth()->user()->nim ?? '123456789' }}</p>
-                    <p class="text-sm text-gray-500">Program Studi: {{ auth()->user()->prodi ?? 'Teknik Informatika' }}</p>
+                    <p class="text-sm text-gray-500">
+                        Program Studi: {{ auth()->user()->prodi->nama ?? 'Teknik Informatika' }}
+                    </p>
+                    <p class="text-sm text-gray-500">   
                 </div>
             </div>
             <div class="text-right">

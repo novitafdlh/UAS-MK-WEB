@@ -8,16 +8,27 @@ use Illuminate\Http\Request;
 use App\Models\Prodi;
 use App\Models\Dosen;
 use App\Models\Jurusan;
+use Illuminate\Support\Facades\Auth;
 
 class MatakuliahController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $matakuliahs = Matakuliah::all();
-        return view('admin.matakuliah.index', compact('matakuliahs'));
+        $prodis = \App\Models\Prodi::all();
+        $prodiId = $request->query('prodi_id');
+
+        $query = \App\Models\Matakuliah::with(['prodi', 'dosen']);
+
+        if ($prodiId) {
+            $query->where('prodi_id', $prodiId);
+        }
+
+        $matakuliahs = $query->get();
+
+        return view('admin.matakuliah.index', compact('matakuliahs', 'prodis', 'prodiId'));
     }
 
     /**
@@ -28,8 +39,10 @@ class MatakuliahController extends Controller
         $prodis = Prodi::all();
         $jurusans = Jurusan::all();
         $dosens = Dosen::all();
+        $mahasiswa = Auth::user()->mahasiswa;
+        $matakuliahs = \App\Models\Matakuliah::where('prodi_id', $mahasiswa->prodi_id)->get();
 
-        return view('admin.matakuliah.create', compact('prodis', 'jurusans', 'dosens'));
+        return view('admin.matakuliah.create', compact('prodis', 'jurusans', 'dosens', 'matakuliahs', 'mahasiswa'));
     }
 
     /**
@@ -67,7 +80,10 @@ class MatakuliahController extends Controller
         $prodis = Prodi::all();
         $jurusans = Jurusan::all();
         $dosens = Dosen::all();
-        return view('admin.matakuliah.edit', compact('matakuliah', 'prodis', 'jurusans', 'dosens'));
+        $mahasiswa = Auth::user()->mahasiswa;
+        $matakuliahs = \App\Models\Matakuliah::where('prodi_id', $mahasiswa->prodi_id)->get();
+
+        return view('admin.matakuliah.edit', compact('matakuliah', 'prodis', 'jurusans', 'dosens', 'matakuliahs', 'mahasiswa'));
     }
 
     /**

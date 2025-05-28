@@ -74,7 +74,17 @@
             <p class="text-sm text-gray-500">Mata kuliah aktif</p>
         </div>
     </div>
-
+    <form method="GET" class="mb-6 flex items-center gap-2">
+        <label for="prodi_id" class="font-semibold">Filter Prodi:</label>
+        <select name="prodi_id" id="prodi_id" onchange="this.form.submit()" class="border rounded px-3 py-2">
+            <option value="">Semua Prodi</option>
+            @foreach($prodis as $prodi)
+                <option value="{{ $prodi->id }}" {{ ($prodiId ?? '') == $prodi->id ? 'selected' : '' }}>
+                    {{ $prodi->nama }}
+                </option>
+            @endforeach
+        </select>
+    </form>
     {{-- Tabel Mata Kuliah --}}
     <div class="bg-white rounded-2xl shadow-sm border border-rose-100 overflow-hidden">
         {{-- Header Section --}}

@@ -30,26 +30,20 @@ class KRSController extends Controller
     // Form tambah KRS
     public function create(Request $request)
     {
-        $prodis = Prodi::all();
-        $matakuliahs = collect();
+        $mahasiswa = Auth::user()->mahasiswa;
+        $matakuliahs = MataKuliah::where('prodi_id', $mahasiswa->prodi_id)->get();
 
-        if ($request->filled('prodi_id')) {
-            $matakuliahs = MataKuliah::where('prodi_id', $request->prodi_id)->get();
-        }
-
-        return view('mahasiswa.krs.create', compact('prodis', 'matakuliahs'));
+        return view('mahasiswa.krs.create', compact('matakuliahs', 'mahasiswa'));
     }
 
     // Simpan KRS baru
     public function store(Request $request)
     {
         $request->validate([
-            'prodi_id' => 'required|exists:prodis,id',
             'mata_kuliah_id' => 'required|exists:matakuliahs,id',
         ]);
 
         KRS::create([
-            'user_id' => auth()->id(),
             'mahasiswa_id' => auth()->id(),
             'mata_kuliah_id' => $request->mata_kuliah_id,
             'semester' => 'Genap',

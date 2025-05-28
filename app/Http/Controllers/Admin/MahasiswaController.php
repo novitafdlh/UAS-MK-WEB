@@ -57,7 +57,6 @@ class MahasiswaController extends Controller
             'email' => 'required|email|unique:mahasiswas,email,' . $mahasiswa->id,
             'prodi_id' => 'required|exists:prodis,id',
             'jurusan_id' => 'required|exists:jurusans,id',
-            'user_id' => 'required|exists:users,id',
         ]);
 
         $validatedData['user_id'] = auth()->id();
