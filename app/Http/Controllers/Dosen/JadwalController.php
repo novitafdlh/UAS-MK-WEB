@@ -4,16 +4,17 @@ namespace App\Http\Controllers\Dosen;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class JadwalController extends Controller
 {
     public function index(Request $request)
     {
-        $dosen = Auth::user()->dosen;
+        $dosen = User::where('role', 'dosen')->where('id', Auth::id())->first();
         $hari = $request->query('hari'); // ambil filter hari dari query string
 
-        $query = \App\Models\Jadwal::with(['prodi', 'mata_kuliah'])
+        $query = \App\Models\Jadwal::with(['prodi', 'mata_kuliah', 'jurusan'])
             ->where('dosen_id', $dosen->id);
 
         if ($hari) {

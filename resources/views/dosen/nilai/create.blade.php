@@ -109,7 +109,7 @@
             <option value="">-- Pilih Mahasiswa --</option>
             @foreach($mahasiswas as $mhs)
                 <option value="{{ $mhs->id }}" {{ ($selectedMahasiswaId == $mhs->id) ? 'selected' : '' }}>
-                    {{ $mhs->nama }}
+                    {{ $mhs->name }}
                 </option>
             @endforeach
         </select>
@@ -141,7 +141,7 @@
                             {{ substr($selectedMhs->nama ?? 'M', 0, 2) }}
                         </div>
                         <div>
-                            <h4 class="text-rose-800 font-semibold">{{ $selectedMhs->nama ?? '-' }}</h4>
+                            <h4 class="text-rose-800 font-semibold">{{ $selectedMhs->name ?? '-' }}</h4>
                             <p class="text-rose-600 text-sm">Mata Kuliah: {{ $selectedMk->nama ?? '-' }}</p>
                         </div>
                     </div>

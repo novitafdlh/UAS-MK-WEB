@@ -55,7 +55,7 @@
                     <tbody class="divide-y divide-gray-100 text-gray-700">
                         @foreach($nilaiList as $item)
                             <tr class="hover:bg-rose-50 transition">
-                                <td class="px-6 py-4 border-r border-gray-200">{{ $item->mahasiswa->nama }}</td>
+                                <td class="px-6 py-4 border-r border-gray-200">{{ $item->user->name ?? '-' }}</td>
                                 <td class="px-6 py-4 border-r border-gray-200">{{ $item->mataKuliah->nama }}</td>
                                 <td class="px-6 py-4">{{ $item->nilai ?? '-' }}</td>
                                 <td class="px-6 py-4 flex gap-2">

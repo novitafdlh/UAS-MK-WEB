@@ -11,10 +11,10 @@ class KHSController extends Controller
 {
     public function index()
     {
-        $mahasiswa = Auth::user()->mahasiswa;
+        $mahasiswa = Auth::user();
         // Ambil nilai beserta relasi matakuliah dan dosen
         $nilais = Nilai::with(['mataKuliah', 'jadwal.dosen'])
-            ->where('mahasiswa_id', $mahasiswa->id)
+            ->where('user_id', $mahasiswa->id)
             ->get();
 
         return view('mahasiswa.khs.index', compact('nilais', 'mahasiswa'));

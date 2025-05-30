@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Dosen;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Nilai;
-use App\Models\Mahasiswa;
 use App\Models\Prodi;
 use App\Models\KRS;
 use App\Models\MataKuliah;
+use App\Models\User;
 
 class NilaiController extends Controller
 {
@@ -18,9 +18,10 @@ class NilaiController extends Controller
         $nilaiList = [];
 
         if (request()->has('prodi_id') && request()->prodi_id != '') {
-            $nilaiList = Nilai::with(['mahasiswa', 'mataKuliah'])
-                ->whereHas('mahasiswa', function ($q) {
-                    $q->where('prodi_id', request()->prodi_id);
+            $nilaiList = Nilai::with(['user', 'mataKuliah'])
+                ->whereHas('user', function ($q) {
+                    $q->where('prodi_id', request()->prodi_id)
+                      ->where('role', 'mahasiswa');
                 })->get();
         }
 
@@ -40,14 +41,16 @@ class NilaiController extends Controller
             ? MataKuliah::where('prodi_id', $selectedProdiId)->get()
             : collect();
 
-        // Ambil mahasiswa yang mengambil mata kuliah tersebut via KRS
+        // Ambil mahasiswa (user) yang mengambil mata kuliah tersebut via KRS
         $mahasiswas = collect();
         if ($selectedMataKuliahId) {
-            $mahasiswaIdsInKRS = KRS::where('mata_kuliah_id', $selectedMataKuliahId)
-                ->pluck('mahasiswa_id')->unique();
+            $mahasiswaUserIdsInKRS = KRS::where('mata_kuliah_id', $selectedMataKuliahId)
+                ->pluck('user_id')->unique();
 
-            // Ambil data mahasiswa berdasarkan daftar id tersebut
-            $mahasiswas = Mahasiswa::whereIn('id', $mahasiswaIdsInKRS)->get();
+            // Ambil user dengan role mahasiswa berdasarkan user_id dari KRS
+            $mahasiswas = User::whereIn('id', $mahasiswaUserIdsInKRS)
+                ->where('role', 'mahasiswa')
+                ->get();
         }
 
         return view('dosen.nilai.create', compact(
@@ -64,13 +67,15 @@ class NilaiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'mahasiswa_id' => 'required|exists:mahasiswas,id', // validasi id mahasiswa
+            'mahasiswa_id' => 'required|exists:users,id', // validasi id mahasiswa (user)
             'mata_kuliah_id' => 'required|exists:matakuliahs,id',
             'nilai' => 'required|string|max:2',
         ]);
 
         // Cari mahasiswa sesuai id mahasiswa yang dipilih
-        $mahasiswaActual = Mahasiswa::find($request->mahasiswa_id);
+        $mahasiswaActual = User::where('id', $request->mahasiswa_id)
+            ->where('role', 'mahasiswa')
+            ->first();
 
         if (!$mahasiswaActual) {
             return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan.');
@@ -79,12 +84,12 @@ class NilaiController extends Controller
         // Simpan atau update nilai
         Nilai::updateOrCreate(
             [
-                'mahasiswa_id' => $mahasiswaActual->id,
+                'user_id' => $mahasiswaActual->id,
                 'mata_kuliah_id' => $request->mata_kuliah_id,
             ],
             [
                 'nilai' => $request->nilai,
-                'dosen_id' => auth()->user()->dosen->id, // Ambil id dosen yang sedang login
+                'dosen_id' => auth()->id(),
             ]
         );
 
@@ -93,19 +98,19 @@ class NilaiController extends Controller
 
     public function edit($id)
     {
-        $nilai = Nilai::with(['mahasiswa', 'mataKuliah'])->findOrFail($id);
+        $nilai = Nilai::with(['user', 'mataKuliah'])->findOrFail($id);
         return view('dosen.nilai.edit', compact('nilai'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nilai' => 'required|numeric|min:0|max:100',
+            'nilai' => 'required|string|max:2',
         ]);
 
         $nilai = Nilai::findOrFail($id);
         $nilai->nilai = $request->nilai;
-        $nilai->dosen_id = auth()->user()->dosen->id;
+        $nilai->dosen_id = auth()->id();
         $nilai->save();
 
         return redirect()->route('dosen.nilai.index')->with('success', 'Nilai berhasil diperbarui.');

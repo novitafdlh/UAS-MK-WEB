@@ -11,21 +11,51 @@ use App\Models\Prodi;    // Import model Prodi
 class DashboardController extends Controller
 {
     public function index()
-    {
-        // Hitung total dari setiap entitas
-        $totalDosens = Dosen::count(); // Total data dosen (dari tabel 'dosens')
-        $totalDosenAccounts = User::where('role', 'dosen')->count(); // Total akun dosen (dari tabel 'users' dengan role 'dosen')
-        $totalMahasiswaAccounts = User::where('role', 'mahasiswa')->count(); // Total akun mahasiswa (dari tabel 'users' dengan role 'mahasiswa')
-        $totalJurusans = Jurusan::count(); // Total jurusan
-        $totalProdis = Prodi::count(); // Total program studi
+{
+    $mahasiswas = \App\Models\User::where('role', 'mahasiswa')->get();
+    $dosens = \App\Models\User::where('role', 'dosen')->get();
+    $totalProdi = \App\Models\Prodi::count();
+    $totalJurusan = \App\Models\Jurusan::count();
+    $totalMataKuliah = \App\Models\MataKuliah::count();
+    $totalJadwal = \App\Models\Jadwal::count();
+    $totalKRS = \App\Models\KRS::count();
 
-        // Kirim data ini ke view
-        return view('admin.dashboard', compact(
-            'totalDosens',
-            'totalDosenAccounts',
-            'totalMahasiswaAccounts',
-            'totalJurusans',
-            'totalProdis'
-        ));
+    return view('admin.dashboard', compact(
+        'mahasiswas',
+        'dosens',
+        'totalProdi',
+        'totalJurusan',
+        'totalMataKuliah',
+        'totalJadwal',
+        'totalKRS'
+    ));
+}
+
+
+    public function show($id) {
+        $akun = User::findOrFail($id);
+        return view('admin.akun.show', compact('akun'));
+    }
+
+    public function edit($id) {
+        $akun = User::findOrFail($id);
+        $prodis = Prodi::all();
+        $jurusans = Jurusan::all();
+        return view('admin.akun.edit', compact('akun', 'prodis', 'jurusans'));
+    }
+
+    public function update(Request $request, $id) {
+        $akun = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $akun->id,
+            'prodi_id' => 'required|exists:prodis,id',
+            'jurusan_id' => 'required|exists:jurusans,id',
+        ]);
+
+        $akun->update($request->only(['name', 'email', 'prodi_id', 'jurusan_id']));
+
+        return redirect()->route('admin.dashboard')->with('success', 'Akun berhasil diperbarui.');
     }
 }

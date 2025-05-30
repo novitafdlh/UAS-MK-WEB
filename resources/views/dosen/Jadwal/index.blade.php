@@ -20,6 +20,7 @@
         <thead>
             <tr>
                 <th class="px-4 py-2">Mata Kuliah</th>
+                <th class="px-4 py-2">Jurusan</th>
                 <th class="px-4 py-2">Prodi</th>
                 <th class="px-4 py-2">Hari</th>
                 <th class="px-4 py-2">Jam</th>
@@ -30,6 +31,7 @@
             @forelse($jadwals as $jadwal)
             <tr>
                 <td class="px-4 py-2">{{ $jadwal->mata_kuliah->nama ?? '-' }}</td>
+                <td class="px-4 py-2">{{ $jadwal->jurusan->nama ?? '-' }}</td>
                 <td class="px-4 py-2">{{ $jadwal->prodi->nama ?? '-' }}</td>
                 <td class="px-4 py-2">{{ $jadwal->hari }}</td>
                 <td class="px-4 py-2">{{ $jadwal->jam_mulai }} - {{ $jadwal->jam_selesai }}</td>

@@ -9,7 +9,7 @@
 
         <div>
             <label class="block mb-2 font-semibold text-gray-700">Nama Mahasiswa</label>
-            <input type="text" value="{{ $nilai->mahasiswa->nama }}" class="w-full px-4 py-2 border rounded-lg bg-gray-100" readonly>
+            <input type="text" value="{{ $nilai->user->name }}" class="w-full px-4 py-2 border rounded-lg bg-gray-100" readonly>
         </div>
 
         <div>
@@ -19,8 +19,12 @@
 
         <div>
             <label for="nilai" class="block mb-2 font-semibold text-gray-700">Nilai</label>
-            <input type="number" name="nilai" id="nilai" value="{{ old('nilai', $nilai->nilai) }}" min="0" max="100" required
+            <select name="nilai" id="nilai" required
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                @foreach(['A', 'B', 'C', 'D', 'E'] as $huruf)
+                    <option value="{{ $huruf }}" {{ old('nilai', $nilai->nilai) == $huruf ? 'selected' : '' }}>{{ $huruf }}</option>
+                @endforeach
+            </select>
             @error('nilai')<p class="text-red-600 text-sm mt-1">{{ $message }}</p>@enderror
         </div>
 
@@ -28,13 +32,6 @@
             <a href="{{ route('dosen.nilai.index') }}" class="px-6 py-2 text-gray-600 font-semibold rounded-lg hover:underline">
                 Batal
             </a>
-            <form action="{{ route('dosen.nilai.destroy', $nilai->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus nilai ini?');">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
-                    Hapus
-                </button>
-            </form>
             <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
                 Simpan
             </button>

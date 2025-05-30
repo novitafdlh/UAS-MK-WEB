@@ -9,7 +9,8 @@ class Nilai extends Model
     protected $table = 'nilai';
 
     protected $fillable = [
-        'user_id', // ganti dari 'mahasiswa_id' ke 'user_id'
+        'user_id',
+        'dosen_id',
         'mata_kuliah_id',
         'nilai',
     ];
@@ -28,5 +29,9 @@ class Nilai extends Model
     public function jadwal()
     {
         return $this->belongsTo(\App\Models\Jadwal::class, 'jadwal_id');
+    }
+    public function dosen()
+    {
+        return $this->belongsTo(User::class, 'dosen_id');
     }
 }
