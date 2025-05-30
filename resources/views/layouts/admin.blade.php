@@ -102,74 +102,24 @@
 
                 <!-- Mahasiswa -->
                 <li>
-                    <button class="w-full sidebar-menu-item flex items-center justify-between px-4 py-3 rounded-xl text-white hover:bg-white hover:bg-opacity-10"
-                            onclick="toggleSubmenu('submenu-mahasiswa', this)">
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
-                            </svg>
-                            <span class="font-medium">Mahasiswa</span>
-                        </div>
-                        <svg class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    <a href="{{ route('admin.mahasiswa.index') }}" 
+                       class="sidebar-menu-item flex items-center space-x-3 px-4 py-3 rounded-xl text-white hover:bg-white hover:bg-opacity-10">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
                         </svg>
-                    </button>
-                    <ul id="submenu-mahasiswa" class="hidden ml-8 mt-2 space-y-1">
-                        <li>
-                            <a href="{{ route('admin.mahasiswa.data.index') }}" 
-                               class="sidebar-menu-item flex items-center space-x-3 px-4 py-2 rounded-lg text-rose-100 hover:bg-white hover:bg-opacity-10 hover:text-white">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                                <span>Data Mahasiswa</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.mahasiswa.akun.index') }}" 
-                               class="sidebar-menu-item flex items-center space-x-3 px-4 py-2 rounded-lg text-rose-100 hover:bg-white hover:bg-opacity-10 hover:text-white">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                <span>Akun Mahasiswa</span>
-                            </a>
-                        </li>
-                    </ul>
+                        <span class="font-medium">Mahasiswa</span>
+                    </a>
                 </li>
 
                 <!-- Dosen -->
                 <li>
-                    <button class="w-full sidebar-menu-item flex items-center justify-between px-4 py-3 rounded-xl text-white hover:bg-white hover:bg-opacity-10"
-                            onclick="toggleSubmenu('submenu-dosen', this)">
-                        <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                            </svg>
-                            <span class="font-medium">Dosen</span>
-                        </div>
-                        <svg class="w-4 h-4 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    <a href="{{ route('admin.dosen.index') }}" 
+                       class="sidebar-menu-item flex items-center space-x-3 px-4 py-3 rounded-xl text-white hover:bg-white hover:bg-opacity-10">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
-                    </button>
-                    <ul id="submenu-dosen" class="hidden ml-8 mt-2 space-y-1">
-                        <li>
-                            <a href="{{ route('admin.dosen.data.index') }}" 
-                               class="sidebar-menu-item flex items-center space-x-3 px-4 py-2 rounded-lg text-rose-100 hover:bg-white hover:bg-opacity-10 hover:text-white">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                                </svg>
-                                <span>Data Dosen</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.dosen.akun.index') }}" 
-                               class="sidebar-menu-item flex items-center space-x-3 px-4 py-2 rounded-lg text-rose-100 hover:bg-white hover:bg-opacity-10 hover:text-white">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                </svg>
-                                <span>Akun Dosen</span>
-                            </a>
-                        </li>
-                    </ul>
+                        <span class="font-medium">Dosen</span>
+                    </a>
                 </li>
 
                 <!-- Mata Kuliah -->

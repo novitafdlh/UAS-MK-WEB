@@ -8,7 +8,8 @@ use App\Models\Jadwal;
 use App\Models\Matakuliah;
 use App\Models\Prodi;
 use App\Models\User;
-use App\Models\Dosen;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Jurusan;
 
 class JadwalController extends Controller
 {
@@ -17,7 +18,7 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $jadwals = Jadwal::with(['prodi', 'mata_kuliah', 'dosen'])->get();
+        $jadwals = Jadwal::with(['jurusan', 'prodi', 'mata_kuliah', 'dosen'])->get();
         return view('admin.jadwal.index', compact('jadwals'));
     }
 
@@ -26,11 +27,12 @@ class JadwalController extends Controller
      */
     public function create()
     {
+        $jurusans = \App\Models\Jurusan::all();
         $prodis = Prodi::all();
         $matakuliahs = Matakuliah::all();
-        $dosens = Dosen::all(); // ambil dari tabel dosens
+        $dosens = User::where('role', 'dosen')->get();
 
-        return view('admin.jadwal.create', compact('prodis', 'matakuliahs', 'dosens'));
+        return view('admin.jadwal.create', compact('jurusans', 'prodis', 'matakuliahs', 'dosens'));
     }
 
     /**
@@ -39,6 +41,7 @@ class JadwalController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'jurusan_id' => 'required|exists:jurusans,id',
             'prodi_id' => 'required',
             'mata_kuliah_id' => 'required',
             'dosen_id' => 'required',
@@ -49,6 +52,7 @@ class JadwalController extends Controller
         ]);
 
         $jadwal = Jadwal::create([
+            'jurusan_id' => $request->jurusan_id,
             'prodi_id' => $request->prodi_id,
             'mata_kuliah_id' => $request->mata_kuliah_id,
             'dosen_id' => $request->dosen_id,
@@ -74,14 +78,14 @@ class JadwalController extends Controller
      */
     public function edit(string $id)
     {
-        $jadwal = Jadwal::with(['prodi', 'mata_kuliah', 'dosen', 'mahasiswas'])->findOrFail($id);
+        $jadwal = Jadwal::with(['jurusan', 'prodi', 'mata_kuliah', 'dosen'])->findOrFail($id);
 
+        $jurusans = \App\Models\Jurusan::all();
         $prodis = Prodi::all();
         $matakuliahs = Matakuliah::all();
-        $dosens = Dosen::all(); // ambil dari tabel dosens
-        $mahasiswas = \App\Models\Mahasiswa::all();
+        $dosens = User::where('role', 'dosen')->get();
 
-        return view('admin.jadwal.edit', compact('jadwal', 'prodis', 'matakuliahs', 'dosens', 'mahasiswas'));
+        return view('admin.jadwal.edit', compact('jadwal', 'jurusans', 'prodis', 'matakuliahs', 'dosens'));
     }
 
     /**
@@ -90,19 +94,23 @@ class JadwalController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
+            'jurusan_id' => 'required|exists:jurusans,id',
             'prodi_id' => 'required',
             'mata_kuliah_id' => 'required',
             'dosen_id' => 'required',
+            'hari' => 'required|string|max:20',
+            'jam_mulai' => 'required|string|max:10',
+            'jam_selesai' => 'required|string|max:10',
+            'ruangan' => 'required|string|max:50',
         ]);
 
         $jadwal = Jadwal::findOrFail($id);
         $jadwal->update([
+            'jurusan_id' => $request->jurusan_id,
             'prodi_id' => $request->prodi_id,
             'mata_kuliah_id' => $request->mata_kuliah_id,
             'dosen_id' => $request->dosen_id,
         ]);
-
-        $jadwal->mahasiswas()->sync($request->mahasiswa_ids);
 
         return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil diperbarui.');
     }
@@ -113,7 +121,6 @@ class JadwalController extends Controller
     public function destroy(string $id)
     {
         $jadwal = Jadwal::findOrFail($id);
-        $jadwal->mahasiswas()->detach();
         $jadwal->delete();
 
         return redirect()->route('admin.jadwal.index')->with('success', 'Jadwal berhasil dihapus.');

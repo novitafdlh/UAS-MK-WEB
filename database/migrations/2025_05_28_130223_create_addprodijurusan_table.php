@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('mahasiswa');
+            $table->foreignId('jurusan_id')->nullable()->constrained('jurusans')->onDelete('cascade');
+            $table->foreignId('prodi_id')->nullable()->constrained('prodis')->onDelete('cascade');
         });
     }
 
@@ -22,7 +23,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+            $table->dropForeign(['jurusan_id']);
+            $table->dropForeign(['prodi_id']);
+            $table->dropColumn(['jurusan_id', 'prodi_id']);
         });
     }
 };

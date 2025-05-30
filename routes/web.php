@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\JurusanController;
 use App\Http\Controllers\Admin\ProdiController;
@@ -34,48 +33,28 @@ Route::middleware('auth')->group(function () {
     // Admin
     Route::middleware('is_admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('dashboard', fn() => view('admin.dashboard'))->name('dashboard');
-        // Route untuk Data Mahasiswa
+
+        // Kelola Mahasiswa
         Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
-            Route::prefix('data')->name('data.')->group(function () {
-                Route::get('/', [MahasiswaController::class, 'index'])->name('index');
-                Route::get('/create', [MahasiswaController::class, 'create'])->name('create');
-                Route::post('/', [MahasiswaController::class, 'store'])->name('store');
-                Route::get('/{id}/edit', [MahasiswaController::class, 'edit'])->name('edit');
-                Route::put('/{id}', [MahasiswaController::class, 'update'])->name('update');
-                Route::delete('/{id}', [MahasiswaController::class, 'destroy'])->name('destroy');
-            });
-
-            Route::prefix('akun')->name('akun.')->group(function () {
-                Route::get('/', [\App\Http\Controllers\Admin\AkunMahasiswaController::class, 'index'])->name('index');
-                Route::get('/create', [\App\Http\Controllers\Admin\AkunMahasiswaController::class, 'create'])->name('create');
-                Route::post('/', [\App\Http\Controllers\Admin\AkunMahasiswaController::class, 'store'])->name('store');
-                Route::get('/{id}/edit', [\App\Http\Controllers\Admin\AkunMahasiswaController::class, 'edit'])->name('edit');
-                Route::put('/{id}', [\App\Http\Controllers\Admin\AkunMahasiswaController::class, 'update'])->name('update');
-                Route::delete('/{id}', [\App\Http\Controllers\Admin\AkunMahasiswaController::class, 'destroy'])->name('destroy');
-            });
-        }); 
-        
-        // Route untuk Data Dosen
-        Route::prefix('dosen')->name('dosen.')->group(function () {
-            Route::prefix('data')->name('data.')->group(function () {
-                Route::get('/', [\App\Http\Controllers\Admin\DosenController::class, 'index'])->name('index');
-                Route::get('/create', [\App\Http\Controllers\Admin\DosenController::class, 'create'])->name('create');
-                Route::post('/', [\App\Http\Controllers\Admin\DosenController::class, 'store'])->name('store');
-                Route::get('/{id}/edit', [\App\Http\Controllers\Admin\DosenController::class, 'edit'])->name('edit');
-                Route::put('/{id}', [\App\Http\Controllers\Admin\DosenController::class, 'update'])->name('update');
-                Route::delete('/{id}', [\App\Http\Controllers\Admin\DosenController::class, 'destroy'])->name('destroy');
-            });
-
-            Route::prefix('akun')->name('akun.')->group(function () {
-                Route::get('/', [\App\Http\Controllers\Admin\AkunDosenController::class, 'index'])->name('index');
-                Route::get('/create', [\App\Http\Controllers\Admin\AkunDosenController::class, 'create'])->name('create');
-                Route::post('/', [\App\Http\Controllers\Admin\AkunDosenController::class, 'store'])->name('store');
-                Route::get('/{id}/edit', [\App\Http\Controllers\Admin\AkunDosenController::class, 'edit'])->name('edit');
-                Route::put('/{id}', [\App\Http\Controllers\Admin\AkunDosenController::class, 'update'])->name('update');
-                Route::delete('/{id}', [\App\Http\Controllers\Admin\AkunDosenController::class, 'destroy'])->name('destroy');
-            });
+            Route::get('/', [\App\Http\Controllers\Admin\MahasiswaController::class, 'index'])->name('index');
+            Route::get('/create', [\App\Http\Controllers\Admin\MahasiswaController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\Admin\MahasiswaController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [\App\Http\Controllers\Admin\MahasiswaController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\App\Http\Controllers\Admin\MahasiswaController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\App\Http\Controllers\Admin\MahasiswaController::class, 'destroy'])->name('destroy');
         });
 
+        // Kelola Dosen
+        Route::prefix('dosen')->name('dosen.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\DosenController::class, 'index'])->name('index');
+            Route::get('/create', [\App\Http\Controllers\Admin\DosenController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\Admin\DosenController::class, 'store'])->name('store');
+            Route::get('/{id}/edit', [\App\Http\Controllers\Admin\DosenController::class, 'edit'])->name('edit');
+            Route::put('/{id}', [\App\Http\Controllers\Admin\DosenController::class, 'update'])->name('update');
+            Route::delete('/{id}', [\App\Http\Controllers\Admin\DosenController::class, 'destroy'])->name('destroy');
+        });
+
+        // Kelola Jurusan dan Prodi
         Route::prefix('jurusan')->name('jurusan.')->group(function () {
             Route::get('/', [JurusanController::class, 'index'])->name('index');
             Route::get('/create', [JurusanController::class, 'create'])->name('create');
@@ -94,10 +73,10 @@ Route::middleware('auth')->group(function () {
             Route::delete('/{id}', [ProdiController::class, 'destroy'])->name('destroy');
         });
 
-        // Route untuk Data Matakuliah
+        // Kelola Matakuliah
         Route::resource('matakuliah', \App\Http\Controllers\Admin\MatakuliahController::class);
 
-        // Route untuk Jadwal
+        // Kelola Jadwal
         Route::prefix('jadwal')->name('jadwal.')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\JadwalController::class, 'index'])->name('index');
             Route::get('/create', [\App\Http\Controllers\Admin\JadwalController::class, 'create'])->name('create');

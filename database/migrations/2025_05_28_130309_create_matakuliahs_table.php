@@ -11,18 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mahasiswas', function (Blueprint $table) {
+        Schema::create('matakuliahs', function (Blueprint $table) {
             $table->id();
-            $table->string('nim')->unique();
-            $table->string('nama');
-            $table->string('email')->unique();
-
-            // Ganti kolom jurusan string jadi foreign key
-            $table->foreignId('jurusan_id')->constrained()->onDelete('cascade');
-
-            // Tambahkan foreign key prodi_id
+            $table->foreignId('jurusan_id')->nullable()->constrained('jurusans')->onDelete('cascade');
             $table->foreignId('prodi_id')->constrained()->onDelete('cascade');
-
+            $table->string('kode')->unique();
+            $table->string('nama');
+            $table->integer('sks');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mahasiswas');
+        Schema::dropIfExists('matakuliahs');
     }
 };

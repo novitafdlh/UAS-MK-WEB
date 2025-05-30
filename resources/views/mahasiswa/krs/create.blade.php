@@ -37,31 +37,50 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('mahasiswa.krs.store') }}" method="POST" class="space-y-6">
-            @csrf
+        <form method="GET" action="{{ route('mahasiswa.krs.create') }}" class="space-y-6">
             <div>
                 <label for="mata_kuliah_id" class="block mb-2 font-semibold text-gray-700">Mata Kuliah</label>
                 <select name="mata_kuliah_id" id="mata_kuliah_id" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    onchange="this.form.submit()">
                     <option value="">-- Pilih Mata Kuliah --</option>
                     @foreach($matakuliahs as $mk)
-                        <option value="{{ $mk->id }}" {{ old('mata_kuliah_id') == $mk->id ? 'selected' : '' }}>
+                        <option value="{{ $mk->id }}" {{ request('mata_kuliah_id') == $mk->id ? 'selected' : '' }}>
                             {{ $mk->kode }} - {{ $mk->nama }} ({{ $mk->sks }} SKS)
                         </option>
                     @endforeach
                 </select>
             </div>
-            <div class="flex justify-end gap-4 pt-4">
-                <a href="{{ route('mahasiswa.krs.index') }}"
-                   class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2 rounded-lg shadow transition">
-                    Batal
-                </a>
-                <button type="submit"
-                        class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
-                    Simpan
-                </button>
-            </div>
         </form>
+
+        @if(isset($jadwal))
+            <div class="mt-4 p-3 bg-gray-100 rounded text-sm text-gray-700">
+                <strong>Jadwal:</strong><br>
+                Hari: <b>{{ $jadwal->hari }}</b><br>
+                Jam: <b>{{ $jadwal->jam_mulai }} - {{ $jadwal->jam_selesai }}</b><br>
+                Ruangan: <b>{{ $jadwal->ruangan }}</b><br>
+                Dosen: <b>{{ $jadwal->dosen->name ?? '-' }}</b>
+            </div>
+        @elseif(request('mata_kuliah_id'))
+            <div class="mt-4 text-red-600">Jadwal belum tersedia.</div>
+        @endif
+
+        @if(request('mata_kuliah_id') && isset($jadwal))
+            <form method="POST" action="{{ route('mahasiswa.krs.store') }}" class="pt-4">
+                @csrf
+                <input type="hidden" name="mata_kuliah_id" value="{{ request('mata_kuliah_id') }}">
+                <div class="flex justify-end gap-4">
+                    <a href="{{ route('mahasiswa.krs.index') }}"
+                       class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2 rounded-lg shadow transition">
+                        Batal
+                    </a>
+                    <button type="submit"
+                            class="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+                        Simpan
+                    </button>
+                </div>
+            </form>
+        @endif
     </div>
 </main>
 @endsection

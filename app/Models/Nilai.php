@@ -9,24 +9,20 @@ class Nilai extends Model
     protected $table = 'nilai';
 
     protected $fillable = [
-        'mahasiswa_id',
+        'user_id', // ganti dari 'mahasiswa_id' ke 'user_id'
         'mata_kuliah_id',
         'nilai',
     ];
 
-    public function mahasiswa()
+    // Relasi ke user (mahasiswa)
+    public function user()
     {
-        return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function mataKuliah()
     {
         return $this->belongsTo(MataKuliah::class, 'mata_kuliah_id');
-    }
-
-    public function dosen()
-    {
-        return $this->belongsTo(Dosen::class, 'dosen_id');
     }
 
     public function jadwal()

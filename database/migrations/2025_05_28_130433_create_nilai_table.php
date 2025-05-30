@@ -13,14 +13,10 @@ return new class extends Migration
     {
         Schema::create('nilai', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('mahasiswa_id');
-            $table->unsignedBigInteger('mata_kuliah_id');
-            $table->string('nilai'); // Bisa string agar fleksibel (A, B, C, dll)
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('mata_kuliah_id')->constrained('matakuliahs')->onDelete('cascade');
+            $table->string('nilai');
             $table->timestamps();
-
-            // Relasi foreign key
-            $table->foreign('mahasiswa_id')->references('id')->on('mahasiswas')->onDelete('cascade');
-            $table->foreign('mata_kuliah_id')->references('id')->on('matakuliahs')->onDelete('cascade');
         });
     }
 

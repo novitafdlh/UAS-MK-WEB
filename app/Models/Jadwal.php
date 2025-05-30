@@ -10,9 +10,11 @@ class Jadwal extends Model
     use HasFactory;
 
     protected $fillable = [
+        'jurusan_id',
         'prodi_id',
-        'mata_kuliah_id',
         'dosen_id',
+        'mata_kuliah_id',
+        'user_id',
         'hari',
         'jam_mulai',
         'jam_selesai',
@@ -31,16 +33,24 @@ class Jadwal extends Model
         return $this->belongsTo(Prodi::class);
     }
 
-    // Relasi ke dosen (menggunakan model User karena dosen termasuk user)
-    public function dosen()
+    public function jurusan()
     {
-        return $this->belongsTo(Dosen::class, 'dosen_id');
+        return $this->belongsTo(\App\Models\Jurusan::class, 'jurusan_id');
     }
 
-    // Relasi ke mahasiswa (many-to-many)
+    public function dosen()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'dosen_id');
+    }
+
+    public function jadwal()
+    {
+        return $this->belongsTo(\App\Models\Jadwal::class, 'jadwal_id');
+    }
+
     public function mahasiswas()
     {
-        return $this->belongsToMany(Mahasiswa::class, 'jadwal_mahasiswa', 'jadwal_id', 'mahasiswa_id')
-                    ->withTimestamps();
+        return $this->belongsToMany(
+            \App\Models\User::class, 'user_id')->where('role', 'mahasiswa')->withTimestamps();
     }
 }

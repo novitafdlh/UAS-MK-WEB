@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Dosen;    // Import model Dosen
 use App\Models\User;     // Import model User (untuk akun dosen & mahasiswa)
 use App\Models\Jurusan;  // Import model Jurusan
 use App\Models\Prodi;    // Import model Prodi

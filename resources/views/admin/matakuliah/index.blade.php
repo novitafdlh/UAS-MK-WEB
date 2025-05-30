@@ -113,7 +113,9 @@
                 <table class="min-w-full divide-y divide-rose-200">
                     <thead class="bg-rose-100">
     <tr>
-        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode & Nama</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Mata Kuliah</th>
         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKS</th>
         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jurusan</th>
         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prodi</th>
@@ -124,14 +126,16 @@
 <tbody class="bg-white divide-y divide-rose-100">
     @foreach($matakuliahs as $matakuliah)
     <tr class="hover:bg-rose-50 transition-colors duration-200">
+        <td class="px-6 py-4">{{ $loop->iteration }}</td>
         <td class="px-6 py-4">
             <div class="flex items-center">
                 <div class="w-12 h-12 bg-gradient-to-br from-rose-100 to-red-100 rounded-xl flex items-center justify-center mr-4">
-                    <span class="text-sm font-bold text-rose-600">{{ substr($matakuliah->kode, 0, 3) }}</span>
+                    <span class="text-sm font-bold text-rose-600">{{ substr($matakuliah->kode, 0, 5) }}</span>
                 </div>
+        </td>
+        <td class="px-6 py-4">
                 <div>
                     <div class="text-sm font-medium text-gray-900">{{ $matakuliah->nama }}</div>
-                    <div class="text-sm text-gray-500">{{ $matakuliah->kode }}</div>
                 </div>
             </div>
         </td>
@@ -141,13 +145,13 @@
             </span>
         </td>
         <td class="px-6 py-4 text-sm text-gray-900">
-            {{ $matakuliah->jurusan ?? '-' }}
+            {{ $matakuliah->jurusan->nama ?? '-' }}
         </td>
         <td class="px-6 py-4 text-sm text-gray-900">
             {{ $matakuliah->prodi->nama ?? '-' }}
         </td>
         <td class="px-6 py-4 text-sm text-gray-900">
-            {{ $matakuliah->dosen->nama ?? '-' }}
+            {{ $matakuliah->dosen->name ?? '-' }}
         </td>
         <td class="px-6 py-4 text-center">
             <div class="flex items-center justify-center space-x-2">

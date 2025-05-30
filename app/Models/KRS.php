@@ -11,15 +11,16 @@ class KRS extends Model
 
     protected $fillable = [
         'user_id',
-        'mahasiswa_id',
+        'jadwal_id',
         'mata_kuliah_id',
         'semester',
         'tahun_akademik',
     ];
 
-     public function user()
+    // Relasi ke user (mahasiswa)
+    public function user()
     {
-        return $this->belongsTo(User::class, 'mahasiswa_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function mataKuliah()
@@ -27,8 +28,8 @@ class KRS extends Model
         return $this->belongsTo(MataKuliah::class, 'mata_kuliah_id');
     }
 
-    public function mahasiswa()
+    public function jadwal()
     {
-        return $this->belongsTo(User::class, 'mahasiswa_id');
+        return $this->belongsTo(Jadwal::class, 'jadwal_id');
     }
 }

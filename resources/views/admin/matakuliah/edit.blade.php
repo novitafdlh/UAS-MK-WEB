@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-
-
     <form action="{{ route('admin.matakuliah.update', $matakuliah->id) }}" method="POST" class="space-y-6">
         @csrf
         @method('PUT')
@@ -26,12 +24,12 @@
         </div>
 
         <div>
-            <label for="jurusan" class="block mb-2 font-semibold text-gray-700">Jurusan</label>
-            <select name="jurusan" id="jurusan" required
+            <label for="jurusan_id" class="block mb-2 font-semibold text-gray-700">Jurusan</label>
+            <select name="jurusan_id" id="jurusan_id" required
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
                 <option value="">-- Pilih Jurusan --</option>
                 @foreach($jurusans as $jurusan)
-                    <option value="{{ $jurusan->nama }}" {{ old('jurusan', $matakuliah->jurusan) == $jurusan->nama ? 'selected' : '' }}>
+                    <option value="{{ $jurusan->id }}" {{ old('jurusan_id', $matakuliah->jurusan_id) == $jurusan->id ? 'selected' : '' }}>
                         {{ $jurusan->nama }}
                     </option>
                 @endforeach
@@ -44,7 +42,8 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
                 <option value="">-- Pilih Prodi --</option>
                 @foreach($prodis as $prodi)
-                    <option value="{{ $prodi->id }}" {{ old('prodi_id', $matakuliah->prodi_id) == $prodi->id ? 'selected' : '' }}>
+                    <option value="{{ $prodi->id }}" data-jurusan="{{ $prodi->jurusan_id }}"
+                        {{ old('prodi_id', $matakuliah->prodi_id) == $prodi->id ? 'selected' : '' }}>
                         {{ $prodi->nama }}
                     </option>
                 @endforeach
@@ -57,8 +56,9 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
                 <option value="">-- Pilih Dosen --</option>
                 @foreach($dosens as $dosen)
-                    <option value="{{ $dosen->id }}" {{ old('dosen_id', $matakuliah->dosen_id) == $dosen->id ? 'selected' : '' }}>
-                        {{ $dosen->nama }}
+                    <option value="{{ $dosen->id }}" data-prodi_id="{{ $dosen->prodi_id }}"
+                        {{ old('dosen_id', $matakuliah->dosen_id) == $dosen->id ? 'selected' : '' }}>
+                        {{ $dosen->name }}
                     </option>
                 @endforeach
             </select>
@@ -71,5 +71,47 @@
             </button>
         </div>
     </form>
-</div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const jurusanSelect = document.getElementById('jurusan_id');
+        const prodiSelect = document.getElementById('prodi_id');
+        const dosenSelect = document.getElementById('dosen_id');
+        const allProdiOptions = Array.from(prodiSelect.options);
+        const allDosenOptions = Array.from(dosenSelect.options);
+
+        // Filter prodi berdasarkan jurusan
+        jurusanSelect.addEventListener('change', function () {
+            const jurusanId = this.value;
+            prodiSelect.innerHTML = '';
+            allProdiOptions.forEach(option => {
+                if (option.value === "" || option.getAttribute('data-jurusan') === jurusanId) {
+                    prodiSelect.appendChild(option.cloneNode(true));
+                }
+            });
+            // Reset dosen saat jurusan berubah
+            dosenSelect.innerHTML = '';
+        });
+
+        // Filter dosen berdasarkan prodi
+        prodiSelect.addEventListener('change', function () {
+            const prodiId = this.value;
+            dosenSelect.innerHTML = '';
+            allDosenOptions.forEach(option => {
+                if (option.value === "") return;
+                if (option.getAttribute('data-prodi_id') === prodiId) {
+                    dosenSelect.appendChild(option.cloneNode(true));
+                }
+            });
+        });
+
+        // Trigger filter saat halaman edit dibuka (agar value terpilih tetap muncul)
+        if (jurusanSelect.value) {
+            jurusanSelect.dispatchEvent(new Event('change'));
+        }
+        if (prodiSelect.value) {
+            prodiSelect.dispatchEvent(new Event('change'));
+        }
+    });
+    </script>
 @endsection

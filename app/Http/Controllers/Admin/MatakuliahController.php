@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Matakuliah;
 use Illuminate\Http\Request;
 use App\Models\Prodi;
-use App\Models\Dosen;
 use App\Models\Jurusan;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +19,7 @@ class MatakuliahController extends Controller
         $prodis = \App\Models\Prodi::all();
         $prodiId = $request->query('prodi_id');
 
-        $query = \App\Models\Matakuliah::with(['prodi', 'dosen']);
+        $query = \App\Models\Matakuliah::with(['prodi', 'jurusan', 'dosen']);
 
         if ($prodiId) {
             $query->where('prodi_id', $prodiId);
@@ -38,11 +37,10 @@ class MatakuliahController extends Controller
     {
         $prodis = Prodi::all();
         $jurusans = Jurusan::all();
-        $dosens = Dosen::all();
-        $mahasiswa = Auth::user()->mahasiswa;
-        $matakuliahs = \App\Models\Matakuliah::where('prodi_id', $mahasiswa->prodi_id)->get();
+        $dosens = \App\Models\User::where('role', 'dosen')->get();
+        $matakuliahs = \App\Models\Matakuliah::all();
 
-        return view('admin.matakuliah.create', compact('prodis', 'jurusans', 'dosens', 'matakuliahs', 'mahasiswa'));
+        return view('admin.matakuliah.create', compact('prodis', 'jurusans', 'dosens', 'matakuliahs'));
     }
 
     /**
@@ -54,9 +52,9 @@ class MatakuliahController extends Controller
             'kode' => 'required|unique:matakuliahs,kode',
             'nama' => 'required',
             'sks' => 'required|integer',
-            'jurusan' => 'required',
+            'jurusan_id' => 'required',
             'prodi_id' => 'required|exists:prodis,id',
-            'dosen_id' => 'nullable|exists:dosens,id',
+            'dosen_id' => 'required|exists:users,id',
         ]);
 
         Matakuliah::create($request->all());
@@ -79,11 +77,10 @@ class MatakuliahController extends Controller
     {
         $prodis = Prodi::all();
         $jurusans = Jurusan::all();
-        $dosens = Dosen::all();
-        $mahasiswa = Auth::user()->mahasiswa;
-        $matakuliahs = \App\Models\Matakuliah::where('prodi_id', $mahasiswa->prodi_id)->get();
+        $dosens = \App\Models\User::where('role', 'dosen')->get();
+        $matakuliahs = \App\Models\Matakuliah::all();
 
-        return view('admin.matakuliah.edit', compact('matakuliah', 'prodis', 'jurusans', 'dosens', 'matakuliahs', 'mahasiswa'));
+        return view('admin.matakuliah.edit', compact('matakuliah', 'prodis', 'jurusans', 'dosens', 'matakuliahs'));
     }
 
     /**
@@ -95,8 +92,9 @@ class MatakuliahController extends Controller
             'kode' => 'required|unique:matakuliahs,kode,' . $matakuliah->id,
             'nama' => 'required',
             'sks' => 'required|integer',
-            'jurusan' => 'required',
+            'jurusan_id' => 'required|exists:jurusans,id',
             'prodi_id' => 'required|exists:prodis,id',
+            'dosen_id' => 'required|exists:users,id',
         ]);
 
         $matakuliah->update($request->all());

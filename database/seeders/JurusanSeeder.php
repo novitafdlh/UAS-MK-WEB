@@ -16,6 +16,14 @@ class JurusanSeeder extends Seeder
         $data = [
             ['nama' => 'Teknologi Informasi'],
             ['nama' => 'Kesehatan Masyarakat'],
+            ['nama' => 'Teknik Elektro'],
+            ['nama' => 'Teknik Sipil'],
+            ['nama' => 'Teknik Mesin'],
+            ['nama' => 'Manajemen'],
+            ['nama' => 'Akuntansi'],
+            ['nama' => 'Ilmu Hukum'],
+            ['nama' => 'Pendidikan Bahasa Inggris'],
+            ['nama' => 'Pendidikan Matematika'],
         ];
 
         foreach ($data as $jurusan) {

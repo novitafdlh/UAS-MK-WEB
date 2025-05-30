@@ -57,47 +57,37 @@
             </div>
 
             <div>
-                <label for="jurusan" class="block mb-2 font-semibold text-gray-700">Jurusan</label>
-                <select name="jurusan" id="jurusan" required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none">
+                <label for="jurusan_id" class="block mb-2 font-semibold text-gray-700">Jurusan</label>
+                <select name="jurusan_id" id="jurusan_id" required class="w-full border rounded px-3 py-2">
                     <option value="">-- Pilih Jurusan --</option>
                     @foreach($jurusans as $jurusan)
-                        <option value="{{ $jurusan->id }}" {{ old('jurusan') == $jurusan->id ? 'selected' : '' }}>
-                            {{ $jurusan->nama }}
-                        </option>
+                        <option value="{{ $jurusan->id }}">{{ $jurusan->nama }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label for="prodi_id" class="block mb-2 font-semibold text-gray-700">Prodi</label>
+                <select name="prodi_id" id="prodi_id" required class="w-full border rounded px-3 py-2">
+                    <option value="">-- Pilih Prodi --</option>
+                    @foreach($prodis as $prodi)
+                        <option value="{{ $prodi->id }}" data-jurusan="{{ $prodi->jurusan_id }}">{{ $prodi->nama }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div>
-                <label for="prodi_id" class="block mb-2 font-semibold text-gray-700">Prodi</label>
-                <select name="prodi_id" id="prodi_id" required
+                <label for="dosen_id" class="block mb-2 font-semibold text-gray-700">Dosen Pengampu</label>
+                <select name="dosen_id" id="dosen_id"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none">
-                    <option value="">-- Pilih Prodi --</option>
-                    @foreach($prodis as $prodi)
-                        <option value="{{ $prodi->id }}" data-jurusan_id="{{ $prodi->jurusan_id }}"
-
-                {{ old('prodi_id') == $prodi->id ? 'selected' : '' }}>
-                {{ $prodi->nama }}
-            </option>
-        @endforeach
-    </select>
-</div>
-
-<div>
-    <label for="dosen_id" class="block mb-2 font-semibold text-gray-700">Dosen Pengampu</label>
-    <select name="dosen_id" id="dosen_id"
-        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none">
-        <option value="">-- Pilih Dosen --</option>
-        @foreach($dosens as $dosen)
-            <option value="{{ $dosen->id }}" data-jurusan_id="{{ $dosen->jurusan_id }}"
-
-                {{ old('dosen_id') == $dosen->id ? 'selected' : '' }}>
-                {{ $dosen->nama }}
-            </option>
-        @endforeach
-    </select>
-</div>
+                    <option value="">-- Pilih Dosen --</option>
+                    @foreach($dosens as $dosen)
+                        <option value="{{ $dosen->id }}" data-prodi_id="{{ $dosen->prodi_id }}"
+                            {{ old('dosen_id') == $dosen->id ? 'selected' : '' }}>
+                            {{ $dosen->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
             <div class="flex justify-end gap-4 pt-4">
                 <a href="{{ route('admin.matakuliah.index') }}" 
@@ -116,35 +106,36 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const jurusanSelect = document.getElementById('jurusan');
+    const jurusanSelect = document.getElementById('jurusan_id');
     const prodiSelect = document.getElementById('prodi_id');
     const dosenSelect = document.getElementById('dosen_id');
+    const allProdiOptions = Array.from(prodiSelect.options);
+    const allDosenOptions = Array.from(dosenSelect.options);
 
-    function filterOptions(select, jurusanId) {
-        Array.from(select.options).forEach(option => {
-            if (!option.value) {
-                option.style.display = '';
-                return;
-            }
-            option.style.display = (option.getAttribute('data-jurusan_id') === jurusanId) ? '' : 'none';
-        });
-        // Reset value if current selection is not visible
-        if (select.selectedOptions.length && select.selectedOptions[0].style.display === 'none') {
-            select.value = '';
-        }
-    }
-
+    // Filter prodi berdasarkan jurusan
     jurusanSelect.addEventListener('change', function () {
         const jurusanId = this.value;
-        filterOptions(prodiSelect, jurusanId);
-        filterOptions(dosenSelect, jurusanId);
+        prodiSelect.innerHTML = '';
+        allProdiOptions.forEach(option => {
+            if (option.value === "" || option.getAttribute('data-jurusan') === jurusanId) {
+                prodiSelect.appendChild(option.cloneNode(true));
+            }
+        });
+        // Reset dosen saat jurusan berubah
+        dosenSelect.innerHTML = '<option value="">-- Pilih Dosen --</option>';
     });
 
-    // Trigger filter on page load if jurusan sudah terisi
-    if (jurusanSelect.value) {
-        filterOptions(prodiSelect, jurusanSelect.value);
-        filterOptions(dosenSelect, jurusanSelect.value);
-    }
+    // Filter dosen berdasarkan prodi
+    prodiSelect.addEventListener('change', function () {
+        const prodiId = this.value;
+        dosenSelect.innerHTML = '<option value="">-- Pilih Dosen --</option>';
+        allDosenOptions.forEach(option => {
+            if (option.value === "") return;
+            if (option.getAttribute('data-prodi_id') === prodiId) {
+                dosenSelect.appendChild(option.cloneNode(true));
+            }
+        });
+    });
 });
 </script>
 @endsection

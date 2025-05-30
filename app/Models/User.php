@@ -11,15 +11,6 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
 
-    public function mahasiswa()
-    {
-        return $this->hasOne(Mahasiswa::class);
-    }
-
-    public function dosen() {
-        return $this->hasOne(Dosen::class, 'user_id');
-    }
-
     public function prodi() {
         return $this->belongsTo(Prodi::class);
     }
@@ -40,6 +31,10 @@ class User extends Authenticatable
         return $this->hasMany(Jadwal::class);
     }
 
+    public function krs() {
+        return $this->hasMany(KRS::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -48,6 +43,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'nidn',
+        'jurusan_id',
+        'prodi_id',
+        'nim',
         'role',
         'password',
     ];

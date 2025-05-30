@@ -102,7 +102,7 @@
                 
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {{-- Tambah Mahasiswa --}}
-                    <a href="{{ route('admin.mahasiswa.data.create') }}" 
+                    <a href="{{ route('admin.mahasiswa.create') }}" 
                        class="group flex flex-col items-center p-4 bg-gradient-to-br from-red-50 to-rose-50 rounded-xl border border-rose-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                         <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,7 +124,7 @@
                     </a>
 
                     {{-- Kelola Akun --}}
-                    <a href="{{ route('admin.mahasiswa.akun.index') }}" 
+                    <a href="{{ route('admin.mahasiswa.index') }}" 
                        class="group flex flex-col items-center p-4 bg-gradient-to-br from-red-50 to-rose-50 rounded-xl border border-rose-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                         <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -135,7 +135,7 @@
                     </a>
 
                     {{-- Data Mahasiswa --}}
-                    <a href="{{ route('admin.mahasiswa.data.index') }}" 
+                    <a href="{{ route('admin.mahasiswa.index') }}" 
                        class="group flex flex-col items-center p-4 bg-gradient-to-br from-red-50 to-rose-50 rounded-xl border border-red-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
                         <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

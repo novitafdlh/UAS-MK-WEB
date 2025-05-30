@@ -13,7 +13,7 @@
     <div class="space-y-4">
         <div>
             <span class="font-semibold text-gray-700">Nama:</span>
-            <span class="ml-2">{{ $dosen->nama }}</span>
+            <span class="ml-2">{{ $dosen->name }}</span>
         </div>
         <div>
             <span class="font-semibold text-gray-700">NIDN:</span>
@@ -24,12 +24,12 @@
             <span class="ml-2">{{ $dosen->email }}</span>
         </div>
         <div>
-            <span class="font-semibold text-gray-700">Prodi:</span>
-            <span class="ml-2">{{ $dosen->prodi->nama ?? '-' }}</span>
+            <span class="font-semibold text-gray-700">Jurusan:</span>
+            <span class="ml-2">{{ optional($dosen->jurusan)->nama ?? '-' }}</span>
         </div>
         <div>
-            <span class="font-semibold text-gray-700">Jurusan:</span>
-            <span class="ml-2">{{ $dosen->jurusan->nama ?? '-' }}</span>
+            <span class="font-semibold text-gray-700">Prodi:</span>
+            <span class="ml-2">{{ optional($dosen->prodi)->nama ?? '-' }}</span>
         </div>
     </div>
     <div class="flex justify-end mt-8">

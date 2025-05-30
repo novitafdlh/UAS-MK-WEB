@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Jurusan;
 use App\Models\Prodi;
 use App\Models\KRS;
-use App\Models\Dosen;
 
 class Matakuliah extends Model
 {
     use HasFactory;
     protected $table = 'matakuliahs';
-    protected $fillable = ['prodi_id', 'jurusan_id', 'kode', 'nama', 'sks', 'jurusan'];
+    protected $fillable = ['prodi_id', 'jurusan_id', 'kode', 'nama', 'sks', 'dosen_id'];
 
     public function jurusan()
     {
@@ -31,6 +30,6 @@ class Matakuliah extends Model
 
     public function dosen()
     {
-        return $this->belongsTo(\App\Models\Dosen::class, 'dosen_id');
+        return $this->belongsTo(User::class, 'dosen_id');
     }
 }

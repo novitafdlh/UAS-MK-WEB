@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('mahasiswas', function (Blueprint $table) {
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+        Schema::table('matakuliahs', function (Blueprint $table) {
+            $table->unsignedBigInteger('dosen_id')->nullable()->after('prodi_id');
+            $table->foreign('dosen_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
@@ -21,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('mahasiswas', function (Blueprint $table) {
-            //
+        Schema::table('matakuliahs', function (Blueprint $table) {
+            $table->dropColumn('dosen_id');
         });
     }
 };

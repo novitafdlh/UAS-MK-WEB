@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Dosen;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Prodi;
 use App\Models\Jurusan;
+use Illuminate\Support\Facades\Hash;
 
 class DosenController extends Controller
 {
@@ -15,8 +16,10 @@ class DosenController extends Controller
      */
     public function index()
     {
-        $dosens = Dosen::with('prodi.jurusan')->get();
-        return view('admin.dosen.data.index', compact('dosens'));
+        $dosen = User::with(['prodi', 'jurusan'])
+            ->where('role', 'dosen')
+            ->get();
+        return view('admin.dosen.index', compact('dosen'));
     }
 
     /**
@@ -24,9 +27,8 @@ class DosenController extends Controller
      */
     public function create()
     {
-        // Ambil semua jurusan beserta prodi-prodi yang dimilikinya
         $jurusans = Jurusan::with('prodis')->get();
-        return view('admin.dosen.data.create', compact('jurusans'));
+        return view('admin.dosen.create', compact('jurusans'));
     }
 
     /**
@@ -34,22 +36,21 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nidn' => 'required|unique:dosens,nidn',
-            'nama' => 'required',
-            'email' => 'required|email|unique:dosens,email',
+        $validatedData = $request->validate([
+            'nidn' => 'required|unique:users,nidn',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
             'prodi_id' => 'required|exists:prodis,id',
             'jurusan_id' => 'required|exists:jurusans,id',
+            'password' => 'required|min:8|confirmed',
         ]);
 
-        // Pastikan prodi_id yang dipilih memang bagian dari jurusan_id yang dipilih
-        $jurusan = Jurusan::find($request->jurusan_id);
-        if (!$jurusan || !$jurusan->prodis->contains('id', $request->prodi_id)) {
-            return back()->withErrors(['prodi_id' => 'Program Studi yang dipilih tidak sesuai dengan Jurusan.'])->withInput();
-        }
+        $validatedData['role'] = 'dosen';
+        $validatedData['password'] = Hash::make($validatedData['password']);
 
-        Dosen::create($request->all());
-        return redirect()->route('admin.dosen.data.index')->with('success', 'Data dosen berhasil ditambahkan.');
+        User::create($validatedData);
+
+        return redirect()->route('admin.dosen.index')->with('success', 'Data Dosen berhasil ditambahkan.');
     }
 
     /**
@@ -65,33 +66,36 @@ class DosenController extends Controller
      */
     public function edit($id)
     {
-        $dosen = Dosen::with('prodi.jurusan')->findOrFail($id);
-        // Ambil semua jurusan beserta prodi-prodi yang dimilikinya
+        $dosen = User::where('role', 'dosen')->with(['prodi', 'jurusan'])->findOrFail($id);
         $jurusans = Jurusan::with('prodis')->get();
-        return view('admin.dosen.data.edit', compact('dosen', 'jurusans'));
+        return view('admin.dosen.edit', compact('dosen', 'jurusans'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dosen $dosen)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'nidn' => 'required|unique:dosens,nidn,' . $dosen->id,
-            'nama' => 'required',
-            'email' => 'required|email|unique:dosens,email,' . $dosen->id,
+        $dosen = User::where('role', 'dosen')->findOrFail($id);
+
+        $validatedData = $request->validate([
+            'nidn' => 'required|unique:users,nidn,' . $dosen->id,
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $dosen->id,
             'prodi_id' => 'required|exists:prodis,id',
             'jurusan_id' => 'required|exists:jurusans,id',
+            'password' => 'nullable|min:8|confirmed',
         ]);
 
-        // Pastikan prodi_id yang dipilih memang bagian dari jurusan_id yang dipilih
-        $jurusan = Jurusan::find($request->jurusan_id);
-        if (!$jurusan || !$jurusan->prodis->contains('id', $request->prodi_id)) {
-            return back()->withErrors(['prodi_id' => 'Program Studi yang dipilih tidak sesuai dengan Jurusan.'])->withInput();
+        if ($request->filled('password')) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        } else {
+            unset($validatedData['password']);
         }
 
-        $dosen->update($request->all());
-        return redirect()->route('admin.dosen.data.index')->with('success', 'Data dosen berhasil diperbarui.');
+        $dosen->update($validatedData);
+
+        return redirect()->route('admin.dosen.index')->with('success', 'Data Dosen berhasil diperbarui.');
     }
 
     /**
@@ -99,8 +103,9 @@ class DosenController extends Controller
      */
     public function destroy($id)
     {
-        $dosen = Dosen::findOrFail($id);
+        $dosen = User::where('role', 'dosen')->findOrFail($id);
         $dosen->delete();
-        return redirect()->route('admin.dosen.data.index')->with('success', 'Data berhasil dihapus');
+
+        return redirect()->route('admin.dosen.index')->with('success', 'Data Dosen berhasil dihapus.');
     }
 }

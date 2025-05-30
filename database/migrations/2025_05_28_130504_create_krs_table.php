@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dosens', function (Blueprint $table) {
+        Schema::create('krs', function (Blueprint $table) {
             $table->id();
-            $table->string('nidn')->unique(); // Nomor Induk Dosen Nasional
-            $table->string('nama');
-            $table->string('email')->unique();
-            $table->string('jurusan');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('mata_kuliah_id')->constrained('matakuliahs')->onDelete('cascade');
+            $table->string('semester');
+            $table->string('tahun_akademik');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dosens');
+        Schema::dropIfExists('krs');
     }
 };
