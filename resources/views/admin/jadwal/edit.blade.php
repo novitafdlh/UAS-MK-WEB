@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="max-w-5xl mx-auto px-6 py-8">
     <div class="bg-red-300 p-8 rounded-xl shadow-md">
         <h1 class="text-3xl font-bold mb-8 text-gray-800 text-center">Edit Jadwal</h1>
@@ -29,7 +28,6 @@
                     <select name="jurusan_id" id="jurusan_id" required
                         class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         <option value="">-- Pilih Jurusan --</option>
-                        {{-- Jurusan --}}
                         @foreach($jurusans as $jurusan)
                             <option value="{{ $jurusan->id }}"
                                 {{ old('jurusan_id', $jadwal->jurusan_id) == $jurusan->id ? 'selected' : '' }}>
@@ -47,7 +45,6 @@
                     <select name="prodi_id" id="prodi_id" required
                         class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         <option value="">-- Pilih Prodi --</option>
-                        {{-- Prodi --}}
                         @foreach($prodis as $prodi)
                             <option value="{{ $prodi->id }}"
                                 data-jurusan="{{ $prodi->jurusan_id }}"
@@ -61,7 +58,6 @@
                     @enderror
                 </div>
 
-                {{-- Dosen --}}
                 <div>
                     <label for="dosen_id" class="block mb-2 font-semibold text-gray-700">Dosen</label>
                     <select name="dosen_id" id="dosen_id" required
@@ -80,7 +76,6 @@
                     @enderror
                 </div>
 
-                {{-- Mata Kuliah --}}
                 <div>
                     <label for="mata_kuliah_id" class="block mb-2 font-semibold text-gray-700">Mata Kuliah</label>
                     <select name="mata_kuliah_id" id="mata_kuliah_id" required
@@ -154,66 +149,99 @@
 </div>
 @endsection
 
+@section('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const jurusanSelect = document.getElementById('jurusan_id');
     const prodiSelect = document.getElementById('prodi_id');
     const dosenSelect = document.getElementById('dosen_id');
     const matkulSelect = document.getElementById('mata_kuliah_id');
+
     const allProdiOptions = Array.from(prodiSelect.options);
     const allDosenOptions = Array.from(dosenSelect.options);
     const allMatkulOptions = Array.from(matkulSelect.options);
 
-    // Filter prodi berdasarkan jurusan
+    function reloadOptions(selectElement, options, filterFn, selectedValue) {
+        selectElement.innerHTML = '';
+
+        const emptyOption = document.createElement('option');
+        emptyOption.value = '';
+        emptyOption.textContent = '-- Pilih --';
+        selectElement.appendChild(emptyOption);
+
+        options.forEach(option => {
+            if (filterFn(option)) {
+                selectElement.appendChild(option.cloneNode(true));
+            }
+        });
+
+        if (selectedValue) {
+            selectElement.value = selectedValue;
+        }
+    }
+
     jurusanSelect.addEventListener('change', function () {
         const jurusanId = this.value;
-        prodiSelect.innerHTML = '';
-        allProdiOptions.forEach(option => {
-            if (option.value === "" || option.getAttribute('data-jurusan') === jurusanId) {
-                prodiSelect.appendChild(option.cloneNode(true));
-            }
-        });
-        // Reset dosen saat jurusan berubah
-        dosenSelect.innerHTML = '';
-        matkulSelect.innerHTML = '';
+
+        reloadOptions(prodiSelect, allProdiOptions,
+            option => option.value === '' || option.getAttribute('data-jurusan') === jurusanId,
+            ''
+        );
+
+        reloadOptions(dosenSelect, allDosenOptions, () => false, '');
+        reloadOptions(matkulSelect, allMatkulOptions, () => false, '');
     });
 
-    // Filter dosen berdasarkan prodi
     prodiSelect.addEventListener('change', function () {
         const prodiId = this.value;
-        dosenSelect.innerHTML = '';
-        allDosenOptions.forEach(option => {
-            if (option.value === "" || option.getAttribute('data-prodi') === prodiId) {
-                dosenSelect.appendChild(option.cloneNode(true));
-            }
-        });
-        matkulSelect.innerHTML = '';
+
+        reloadOptions(dosenSelect, allDosenOptions,
+            option => option.value === '' || option.getAttribute('data-prodi') === prodiId,
+            ''
+        );
+
+        reloadOptions(matkulSelect, allMatkulOptions, () => false, '');
     });
 
-    // Filter mata kuliah berdasarkan dosen
     dosenSelect.addEventListener('change', function () {
         const dosenId = this.value;
-        matkulSelect.innerHTML = '';
-        allMatkulOptions.forEach(option => {
-            if (option.value === "" || option.getAttribute('data-dosen') === dosenId) {
-                matkulSelect.appendChild(option.cloneNode(true));
-            }
-        });
+
+        reloadOptions(matkulSelect, allMatkulOptions,
+            option => option.value === '' || option.getAttribute('data-dosen') === dosenId,
+            ''
+        );
     });
 
-    // Trigger filter saat halaman dibuka (untuk old value)
-    if (jurusanSelect.value) {
-        jurusanSelect.dispatchEvent(new Event('change'));
+    // Inisialisasi saat halaman load untuk set pilihan lama
+    function initSelects() {
+        const oldJurusan = jurusanSelect.value;
+        const oldProdi = prodiSelect.value;
+        const oldDosen = dosenSelect.value;
+        const oldMatkul = matkulSelect.value;
+
+        if (oldJurusan) {
+            reloadOptions(prodiSelect, allProdiOptions,
+                option => option.value === '' || option.getAttribute('data-jurusan') === oldJurusan,
+                oldProdi
+            );
+
+            if (oldProdi) {
+                reloadOptions(dosenSelect, allDosenOptions,
+                    option => option.value === '' || option.getAttribute('data-prodi') === oldProdi,
+                    oldDosen
+                );
+
+                if (oldDosen) {
+                    reloadOptions(matkulSelect, allMatkulOptions,
+                        option => option.value === '' || option.getAttribute('data-dosen') === oldDosen,
+                        oldMatkul
+                    );
+                }
+            }
+        }
     }
-    if (prodiSelect.value) {
-        prodiSelect.dispatchEvent(new Event('change'));
-    }
-    if (dosenSelect.value) {
-        dosenSelect.dispatchEvent(new Event('change'));
-    }
-    if (matkulSelect.value) {
-        matkulSelect.dispatchEvent(new Event('change'));
-    }
+
+    initSelects();
 });
 </script>
-
+@endsection

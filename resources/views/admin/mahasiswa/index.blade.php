@@ -7,7 +7,7 @@
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold text-gray-800">Data Mahasiswa</h1>
         <a href="{{ route('admin.mahasiswa.create') }}"
-           class="inline-block px-6 py-2 bg-gradient-to-r from-rose-600 to-red-600 text-white rounded-lg shadow hover:scale-105 transition-all">
+           class="inline-block px-6 py-2 bg-gradient-to-r from-red-500 to-red-800 text-white rounded-lg shadow hover:scale-105 transition-all">
             + Tambah Mahasiswa
         </a>
     </div>

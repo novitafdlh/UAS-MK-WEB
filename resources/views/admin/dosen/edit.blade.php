@@ -4,9 +4,12 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-6">
-    <div class="mb-6">
+    <div class="mb-6 flex justify-between items-center">
         <h1 class="text-2xl font-bold text-gray-800">Edit Dosen</h1>
-        <a href="{{ route('admin.dosen.index') }}" class="text-red-600 hover:underline text-sm">&larr; Kembali ke Data Dosen</a>
+        <a href="{{ route('admin.mahasiswa.index') }}" 
+        class="text-white-600 bg-red-400 hover:underline text-sm border border-red-600 px-3 py-2 rounded hover:bg-red-600 hover:text-white transition">
+        &larr; Kembali ke Data Dosen
+        </a>
     </div>
 
     @if($errors->any())

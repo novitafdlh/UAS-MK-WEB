@@ -4,10 +4,14 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-6">
-    <div class="mb-6">
+    <div class="mb-6 flex justify-between items-center">
         <h1 class="text-2xl font-bold text-gray-800">Tambah Mahasiswa</h1>
-        <a href="{{ route('admin.mahasiswa.index') }}" class="text-red-600 hover:underline text-sm">&larr; Kembali ke Data Mahasiswa</a>
+        <a href="{{ route('admin.mahasiswa.index') }}" 
+        class="text-white-600 bg-red-400 hover:underline text-sm border border-red-600 px-3 py-2 rounded hover:bg-red-600 hover:text-white transition">
+        &larr; Kembali ke Data Mahasiswa
+        </a>
     </div>
+
 
     @if($errors->any())
         <div class="mb-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded">
@@ -19,7 +23,7 @@
         </div>
     @endif
 
-    <div class="bg-white rounded-xl shadow p-6 max-w-lg mx-auto">
+    <div class="bg-red-300 rounded-xl shadow p-6 max-w-lg mx-auto">
         <form action="{{ route('admin.mahasiswa.store') }}" method="POST" class="space-y-5">
             @csrf
             <div>
@@ -75,7 +79,7 @@
             </div>
             <div class="pt-2">
                 <button type="submit"
-                        class="w-full py-2 px-4 bg-gradient-to-r from-rose-600 to-red-600 text-white rounded-lg shadow hover:scale-105 transition-all">
+                        class="w-full py-2 px-4 bg-red-500 text-white rounded-lg shadow hover:scale-105 transition-all">
                     Simpan
                 </button>
             </div>
