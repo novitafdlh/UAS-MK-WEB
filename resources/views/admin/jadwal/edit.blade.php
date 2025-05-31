@@ -29,8 +29,10 @@
                     <select name="jurusan_id" id="jurusan_id" required
                         class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         <option value="">-- Pilih Jurusan --</option>
+                        {{-- Jurusan --}}
                         @foreach($jurusans as $jurusan)
-                            <option value="{{ $jurusan->id }}" {{ old('jurusan_id') == $jurusan->id ? 'selected' : '' }}>
+                            <option value="{{ $jurusan->id }}"
+                                {{ old('jurusan_id', $jadwal->jurusan_id) == $jurusan->id ? 'selected' : '' }}>
                                 {{ $jurusan->nama }}
                             </option>
                         @endforeach
@@ -45,9 +47,11 @@
                     <select name="prodi_id" id="prodi_id" required
                         class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         <option value="">-- Pilih Prodi --</option>
+                        {{-- Prodi --}}
                         @foreach($prodis as $prodi)
-                            <option value="{{ $prodi->id }}" data-jurusan="{{ $prodi->jurusan_id }}"
-                                {{ old('prodi_id') == $prodi->id ? 'selected' : '' }}>
+                            <option value="{{ $prodi->id }}"
+                                data-jurusan="{{ $prodi->jurusan_id }}"
+                                {{ old('prodi_id', $jadwal->prodi_id) == $prodi->id ? 'selected' : '' }}>
                                 {{ $prodi->nama }}
                             </option>
                         @endforeach
@@ -57,45 +61,36 @@
                     @enderror
                 </div>
 
-                <div>
-                    <label for="prodi_id" class="block mb-2 font-semibold text-gray-700">Prodi</label>
-                    <select name="prodi_id" id="prodi_id" required
-                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
-                        <option value="">-- Pilih Prodi --</option>
-                        @foreach($prodis as $prodi)
-                            <option value="{{ $prodi->id }}" data-jurusan="{{ $prodi->jurusan_id }}"
-                                {{ old('prodi_id') == $prodi->id ? 'selected' : '' }}>
-                                {{ $prodi->nama }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('prodi_id')
-                        <p class="mt-1 text-red-600 text-sm italic">{{ $message }}</p>
-                    @enderror
-                </div>
-
+                {{-- Dosen --}}
                 <div>
                     <label for="dosen_id" class="block mb-2 font-semibold text-gray-700">Dosen</label>
                     <select name="dosen_id" id="dosen_id" required
-                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         <option value="">-- Pilih Dosen --</option>
                         @foreach($dosens as $dosen)
-                            <option value="{{ $dosen->id }}" {{ old('dosen_id', $jadwal->dosen_id) == $dosen->id ? 'selected' : '' }}>
-                                {{ $dosen->nama }}
+                            <option value="{{ $dosen->id }}"
+                                data-prodi="{{ $dosen->prodi_id }}"
+                                {{ old('dosen_id', $jadwal->dosen_id) == $dosen->id ? 'selected' : '' }}>
+                                {{ $dosen->name }}
                             </option>
                         @endforeach
                     </select>
-                    @error('dosen_id')<p class="text-red-600 text-sm mt-1">{{ $message }}</p>@enderror
+                    @error('dosen_id')
+                        <p class="mt-1 text-red-600 text-sm italic">{{ $message }}</p>
+                    @enderror
                 </div>
 
+                {{-- Mata Kuliah --}}
                 <div>
                     <label for="mata_kuliah_id" class="block mb-2 font-semibold text-gray-700">Mata Kuliah</label>
                     <select name="mata_kuliah_id" id="mata_kuliah_id" required
                         class="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-500">
                         <option value="">-- Pilih Mata Kuliah --</option>
                         @foreach($matakuliahs as $mk)
-                            <option value="{{ $mk->id }}" data-dosen="{{ $mk->dosen_id }}"
-                                {{ old('mata_kuliah_id') == $mk->id ? 'selected' : '' }}>
+                            <option value="{{ $mk->id }}"
+                                data-dosen="{{ $mk->dosen_id }}"
+                                data-prodi="{{ $mk->prodi_id }}"
+                                {{ old('mata_kuliah_id', $jadwal->mata_kuliah_id) == $mk->id ? 'selected' : '' }}>
                                 {{ $mk->nama }}
                             </option>
                         @endforeach
