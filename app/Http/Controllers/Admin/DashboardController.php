@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;     // Import model User (untuk akun dosen & mahasiswa)
+use App\Models\User;
 use App\Models\Jurusan;  // Import model Jurusan
 use App\Models\Prodi;    // Import model Prodi
 
@@ -12,8 +12,8 @@ class DashboardController extends Controller
 {
     public function index()
 {
-    $mahasiswas = \App\Models\User::where('role', 'mahasiswa')->get();
-    $dosens = \App\Models\User::where('role', 'dosen')->get();
+    $totalMahasiswa = User::where('role', 'mahasiswa')->count();
+    $totalDosen = User::where('role', 'dosen')->count();
     $totalProdi = \App\Models\Prodi::count();
     $totalJurusan = \App\Models\Jurusan::count();
     $totalMataKuliah = \App\Models\MataKuliah::count();
