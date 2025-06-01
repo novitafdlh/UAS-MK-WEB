@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Jurusan;
 use App\Models\Prodi;
+use App\Models\User;
+use App\Models\Matakuliah;
+use App\Models\Jadwal;
 
 class JurusanController extends Controller
 {

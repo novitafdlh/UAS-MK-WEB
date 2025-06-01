@@ -17,13 +17,17 @@
 
         <!-- Judul -->
         <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">Sistem Akademik</h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Sistem Informasi Akademik</h1>
             <p class="text-gray-500 font-medium">Universitas Tadulako</p>
             <div class="w-16 h-1 bg-gradient-to-r from-red-600 to-red-700 mx-auto mt-3 rounded-full"></div>
         </div>
 
-        <h2 class="text-2xl font-bold text-center text-red-700 mb-6">Login Pengguna</h2>
-
+        <h2 class="text-2xl font-bold text-center text-red-700 mb-6">Login</h2>
+        @if(session('success'))
+            <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
         <!-- Form Login -->
         <form action="{{ route('login') }}" method="POST" class="space-y-5">
             @csrf

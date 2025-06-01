@@ -69,33 +69,30 @@
         </div>
     </form>
 </div>
-@push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const jurusanSelect = document.getElementById('jurusan_id');
     const prodiSelect = document.getElementById('prodi_id');
     const allProdiOptions = Array.from(prodiSelect.options);
-    
+
     function filterProdi() {
-        const selectedJurusanId = jurusanSelect.value;
-        prodiSelect.innerHTML = '';
-        prodiSelect.appendChild(new Option('-- Pilih Prodi --', ''));
+        const jurusanId = jurusanSelect.value;
+        prodiSelect.innerHTML = '<option value="">-- Pilih Prodi --</option>';
         allProdiOptions.forEach(option => {
-            if (!option.value) return; // skip default option
-            if (option.getAttribute('data-jurusan') == selectedJurusanId) {
+            if (!option.value || option.getAttribute('data-jurusan') == jurusanId) {
                 prodiSelect.appendChild(option.cloneNode(true));
             }
         });
-        @if(old('prodi_id', $dosen->prodi_id))
-            prodiSelect.value = "{{ old('prodi_id', $dosen->prodi_id) }}";
+        // Pilih kembali prodi jika sebelumnya sudah dipilih
+        @if(old('prodi_id'))
+            prodiSelect.value = "{{ old('prodi_id') }}";
         @endif
     }
-        
-        jurusanSelect.addEventListener('change', filterProdi);
 
-    // Jalankan saat halaman pertama kali dibuka
+    jurusanSelect.addEventListener('change', filterProdi);
+
+    // Jalankan filter saat halaman pertama kali dibuka
     filterProdi();
 });
 </script>
-@endpush
 @endsection

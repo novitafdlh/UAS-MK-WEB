@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\Jurusan;
+use App\Models\Prodi;
 
 class RegisteredUserController extends Controller
 {
@@ -19,7 +21,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $jurusans = \App\Models\Jurusan::all();
+        $prodis = \App\Models\Prodi::all();
+        return view('auth.register', compact('jurusans', 'prodis'));
     }
 
     /**
@@ -31,19 +35,23 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'nim' => 'required|string|max:50|unique:users',
+            'jurusan_id' => 'required|exists:jurusans,id',
+            'prodi_id' => 'required|exists:prodis,id',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'nim' => $request->nim,
+            'jurusan_id' => $request->jurusan_id,
+            'prodi_id' => $request->prodi_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'mahasiswa',
         ]);
 
-        Auth::login($user);
-
-        return redirect('login')->with('success', 'Akun berhasil dibuat. Silakan login.');
+        return redirect()->route('login')->with('success', 'Akun berhasil dibuat. Silakan login.');
     }
 }

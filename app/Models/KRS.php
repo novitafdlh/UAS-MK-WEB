@@ -15,6 +15,7 @@ class KRS extends Model
         'mata_kuliah_id',
         'semester',
         'tahun_akademik',
+        'nilai'
     ];
 
     // Relasi ke user (mahasiswa)

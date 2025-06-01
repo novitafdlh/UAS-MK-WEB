@@ -27,7 +27,7 @@
                     @forelse($nilais as $nilai)
                         <tr>
                             <td class="px-6 py-4">{{ $nilai->mataKuliah->nama ?? '-' }}</td>
-                            <td class="px-6 py-4">{{ $nilai->dosen->name ?? '-' }}</td>
+                            <td class="px-6 py-4">{{ $nilai->jadwal->dosen->name ?? '-' }}</td>
                             <td class="px-6 py-4">{{ $nilai->nilai ?? '-' }}</td>
                         </tr>
                     @empty

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dosen;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Nilai;
 use App\Models\Prodi;
 use App\Models\KRS;
 use App\Models\MataKuliah;
@@ -18,7 +17,7 @@ class NilaiController extends Controller
         $nilaiList = [];
 
         if (request()->has('prodi_id') && request()->prodi_id != '') {
-            $nilaiList = Nilai::with(['user', 'mataKuliah'])
+            $nilaiList = KRS::with(['user', 'mataKuliah'])
                 ->whereHas('user', function ($q) {
                     $q->where('prodi_id', request()->prodi_id)
                       ->where('role', 'mahasiswa');
@@ -82,7 +81,7 @@ class NilaiController extends Controller
         }
 
         // Simpan atau update nilai
-        Nilai::updateOrCreate(
+        KRS::updateOrCreate(
             [
                 'user_id' => $mahasiswaActual->id,
                 'mata_kuliah_id' => $request->mata_kuliah_id,
@@ -98,7 +97,7 @@ class NilaiController extends Controller
 
     public function edit($id)
     {
-        $nilai = Nilai::with(['user', 'mataKuliah'])->findOrFail($id);
+        $nilai = KRS::with(['user', 'mataKuliah'])->findOrFail($id);
         return view('dosen.nilai.edit', compact('nilai'));
     }
 
@@ -108,7 +107,7 @@ class NilaiController extends Controller
             'nilai' => 'required|string|max:2',
         ]);
 
-        $nilai = Nilai::findOrFail($id);
+        $nilai = KRS::findOrFail($id);
         $nilai->nilai = $request->nilai;
         $nilai->dosen_id = auth()->id();
         $nilai->save();
@@ -118,7 +117,7 @@ class NilaiController extends Controller
 
     public function destroy($id)
     {
-        $nilai = Nilai::findOrFail($id);
+        $nilai = KRS::findOrFail($id);
         $nilai->delete();
 
         return redirect()->route('dosen.nilai.index')->with('success', 'Nilai berhasil dihapus.');

@@ -30,6 +30,12 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
+        if (!$user) {
+            return back()->withErrors([
+                'email' => 'Email atau password yang Anda masukkan salah.',
+            ]);
+        }
+
         if ($user->role === 'admin') {
             Auth::logout();
             return back()->withErrors([

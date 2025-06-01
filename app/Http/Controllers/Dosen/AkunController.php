@@ -26,9 +26,9 @@ class AkunController extends Controller
     public function edit()
     {
         $dosen = User::where('role', 'dosen')->where('id', Auth::id())->first();
-        $prodis = Prodi::all();
-        $jurusans = Jurusan::all();
-        
+        $jurusans = \App\Models\Jurusan::all();
+        $prodis = \App\Models\Prodi::all();
+
         return view('dosen.akun.edit', compact('dosen', 'prodis', 'jurusans'));
     }
 
