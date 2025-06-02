@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', config('app.name', 'Laravel'))</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
-
-            <!-- Page Content -->
-            <main>
-                @yield('content')
+    @vite(['resources/css/app.css'])
+    @stack('styles')
+</head>
+{{-- Hapus flex items-center justify-center dari body --}}
+<body class="font-sans antialiased bg-gradient-to-br from-red-100 to-white min-h-screen">
+    {{-- Ini adalah div yang akan menempatkan kotak login di kiri --}}
+    <div class="flex"> {{-- Menggunakan flexbox untuk layout horizontal --}}
+        <div class="w-1/3 min-h-screen flex items-center justify-center p-8"> {{-- Kolom kiri untuk kotak login --}}
+            <main> {{-- Masih membungkus konten dengan main --}}
+                @yield('content') {{-- Konten login akan di-render di sini --}}
             </main>
         </div>
-    </body>
+        <div class="w-2/3 min-h-screen">
+            {{-- Area kosong di kanan, atau bisa untuk gambar/ilustrasi --}}
+        </div>
+    </div>
+
+    @vite(['resources/js/app.js'])
+    @stack('scripts')
+</body>
 </html>
